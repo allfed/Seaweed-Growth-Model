@@ -1,0 +1,11 @@
+name: cb
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - numpy=1.21.2
+  - pip
+  - pip:
+    - tqdm==4.62.3
+
