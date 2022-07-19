@@ -12,6 +12,8 @@ sys.path.append(str(path_root))
 from src.growth_model import growth_factor_combination
 from src.growth_model import calculate_illumination_factor
 from src.growth_model import calculate_temperature_factor
+from src.growth_model import calculate_nutrient_factor
+from src.growth_model import calculate_salinity_factor
 
 def test_growth_factor_combination():
     """
@@ -57,6 +59,28 @@ def test_calculate_temperature_factor():
 
     # Test 2: temperature between 24 and 30
     assert calculate_temperature_factor(25) == 1
-    # Test 3: temperature above 30
+
+
+def test_calculate_nutrient_factor():
+    """
+    Tests the calculate_nutrient_factor function
+    """
+    # Test 1: make sure everything stays between 0 and 1
+    for nutrient in range(0, 500):
+        assert calculate_nutrient_factor(nutrient, nutrient, nutrient) <= 1
+        assert calculate_nutrient_factor(nutrient, nutrient, nutrient) >= 0
+    
+
+def test_calculate_salinity_factor():
+    """
+    Tests the calculate_salinity_factor function
+    """
+    # Test 1: make sure everything stays between 0 and 1
+    for salinity in range(0, 100):
+        assert calculate_salinity_factor(salinity) <= 1
+        assert calculate_salinity_factor(salinity) >= 0
+    # Test 2: salinity between 24 and 36
+    assert calculate_salinity_factor(25) == 1
+
 
     

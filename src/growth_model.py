@@ -90,3 +90,22 @@ def calculate_nutrient_factor(nitrate, ammonium, phosphate):
     phosphate_factor = phosphate / (KPO4 + phosphate)
     # Calculate the nutrient factor
     return min(nitrate_factor, ammonium_factor, phosphate_factor)
+
+
+def calculate_salinity_factor(salinity):
+    """
+    Calculates the salinity factor
+    Arguments:
+        salinity: the salinity of the water in ppt
+    Returns:
+        The salinity factor
+    """
+    # with  = 0.007 ppt−2 and = 0.063 ppt−2.
+    kS1 = 0.007
+    kS2 = 0.063
+    if salinity < 24:
+        return math.exp(-kS1 * (24 - salinity)**2)
+    elif salinity > 36:
+        return math.exp(-kS2 * (salinity - 36)**2)
+    else:
+        return 1
