@@ -23,8 +23,8 @@ def growth_factor_combination(opt_growth_rate, non_opt_illumniation, non_opt_tem
     parameters = [opt_growth_rate, non_opt_illumniation, non_opt_temperature, non_opt_nutrients, non_opt_salinity, self_shading]
     for parameter in parameters:
         assert 0 <= parameter <= 1
-    # Calculate the actual production rate 
-    return opt_growth_rate * non_opt_illumniation * - non_opt_temperature * \
+    # Calculate the actual production rate
+    return opt_growth_rate * non_opt_illumniation * non_opt_temperature * \
            non_opt_nutrients * non_opt_salinity * self_shading
 
 
