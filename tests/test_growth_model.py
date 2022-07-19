@@ -14,6 +14,8 @@ from src.growth_model import calculate_illumination_factor
 from src.growth_model import calculate_temperature_factor
 from src.growth_model import calculate_nutrient_factor
 from src.growth_model import calculate_salinity_factor
+from src.growth_model import calculate_self_shading_factor
+
 
 def test_growth_factor_combination():
     """
@@ -69,7 +71,7 @@ def test_calculate_nutrient_factor():
     for nutrient in range(0, 500):
         assert calculate_nutrient_factor(nutrient, nutrient, nutrient) <= 1
         assert calculate_nutrient_factor(nutrient, nutrient, nutrient) >= 0
-    
+
 
 def test_calculate_salinity_factor():
     """
@@ -83,4 +85,14 @@ def test_calculate_salinity_factor():
     assert calculate_salinity_factor(25) == 1
 
 
+def test_calculate_self_shading_factor():
+    """
+    Tests the calculate_self_shading_factor function
+    """
+    # Test 1: make sure everything stays between 0 and 1
+    for self_shading in range(0, 50):
+        assert calculate_self_shading_factor(self_shading) <= 1
+        assert calculate_self_shading_factor(self_shading) >= 0
+    # Test 2: self_shading between 24 and 36
+    assert calculate_self_shading_factor(0.3) == 1
     

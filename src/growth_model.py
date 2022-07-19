@@ -9,7 +9,7 @@ import math
 
 
 def growth_factor_combination(opt_growth_rate, non_opt_illumniation, non_opt_temperature,
-                            non_opt_nutrients, non_opt_salinity, self_shading):
+                            non_opt_nutrients, non_opt_salinity, self_shading=1):
     """
     Calculates the actual production rate of the seaweed
     Arguments:
@@ -18,14 +18,15 @@ def growth_factor_combination(opt_growth_rate, non_opt_illumniation, non_opt_tem
         non_opt_temperature: the non-optimal temperature of the algae
         non_opt_nutrients: the non-optimal nutrients of the algae
         non_opt_salinity: the non-optimal salinity of the algae
-        self_shading: the self-shading of the algae
+        self_shading: the self-shading of the algae: default value 1, as we not always have
+        information about the density of the algae
     Returns:
         The actual production rate of the algae
     """
-    # Make sure all parameters are between 0 and 1
-    parameters = [opt_growth_rate, non_opt_illumniation, non_opt_temperature, non_opt_nutrients, non_opt_salinity, self_shading]
-    for parameter in parameters:
-        assert 0 <= parameter <= 1
+    # Make sure all factors are between 0 and 1
+    factors = [opt_growth_rate, non_opt_illumniation, non_opt_temperature, non_opt_nutrients, non_opt_salinity, self_shading]
+    for factor in factors:
+        assert 0 <= factor <= 1
     # Calculate the actual production rate
     return opt_growth_rate * non_opt_illumniation * non_opt_temperature * \
            non_opt_nutrients * non_opt_salinity * self_shading
@@ -107,5 +108,19 @@ def calculate_salinity_factor(salinity):
         return math.exp(-kS1 * (24 - salinity)**2)
     elif salinity > 36:
         return math.exp(-kS2 * (salinity - 36)**2)
+    else:
+        return 1
+
+
+def calculate_self_shading_factor(density):
+    """
+    Calculates the self-shading factor
+    Arguments:
+        density: the density (kg/m2) of the algae
+    Returns:
+        The self-shading factor
+    """
+    if density >= 0.4:
+        return math.exp(-0.513 * (density - 0.4))
     else:
         return 1
