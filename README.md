@@ -1,2 +1,2 @@
-# Seaweed-Upscaling-Model
-Simple model to calculate how quickly global seaweed production could be upscaled. 
+# Seaweed-Growth-Model
+ Model to calculate where seaweed can grow in a nuclear war 
