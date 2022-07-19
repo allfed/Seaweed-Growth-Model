@@ -28,3 +28,18 @@ def growth_factor_combination(opt_growth_rate, non_opt_illumniation, non_opt_tem
            non_opt_nutrients * non_opt_salinity * self_shading
 
 
+def calculate_illumination_factor(illumination):
+    """
+    Calculates the illumination factor
+    Arguments:
+        illumination: the illumination of the algae in W/m²
+    Returns:
+        The illumination factor
+    """
+    if illumination < 21.9:
+        return illumination / 21.9
+    elif illumination > 100:
+        return 100 / illumination
+    else:
+        return 1
+    

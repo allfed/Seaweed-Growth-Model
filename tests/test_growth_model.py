@@ -10,6 +10,7 @@ path_root = Path(__file__).parents[2]
 sys.path.append(str(path_root))
 
 from src.growth_model import growth_factor_combination
+from src.growth_model import calculate_illumination_factor
 
 def test_growth_factor_combination():
     """
@@ -28,3 +29,14 @@ def test_growth_factor_combination():
     with pytest.raises(AssertionError):
         result = growth_factor_combination(1, 1, 1, 1, 1, 2) == 2
 
+def test_calculate_illumination_factor():
+    """
+    Tests the calculate_illumination_factor function
+    """
+    # Test 1
+    assert calculate_illumination_factor(25) == 1
+    # Test 2
+    assert calculate_illumination_factor(500) == 100/500
+    # Test 3
+    assert calculate_illumination_factor(5) == 5/21.9
+   
