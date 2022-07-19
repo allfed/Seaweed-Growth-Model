@@ -109,3 +109,17 @@ def calculate_salinity_factor(salinity):
         return math.exp(-kS2 * (salinity - 36)**2)
     else:
         return 1
+
+
+def calculate_self_shading_factor(density):
+    """
+    Calculates the self-shading factor
+    Arguments:
+        density: the density (kg/m2) of the algae
+    Returns:
+        The self-shading factor
+    """
+    if density >= 0.4:
+        return math.exp(-0.513 * (density - 0.4))
+    else:
+        return 1
