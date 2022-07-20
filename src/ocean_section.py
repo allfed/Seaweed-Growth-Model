@@ -36,7 +36,7 @@ class Ocean_Section():
             None
         """
         # Get the data from the database
-        lme_dict = rwf.read_file_by_lme("../data/seaweed_environment_data_in_nuclear_war.csv")
+        lme_dict = rwf.read_file_by_lme("data/seaweed_environment_data_in_nuclear_war.csv")
         # Get the data for the LME
         lme = lme_dict[lme_number]
         # Set the data
