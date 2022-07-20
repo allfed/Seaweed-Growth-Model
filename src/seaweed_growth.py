@@ -1,6 +1,14 @@
 """
 Contains all functions needed to calculate the growth of
-seaweed. Based on the publication:
+seaweed.
+
+The calculation for each factor is split into two functions.
+The first function with "single_value" in the name calculates
+the factor for a single value. While the second function with
+"calculate" in the name calculates the factor for a whole dataframe,
+for which it uses the first function.
+
+Based on the publication:
 James, S.C. and Boriah, V. (2010), Modeling algae growth
 in an open-channel raceway
 Journal of Computational Biology, 17(7), 895−906.
@@ -8,25 +16,28 @@ Journal of Computational Biology, 17(7), 895−906.
 import math
 import pandas as pd
 
-def growth_factor_combination_single_value(non_opt_illumniation, non_opt_temperature,
-                            non_opt_nutrients, non_opt_salinity):
+def growth_factor_combination_single_value(illumination_factor:float,
+                                            temperature_factor:float,
+                                            nutrient_factor:float,
+                                            salinity_factor:float):
     """
     Calculates the actual production rate of the seaweed
     Arguments:
-        non_opt_illumniation: the non-optimal illumination of the algae
-        non_opt_temperature: the non-optimal temperature of the algae
-        non_opt_nutrients: the non-optimal nutrients of the algae
-        non_opt_salinity: the non-optimal salinity of the algae
+        illumination_factor: the illumination factor
+        temperature_factor: the temperature factor
+        nutrient_factor: the nutrient factor
+        salinity_factor: the salinity factor
     Returns:
         The actual production rate of the algae
     """
     # Make sure all factors are between 0 and 1
-    factors = [non_opt_illumniation, non_opt_temperature, non_opt_nutrients, non_opt_salinity]
+    factors = [illumination_factor, temperature_factor, 
+            nutrient_factor, salinity_factor]
     for factor in factors:
         assert 0 <= factor <= 1
     # Calculate the actual production rate
-    return non_opt_illumniation * non_opt_temperature * \
-           non_opt_nutrients * non_opt_salinity
+    return illumination_factor * temperature_factor * \
+           nutrient_factor * salinity_factor
 
 def growth_factor_combination(
                                 non_opt_illumniation:pd.DataFrame,
@@ -60,7 +71,7 @@ def growth_factor_combination(
 
 def illumination_single_value(illumination:float):
     """
-    Calculates the illumination factor
+    Calculates the illumination factor for a single value
     Arguments:
         illumination: the illumination of the algae in W/m²
     Returns:
@@ -87,19 +98,19 @@ def temperature_single_value(temperature:float):
     Arguments:
         temperature: the temperature of the water in °C
     Returns:
-        The temperature factor
+        The temperature factor as a float
     """
     # where Kt1 = 0.017°C−2 and Kt2 = 0.06°C−2. These coefficients were determined by 
     # fitting the preceding equation such that g(15°C) = 0.25 and g(36°C) = 0.1
     
     
-    Kt1 = 0.017
-    Kt2 = 0.06
+    kt1 = 0.017
+    kt2 = 0.06
 
     if temperature < 24:
-        return math.exp(-Kt1 * (24 - temperature)**2)
+        return math.exp(-kt1 * (24 - temperature)**2)
     elif temperature > 30:
-        return math.exp(-Kt2 * (temperature - 30)**2)
+        return math.exp(-kt2 * (temperature - 30)**2)
     else:
         return 1
 
@@ -110,7 +121,7 @@ def calculate_temperature_factor(temperature:pd.DataFrame):
     Arguments:
         temperature: the temperature of the water in celcius
     Returns:
-        The temperature factor
+        The temperature factor as a pandas dataframe
     """
     # Apply the function to the salinity dataframe
     return temperature.apply(salinity_single_value)
@@ -119,13 +130,13 @@ def calculate_temperature_factor(temperature:pd.DataFrame):
 def nutrient_single_value(nitrate:float, ammonium:float, phosphate:float):
     """
     Calculates the nutrient factor, which is the minimum of the 
-    three nutrients nitrate, ammonium and phosphate
+    three nutrients nitrate, ammonium and phosphate for a single value
     Arguments:
         nitrate: the nitrate concentration in mg/L
         ammonium: the ammonium concentration in mg/L
         phosphate: the phosphate concentration in mg/L
     Returns:
-        The nutrient factor
+        The nutrient factor as a float
     """
     # where KNO3 = 0.4 μM, KNH4 = 0.3 μM, and KPO4 = 0.1 μM.
     # were implemented because these yield growth rates consistent with  observations by Lapointe [1987]
@@ -178,7 +189,7 @@ def calculate_salinity_factor(salinity:pd.DataFrame):
     Arguments:
         salinity: the salinity of the water in ppt
     Returns:
-        The salinity factor
+        The salinity factor as a pandas dataframe
     """
     # Apply the function to the salinity dataframe
     return salinity.apply(salinity_single_value)

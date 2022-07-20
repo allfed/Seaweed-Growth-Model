@@ -12,7 +12,7 @@ class OceanSection():
     and also saves the single factors for growth
     """
     def __init__(self):
-        # Add the original data
+        # Add the data
         self.salinity = None
         self.temperature = None
         self.nitrate = None
