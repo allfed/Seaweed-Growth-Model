@@ -2,7 +2,7 @@
 Main file that ties the other ones together.
 """
 import read_write_files as rwf
-
+import seaweed_growth as sg
 
 
 class Ocean_Section():
@@ -33,7 +33,7 @@ class Ocean_Section():
         Arguments:
             section_name: the name of the section
         Returns:
-            The data of the section
+            None
         """
         # Get the data from the database
         lme_dict = rwf.read_file_by_lme("../data/seaweed_environment_data_in_nuclear_war.csv")
@@ -48,5 +48,20 @@ class Ocean_Section():
         self.illumination = lme["illumination"]
 
     def calculate_factors(self):
-        
+        """
+        Calculates the factors and growth rate for the ocean section
+        Arguments:
+            None
+        Returns:
+            None
+        """
+        # Calculate the factors
+        self.salinity_factor = sg.calculate_salinity_factor(self.salinity)
+        self.nutrient_factor = sg.calculate_nutrient_factor(self.nitrate, self.ammonium, self.phosphate)
+        self.illumination_factor = sg.calculate_illumination_factor(self.illumination)
+        self.self_shading_factor = sg.calculate_self_shading_factor(self.illumination)
+        self.temp_factor = sg.calculate_temperature_factor(self.temperature)
+        self.seaweed_growth_rate = sg.growth_factor_combination(self.salinity_factor, self.nutrient_factor, 
+                                                                self.illumination_factor, self.self_shading_factor, 
+                                                                self.temp_factor)
         

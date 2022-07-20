@@ -9,12 +9,12 @@ import pytest
 path_root = Path(__file__).parents[2]
 sys.path.append(str(path_root))
 
-from src.growth_model import growth_factor_combination
-from src.growth_model import calculate_illumination_factor
-from src.growth_model import calculate_temperature_factor
-from src.growth_model import calculate_nutrient_factor
-from src.growth_model import calculate_salinity_factor
-from src.growth_model import calculate_self_shading_factor
+from src.seaweed_growth import growth_factor_combination
+from src.seaweed_growth import calculate_illumination_factor
+from src.seaweed_growth import calculate_temperature_factor
+from src.seaweed_growth import calculate_nutrient_factor
+from src.seaweed_growth import calculate_salinity_factor
+from src.seaweed_growth import calculate_self_shading_factor
 
 
 def test_growth_factor_combination():

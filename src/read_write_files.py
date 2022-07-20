@@ -34,5 +34,5 @@ def read_file_by_lme(file):
 
 
 if __name__ == "__main__":
-    lme_dict = read_file_by_LME("../data/seaweed_environment_data_in_nuclear_war.csv")
+    lme_dict = read_file_by_lme("../data/seaweed_environment_data_in_nuclear_war.csv")
     lme = lme_dict[1]
