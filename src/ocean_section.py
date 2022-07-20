@@ -1,8 +1,8 @@
 """
 Main file that ties the other ones together.
 """
-import read_write_files as rwf
-import seaweed_growth as sg
+from src import read_write_files as rwf
+from src import seaweed_growth as sg
 
 
 class Ocean_Section():
@@ -64,4 +64,9 @@ class Ocean_Section():
         self.seaweed_growth_rate = sg.growth_factor_combination(self.salinity_factor, self.nutrient_factor, 
                                                                 self.illumination_factor, self.self_shading_factor, 
                                                                 self.temp_factor)
-        
+
+
+if __name__ == "__main__":
+    test_section = Ocean_Section()
+    test_section.get_lme_data(1)
+    test_section.calculate_factors()

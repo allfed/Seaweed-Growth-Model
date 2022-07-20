@@ -9,7 +9,7 @@ import math
 
 
 def growth_factor_combination(opt_growth_rate, non_opt_illumniation, non_opt_temperature,
-                            non_opt_nutrients, non_opt_salinity, self_shading=1):
+                            non_opt_nutrients, non_opt_salinity, self_shading=1.0):
     """
     Calculates the actual production rate of the seaweed
     Arguments:

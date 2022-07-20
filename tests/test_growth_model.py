@@ -1,13 +1,7 @@
 """
 Tests the growth model
 """
-import sys
-from pathlib import Path
 import pytest
-
-# Add the source directory to the path
-path_root = Path(__file__).parents[2]
-sys.path.append(str(path_root))
 
 from src.seaweed_growth import growth_factor_combination
 from src.seaweed_growth import calculate_illumination_factor

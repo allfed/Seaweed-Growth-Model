@@ -1,15 +1,7 @@
 """
 Tests the reading and writing of files
 """
-import sys
 import pandas as pd
-from pathlib import Path
-import pytest
-
-# Add the source directory to the path
-path_root = Path(__file__).parents[2]
-sys.path.append(str(path_root))
-
 from src.read_write_files import read_file_by_lme
 
 
