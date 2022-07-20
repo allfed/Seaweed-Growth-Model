@@ -4,89 +4,85 @@ Tests the growth model
 import pytest
 
 from src.seaweed_growth import growth_factor_combination
+from src.seaweed_growth import growth_factor_combination_single_value
 from src.seaweed_growth import calculate_illumination_factor
+from src.seaweed_growth import illumination_single_value
 from src.seaweed_growth import calculate_temperature_factor
+from src.seaweed_growth import temperature_single_value
 from src.seaweed_growth import calculate_nutrient_factor
+from src.seaweed_growth import nutrient_single_value
 from src.seaweed_growth import calculate_salinity_factor
-from src.seaweed_growth import calculate_self_shading_factor
+from src.seaweed_growth import salinity_single_value
 
 
-def test_growth_factor_combination():
+
+def test_growth_factor_combination_single_value():
     """
     Tests the growth_factor combination
     """
     # Test 1
-    assert growth_factor_combination(1, 1, 1, 1, 1, 1) == 1
+    assert growth_factor_combination_single_value(1, 1, 1, 1) == 1
     # Test 2
-    assert growth_factor_combination(1, 1, 1, 1, 1, 0) == 0
+    assert growth_factor_combination_single_value(1, 1, 1, 0) == 0
     # Test 3
-    assert growth_factor_combination(1, 1, 1, 1, 1, 0.25) == 0.25
+    assert growth_factor_combination_single_value(1, 1, 1, 0.25) == 0.25
     # Test 4
     with pytest.raises(AssertionError):
-        result = growth_factor_combination(1, 1, 1, 1, 1, -1) == -1
+        result = growth_factor_combination_single_value(1, 1, 1, -1) == -1
     # Test 5
     with pytest.raises(AssertionError):
-        result = growth_factor_combination(1, 1, 1, 1, 1, 2) == 2
+        result = growth_factor_combination_single_value(1, 1, 1, 2) == 2
 
-def test_calculate_illumination_factor():
+
+def test_illumination_single_value():
     """
-    Tests the calculate_illumination_factor function
+    Tests the illumination_single_value function
     """
     # Test 1
-    assert calculate_illumination_factor(25) == 1
+    assert illumination_single_value(25) == 1
     # Test 2
-    assert calculate_illumination_factor(500) == 100/500
+    assert illumination_single_value(500) == 100/500
     # Test 3
-    assert calculate_illumination_factor(5) == 5/21.9
+    assert illumination_single_value(5) == 5/21.9
     # Test 4: make sure everything stays between 0 and 1
     for illumination in range(0, 500):
-        assert calculate_illumination_factor(illumination) <= 1
-        assert calculate_illumination_factor(illumination) >= 0
+        assert illumination_single_value(illumination) <= 1
+        assert illumination_single_value(illumination) >= 0
 
 
-def test_calculate_temperature_factor():
+def test_temperature_single_value():
     """
-    Tests the calculate_temperature_factor function
+    Tests the temperature_single_value function
     """
     # Test 1: make sure everything stays between 0 and 1
     for temperature in range(0, 50):
-        assert calculate_temperature_factor(temperature) <= 1
-        assert calculate_temperature_factor(temperature) >= 0
+        assert temperature_single_value(temperature) <= 1
+        assert temperature_single_value(temperature) >= 0
 
     # Test 2: temperature between 24 and 30
-    assert calculate_temperature_factor(25) == 1
+    assert temperature_single_value(25.0) == 1
 
 
-def test_calculate_nutrient_factor():
+def test_nutrient_single_value():
     """
-    Tests the calculate_nutrient_factor function
+    Tests the nutrient_single_value function
     """
     # Test 1: make sure everything stays between 0 and 1
     for nutrient in range(0, 500):
-        assert calculate_nutrient_factor(nutrient, nutrient, nutrient) <= 1
-        assert calculate_nutrient_factor(nutrient, nutrient, nutrient) >= 0
+        assert nutrient_single_value(nutrient, nutrient, nutrient) <= 1
+        assert nutrient_single_value(nutrient, nutrient, nutrient) >= 0
 
 
-def test_calculate_salinity_factor():
+def test_salinity_single_value():
     """
-    Tests the calculate_salinity_factor function
+    Tests the salinity_single_value function
     """
     # Test 1: make sure everything stays between 0 and 1
     for salinity in range(0, 100):
-        assert calculate_salinity_factor(salinity) <= 1
-        assert calculate_salinity_factor(salinity) >= 0
+        assert salinity_single_value(salinity) <= 1
+        assert salinity_single_value(salinity) >= 0
     # Test 2: salinity between 24 and 36
-    assert calculate_salinity_factor(25) == 1
+    assert salinity_single_value(25) == 1
 
 
-def test_calculate_self_shading_factor():
-    """
-    Tests the calculate_self_shading_factor function
-    """
-    # Test 1: make sure everything stays between 0 and 1
-    for self_shading in range(0, 50):
-        assert calculate_self_shading_factor(self_shading) <= 1
-        assert calculate_self_shading_factor(self_shading) >= 0
-    # Test 2: self_shading between 24 and 36
-    assert calculate_self_shading_factor(0.3) == 1
     

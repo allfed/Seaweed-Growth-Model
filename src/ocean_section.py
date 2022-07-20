@@ -3,9 +3,9 @@ Main file that ties the other ones together.
 """
 from src import read_write_files as rwf
 from src import seaweed_growth as sg
+import pandas as pd
 
-
-class Ocean_Section():
+class OceanSection():
     """
     Class the represents a section of the ocean.
     alculates for every section how quickly seaweed can grow
@@ -23,11 +23,10 @@ class Ocean_Section():
         self.salinity_factor = None
         self.nutrient_factor = None
         self.illumination_factor = None
-        self.self_shading_factor = None
         self.temp_factor = None
         self.seaweed_growth_rate = None
 
-    def get_lme_data(self, lme_number):
+    def get_lme_data(self, lme_number, file):
         """
         Gets the data from the database based on the LME number
         Arguments:
@@ -36,10 +35,10 @@ class Ocean_Section():
             None
         """
         # Get the data from the database
-        lme_dict = rwf.read_file_by_lme("data/seaweed_environment_data_in_nuclear_war.csv")
+        lme_dict = rwf.read_file_by_lme(file)
         # Get the data for the LME
         lme = lme_dict[lme_number]
-        # Set the data
+        # Set the data (those are all pandas dataframes)
         self.salinity = lme["salinity"]
         self.temperature = lme["surface_temperature"]
         self.nitrate = lme["nitrate"]
@@ -59,14 +58,11 @@ class Ocean_Section():
         self.salinity_factor = sg.calculate_salinity_factor(self.salinity)
         self.nutrient_factor = sg.calculate_nutrient_factor(self.nitrate, self.ammonium, self.phosphate)
         self.illumination_factor = sg.calculate_illumination_factor(self.illumination)
-        self.self_shading_factor = sg.calculate_self_shading_factor(self.illumination)
         self.temp_factor = sg.calculate_temperature_factor(self.temperature)
-        self.seaweed_growth_rate = sg.growth_factor_combination(self.salinity_factor, self.nutrient_factor, 
-                                                                self.illumination_factor, self.self_shading_factor, 
-                                                                self.temp_factor)
+        self.seaweed_growth_rate = sg.growth_factor_combination(self.illumination_factor, self.temp_factor, self.nutrient_factor, self.salinity_factor)
 
 
 if __name__ == "__main__":
-    test_section = Ocean_Section()
-    test_section.get_lme_data(1)
+    test_section = OceanSection()
+    test_section.get_lme_data(1, "data/seaweed_environment_data_in_nuclear_war.csv")
     test_section.calculate_factors()
