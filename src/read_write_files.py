@@ -3,7 +3,7 @@ Reads in the ocean data after nuclear war provided by Cherryl Harrison
 """
 import pandas as pd
 
-def read_file_by_LME(file):
+def read_file_by_lme(file):
     """
     Reads in a file and returns it as a dictionary of pandas dataframes
     The data is ocean data after nuclear war seperated by 
