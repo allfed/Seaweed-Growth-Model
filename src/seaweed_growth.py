@@ -41,13 +41,13 @@ def growth_factor_combination_single_value(illumination_factor:float,
            nutrient_factor * salinity_factor
 
 def growth_factor_combination(
-                                illumination_factor:pd.DataFrame,
-                                temperature_factor:pd.DataFrame,
-                                nutrient_factor:pd.DataFrame,
-                                salinity_factor:pd.DataFrame):
+                                illumination_factor:pd.Series,
+                                temperature_factor:pd.Series,
+                                nutrient_factor:pd.Series,
+                                salinity_factor:pd.Series):
     """
     Calculates the actual production rate of the seaweed for a whole dataframe
-    And returns it as a pandas dataframe
+    And returns it as a pandas series
     """
     factors_combined_df = pd.concat([illumination_factor,
                                     temperature_factor,
@@ -67,7 +67,7 @@ def growth_factor_combination(
                                                         x['nutrient_factor'],
                                                         x['salinity_factor']),
                                                         axis=1) # Calculate the growth factor combination
-    return factors_combined_df['growth_factor_combination']
+    return pd.Series(factors_combined_df['growth_factor_combination'])
 
 
 def illumination_single_value(illumination:float):
@@ -89,11 +89,11 @@ def illumination_single_value(illumination:float):
         return 1
 
 
-def calculate_illumination_factor(illumination:pd.DataFrame):
+def calculate_illumination_factor(illumination:pd.Series):
     """
-    Calculates the illumination factor for a whole dataframe
+    Calculates the illumination factor for a whole series
     """
-    return illumination.apply(illumination_single_value)
+    return pd.Series(illumination.apply(illumination_single_value))
 
 
 def temperature_single_value(temperature:float):
@@ -119,16 +119,16 @@ def temperature_single_value(temperature:float):
         return 1
 
 
-def calculate_temperature_factor(temperature:pd.DataFrame):
+def calculate_temperature_factor(temperature:pd.Series):
     """
     Calculates the temperature factor for a whole dataframe column
     Arguments:
         temperature: the temperature of the water in celcius
     Returns:
-        The temperature factor as a pandas dataframe
+        The temperature factor as a pandas series
     """
     # Apply the function to the salinity dataframe
-    return temperature.apply(salinity_single_value)
+    return pd.Series(temperature.apply(temperature_single_value))
 
 
 def nutrient_single_value(nitrate:float, ammonium:float, phosphate:float):
@@ -164,25 +164,27 @@ def nutrient_single_value(nitrate:float, ammonium:float, phosphate:float):
     return min(nitrate_factor, ammonium_factor, phosphate_factor)
 
 
-def calculate_nutrient_factor(nitrate:pd.DataFrame,
-                              ammonium:pd.DataFrame,
-                              phosphate:pd.DataFrame):
+def calculate_nutrient_factor(nitrate:pd.Series,
+                              ammonium:pd.Series,
+                              phosphate:pd.Series):
     """
-    Calculates the nutrient factor for a whole dataframe
-    And returns the nutrient factor as a pandas dataframe
+    Calculates the nutrient factor for a whole series
+    And returns the nutrient factor as a pandas series
     """
     nutrient_df = pd.concat([nitrate, ammonium, phosphate], axis=1)
     nutrient_df.columns = ['nitrate', 'ammonium', 'phosphate']
     nutrient_df["nutrient_factor"] = nutrient_df.apply(
         lambda x: nutrient_single_value(x['nitrate'], x["ammonium"], x["phosphate"]), axis=1)
 
-    return nutrient_df["nutrient_factor"]
+    return pd.Series(nutrient_df["nutrient_factor"])
 
 
 def salinity_single_value(salinity:float):
     """
     Calculates the salinity factor for a single salinity value
     """
+    # Make sure the salinity is in a reasonable range
+    assert 0 <= salinity <= 50
     # with  = 0.007 ppt−2 and = 0.063 ppt−2.
     kS1 = 0.007
     kS2 = 0.063
@@ -194,13 +196,13 @@ def salinity_single_value(salinity:float):
         return 1
 
 
-def calculate_salinity_factor(salinity:pd.DataFrame):
+def calculate_salinity_factor(salinity:pd.Series):
     """
     Calculates the salinity factor for a whole dataframe
     Arguments:
         salinity: the salinity of the water in ppt
     Returns:
-        The salinity factor as a pandas dataframe
+        The salinity factor as a pandas series
     """
     # Apply the function to the salinity dataframe
-    return salinity.apply(salinity_single_value)
+    return pd.Series(salinity.apply(salinity_single_value))

@@ -3,7 +3,6 @@ Main file that ties the other ones together.
 """
 from src import read_write_files as rwf
 from src import seaweed_growth as sg
-import pandas as pd
 
 class OceanSection():
     """
