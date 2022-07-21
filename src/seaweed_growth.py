@@ -28,10 +28,11 @@ def growth_factor_combination_single_value(illumination_factor:float,
         nutrient_factor: the nutrient factor
         salinity_factor: the salinity factor
     Returns:
-        The actual production rate of the algae
+        fraction of the actual production rate the seaweed could 
+        reach in optimal circumstances
     """
     # Make sure all factors are between 0 and 1
-    factors = [illumination_factor, temperature_factor, 
+    factors = [illumination_factor, temperature_factor,
             nutrient_factor, salinity_factor]
     for factor in factors:
         assert 0 <= factor <= 1
@@ -40,31 +41,31 @@ def growth_factor_combination_single_value(illumination_factor:float,
            nutrient_factor * salinity_factor
 
 def growth_factor_combination(
-                                non_opt_illumniation:pd.DataFrame,
-                                non_opt_temperature:pd.DataFrame,
-                                non_opt_nutrients:pd.DataFrame,
-                                non_opt_salinity:pd.DataFrame):
+                                illumination_factor:pd.DataFrame,
+                                temperature_factor:pd.DataFrame,
+                                nutrient_factor:pd.DataFrame,
+                                salinity_factor:pd.DataFrame):
     """
     Calculates the actual production rate of the seaweed for a whole dataframe
     And returns it as a pandas dataframe
     """
-    factors_combined_df = pd.concat([non_opt_illumniation,
-                                    non_opt_temperature,
-                                    non_opt_nutrients,
-                                    non_opt_salinity],
+    factors_combined_df = pd.concat([illumination_factor,
+                                    temperature_factor,
+                                    nutrient_factor,
+                                    salinity_factor],
                                     axis=1)
     factors_combined_df.columns = [
-                                    'non_opt_illumniation',
-                                    'non_opt_temperature',
-                                    'non_opt_nutrients',
-                                    'non_opt_salinity'] # Rename the columns
+                                    'illumination_factor',
+                                    'temperature_factor',
+                                    'nutrient_factor',
+                                    'salinity_factor'] # Rename the columns
 
     factors_combined_df["growth_factor_combination"] = factors_combined_df.apply(
         lambda x: growth_factor_combination_single_value(
-                                                        x['non_opt_illumniation'],
-                                                        x['non_opt_temperature'],
-                                                        x['non_opt_nutrients'],
-                                                        x['non_opt_salinity']),
+                                                        x['illumination_factor'],
+                                                        x['temperature_factor'],
+                                                        x['nutrient_factor'],
+                                                        x['salinity_factor']),
                                                         axis=1) # Calculate the growth factor combination
     return factors_combined_df['growth_factor_combination']
 

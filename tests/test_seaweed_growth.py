@@ -1,6 +1,7 @@
 """
 Tests the growth model
 """
+import pandas as pd
 import pytest
 
 from src.seaweed_growth import growth_factor_combination
@@ -14,6 +15,17 @@ from src.seaweed_growth import nutrient_single_value
 from src.seaweed_growth import calculate_salinity_factor
 from src.seaweed_growth import salinity_single_value
 
+
+def create_test_dataframe():
+    """
+    Creates a test dataframe and returns it
+    """
+    df = pd.DataFrame()
+    df['illumination'] = [25, 500, 5, 0, 0.25, -1, 2]
+    df['temperature'] = [25, 50, 5, 0, 0.25, -1, 2]
+    df['nutrient'] = [25, 50, 5, 0, 0.25, -1, 2]
+    df['salinity'] = [25, 50, 5, 0, 0.25, -1, 2]
+    return df
 
 
 def test_growth_factor_combination_single_value():
