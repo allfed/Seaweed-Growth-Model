@@ -1,5 +1,7 @@
 """
-Main file that ties the other ones together.
+File contains the class OceanSection, which is used to represent 
+a section of the ocean. This can be either a large marine ecosystem
+or simply a part of a global grid. 
 """
 from src import read_write_files as rwf
 from src import seaweed_growth as sg
@@ -44,6 +46,27 @@ class OceanSection():
         self.ammonium = lme["ammonium"]
         self.phosphate = lme["phosphate"]
         self.illumination = lme["illumination"]
+
+    def get_grid_data(self, grid_name, file):
+        """
+        Gets the data from the database based on the section name
+        Arguments:
+            grid_name: the name of the grid section
+        Returns:
+            None
+        """
+        # Get the data from the database
+        section_dict = rwf.read_file_by_grid(file)
+        # Get the data for the section
+        section = section_dict[grid_name]
+        # Set the data (those are all pandas dataframes)
+        self.salinity = section["salinity"]
+        self.temperature = section["surface_temperature"]
+        self.nitrate = section["nitrate"]
+        self.ammonium = section["ammonium"]
+        self.phosphate = section["phosphate"]
+        self.illumination = section["illumination"]
+
 
     def calculate_factors(self):
         """
