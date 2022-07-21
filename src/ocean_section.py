@@ -1,9 +1,10 @@
 """
-Main file that ties the other ones together.
+File contains the class OceanSection, which is used to represent 
+a section of the ocean. This can be either a large marine ecosystem
+or simply a part of a global grid. 
 """
 from src import read_write_files as rwf
 from src import seaweed_growth as sg
-import pandas as pd
 
 class OceanSection():
     """
@@ -11,8 +12,10 @@ class OceanSection():
     alculates for every section how quickly seaweed can grow
     and also saves the single factors for growth
     """
-    def __init__(self):
-        # Add the original data
+    def __init__(self, name):
+        # Add the name
+        self.name = name
+        # Add the data
         self.salinity = None
         self.temperature = None
         self.nitrate = None
@@ -26,7 +29,7 @@ class OceanSection():
         self.temp_factor = None
         self.seaweed_growth_rate = None
 
-    def get_lme_data(self, lme_number, file):
+    def get_lme_data(self, file):
         """
         Gets the data from the database based on the LME number
         Arguments:
@@ -37,7 +40,7 @@ class OceanSection():
         # Get the data from the database
         lme_dict = rwf.read_file_by_lme(file)
         # Get the data for the LME
-        lme = lme_dict[lme_number]
+        lme = lme_dict[self.name]
         # Set the data (those are all pandas dataframes)
         self.salinity = lme["salinity"]
         self.temperature = lme["surface_temperature"]
@@ -45,6 +48,27 @@ class OceanSection():
         self.ammonium = lme["ammonium"]
         self.phosphate = lme["phosphate"]
         self.illumination = lme["illumination"]
+
+    def get_grid_data(self, file):
+        """
+        Gets the data from the database based on the section name
+        Arguments:
+            grid_name: the name of the grid section
+        Returns:
+            None
+        """
+        # Get the data from the database
+        section_dict = rwf.read_file_by_grid(file)
+        # Get the data for the section
+        section = section_dict[self.name]
+        # Set the data (those are all pandas dataframes)
+        self.salinity = section["salinity"]
+        self.temperature = section["surface_temperature"]
+        self.nitrate = section["nitrate"]
+        self.ammonium = section["ammonium"]
+        self.phosphate = section["phosphate"]
+        self.illumination = section["illumination"]
+
 
     def calculate_factors(self):
         """
@@ -63,6 +87,6 @@ class OceanSection():
 
 
 if __name__ == "__main__":
-    test_section = OceanSection()
-    test_section.get_lme_data(1, "data/seaweed_environment_data_in_nuclear_war.csv")
+    test_section = OceanSection(1)
+    test_section.get_lme_data("data/seaweed_environment_data_in_nuclear_war.csv")
     test_section.calculate_factors()
