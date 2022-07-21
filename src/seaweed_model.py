@@ -1,4 +1,7 @@
-
+"""
+Main Interface
+"""
+import pandas as pd
 from src import ocean_section as oc_se
 
 class SeaweedModel:
@@ -54,14 +57,30 @@ class SeaweedModel:
         for section in self.sections.values():
             section.calculate_growth_rate()
 
+
     def plot_growth_rate_by_lme(self):
         """
         Plots the growth rate for the model based on LME
         """
-        pass
+        # Make a dataframe from the dictionary of the sections
+        sections_df = pd.DataFrame.from_dict(self.sections, orient="index")
+        # Plot the growth rate
+        sections_df["seaweed_growth_rate"].plot(kind="bar")
+
 
     def plot_growth_rate_by_grid(self):
         """
         Plots the growth rate for the model based on grid
         """
         pass
+
+
+if __name__ == "__main__":
+    model = SeaweedModel()
+    model.add_data_by_lme([i for i in range(1, 67)], 
+                            "data/seaweed_environment_data_in_nuclear_war.csv")
+    model.calculate_factors()
+    model.calculate_growth_rate()
+    model.plot_growth_rate_by_lme()
+
+    
