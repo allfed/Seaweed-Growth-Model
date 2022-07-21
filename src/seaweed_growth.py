@@ -28,7 +28,7 @@ def growth_factor_combination_single_value(illumination_factor:float,
         nutrient_factor: the nutrient factor
         salinity_factor: the salinity factor
     Returns:
-        fraction of the actual production rate the seaweed could 
+        fraction of the actual production rate the seaweed could
         reach in optimal circumstances
     """
     # Make sure all factors are between 0 and 1
@@ -78,6 +78,9 @@ def illumination_single_value(illumination:float):
     Returns:
         The illumination factor
     """
+    # Make sure the values are in a reasonable range
+    # 1361 is the maximum illumination that reaches the atmosphere
+    assert 0 <= illumination <= 1361
     if illumination < 21.9:
         return illumination / 21.9
     elif illumination > 100:
@@ -101,10 +104,10 @@ def temperature_single_value(temperature:float):
     Returns:
         The temperature factor as a float
     """
-    # where Kt1 = 0.017°C−2 and Kt2 = 0.06°C−2. These coefficients were determined by 
+    # make sure the temperature is in a reasonable range
+    assert -20 <= temperature <= 50
+    # where Kt1 = 0.017°C−2 and Kt2 = 0.06°C−2. These coefficients were determined by
     # fitting the preceding equation such that g(15°C) = 0.25 and g(36°C) = 0.1
-    
-    
     kt1 = 0.017
     kt2 = 0.06
 
@@ -139,9 +142,16 @@ def nutrient_single_value(nitrate:float, ammonium:float, phosphate:float):
     Returns:
         The nutrient factor as a float
     """
+    # Make sure all three nutrients are in a reasonable range
+    assert 0 <= nitrate <= 1000
+    assert 0 <= ammonium <= 1000
+    assert 0 <= phosphate <= 1000
+
     # where KNO3 = 0.4 μM, KNH4 = 0.3 μM, and KPO4 = 0.1 μM.
-    # were implemented because these yield growth rates consistent with  observations by Lapointe [1987]
-    # "Phosphorus- and nitrogen-limited photosynthesis and growth of Gracilaria tikvahiae (Rhodophyceae)
+    # were implemented because these yield growth rates consistent with
+    # observations by Lapointe [1987]
+    # "Phosphorus- and nitrogen-limited photosynthesis and growth
+    # of Gracilaria tikvahiae (Rhodophyceae)
     # in the Florida Keys: an experimental field study"
     kno3 = 0.4
     knh4 = 0.3
@@ -150,7 +160,7 @@ def nutrient_single_value(nitrate:float, ammonium:float, phosphate:float):
     nitrate_factor = nitrate / (kno3 + nitrate)
     ammonium_factor = ammonium / (knh4 + ammonium)
     phosphate_factor = phosphate / (kpo4 + phosphate)
-    # Calculate the nutrient factor
+    # Calculate the nutrient factor as the minimum available nutrient
     return min(nitrate_factor, ammonium_factor, phosphate_factor)
 
 
