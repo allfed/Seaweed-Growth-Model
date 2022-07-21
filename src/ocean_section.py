@@ -12,7 +12,9 @@ class OceanSection():
     alculates for every section how quickly seaweed can grow
     and also saves the single factors for growth
     """
-    def __init__(self):
+    def __init__(self, name):
+        # Add the name
+        self.name = name
         # Add the data
         self.salinity = None
         self.temperature = None
@@ -27,7 +29,7 @@ class OceanSection():
         self.temp_factor = None
         self.seaweed_growth_rate = None
 
-    def get_lme_data(self, lme_number, file):
+    def get_lme_data(self, file):
         """
         Gets the data from the database based on the LME number
         Arguments:
@@ -38,7 +40,7 @@ class OceanSection():
         # Get the data from the database
         lme_dict = rwf.read_file_by_lme(file)
         # Get the data for the LME
-        lme = lme_dict[lme_number]
+        lme = lme_dict[self.name]
         # Set the data (those are all pandas dataframes)
         self.salinity = lme["salinity"]
         self.temperature = lme["surface_temperature"]
@@ -47,7 +49,7 @@ class OceanSection():
         self.phosphate = lme["phosphate"]
         self.illumination = lme["illumination"]
 
-    def get_grid_data(self, grid_name, file):
+    def get_grid_data(self, file):
         """
         Gets the data from the database based on the section name
         Arguments:
@@ -58,7 +60,7 @@ class OceanSection():
         # Get the data from the database
         section_dict = rwf.read_file_by_grid(file)
         # Get the data for the section
-        section = section_dict[grid_name]
+        section = section_dict[self.name]
         # Set the data (those are all pandas dataframes)
         self.salinity = section["salinity"]
         self.temperature = section["surface_temperature"]
@@ -85,6 +87,6 @@ class OceanSection():
 
 
 if __name__ == "__main__":
-    test_section = OceanSection()
-    test_section.get_lme_data(1, "data/seaweed_environment_data_in_nuclear_war.csv")
+    test_section = OceanSection(1)
+    test_section.get_lme_data("data/seaweed_environment_data_in_nuclear_war.csv")
     test_section.calculate_factors()

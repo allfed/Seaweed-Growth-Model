@@ -59,6 +59,25 @@ def read_file_by_grid(file):
     # return the dataframe
     return grid_dict
 
+
+def write_factors_by_section(file, factors):
+    """
+    Writes the factors to a file
+    Arguments:
+        section_name: the name of the section
+        file: the file to be written to
+        factors: the factors to be written
+    Returns:
+        None
+    """
+    # create a dataframe
+    factors_df = pd.DataFrame(factors)
+    # set the index to the section name
+    factors_df.set_index(section_name, inplace=True)
+    # write the dataframe to the file
+    factors_df.to_csv(file) 
+
+
 if __name__ == "__main__":
     lme_dict = read_file_by_lme("../data/seaweed_environment_data_in_nuclear_war.csv")
     lme = lme_dict[1]
