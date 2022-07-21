@@ -1,7 +1,6 @@
 """
-Tests the growth model
+Tests the growth functions
 """
-from re import A
 import pandas as pd
 import pytest
 
@@ -138,7 +137,7 @@ def test_nutrient_single_value():
     Just makes sure that it stays between 0 and 1
     """
     # Test 1: make sure everything stays between 0 and 1
-    for nutrient in range(0, 500):
+    for nutrient in range(0, 50):
         assert nutrient_single_value(nutrient, nutrient, nutrient) <= 1
         assert nutrient_single_value(nutrient, nutrient, nutrient) >= 0
 

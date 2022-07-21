@@ -5,7 +5,7 @@ seaweed.
 The calculation for each factor is split into two functions.
 The first function with "single_value" in the name calculates
 the factor for a single value. While the second function with
-"calculate" in the name calculates the factor for a whole dataframe,
+"calculate" in the name calculates the factor for a whole pandas series,
 for which it uses the first function.
 
 Based on the publication:
@@ -136,16 +136,16 @@ def nutrient_single_value(nitrate:float, ammonium:float, phosphate:float):
     Calculates the nutrient factor, which is the minimum of the 
     three nutrients nitrate, ammonium and phosphate for a single value
     Arguments:
-        nitrate: the nitrate concentration in mg/L
-        ammonium: the ammonium concentration in mg/L
-        phosphate: the phosphate concentration in mg/L
+        nitrate: the nitrate concentration in mmol/m³
+        ammonium: the ammonium concentration in mmol/m³
+        phosphate: the phosphate concentration in mmol/m³
     Returns:
         The nutrient factor as a float
     """
     # Make sure all three nutrients are in a reasonable range
-    assert 0 <= nitrate <= 1000
-    assert 0 <= ammonium <= 1000
-    assert 0 <= phosphate <= 1000
+    assert 0 <= nitrate <= 50
+    assert 0 <= ammonium <= 50
+    assert 0 <= phosphate <= 50
 
     # where KNO3 = 0.4 μM, KNH4 = 0.3 μM, and KPO4 = 0.1 μM.
     # were implemented because these yield growth rates consistent with
