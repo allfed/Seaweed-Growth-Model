@@ -83,6 +83,16 @@ class OceanSection():
         self.nutrient_factor = sg.calculate_nutrient_factor(self.nitrate, self.ammonium, self.phosphate)
         self.illumination_factor = sg.calculate_illumination_factor(self.illumination)
         self.temp_factor = sg.calculate_temperature_factor(self.temperature)
+
+    def calculate_growth_rate(self):
+        """
+        Calculates the growth rate for the ocean section
+        Arguments:
+            None
+        Returns:
+            None
+        """
+        # Calculate the growth rate
         self.seaweed_growth_rate = sg.growth_factor_combination(self.illumination_factor, self.temp_factor, self.nutrient_factor, self.salinity_factor)
 
 
