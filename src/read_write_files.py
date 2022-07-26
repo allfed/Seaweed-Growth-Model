@@ -29,6 +29,9 @@ def read_file_by_lme(file):
         lme_dict[i].index = pd.to_datetime(lme_dict[i].index)
         # rename columns
         lme_dict[i].columns = ["surface_temperature", "salinity", "nitrate", "illumination", "phosphate", "ammonium"]
+        # For some reason some of the nitrate values are below 0, which is impossible. 
+        # Set those to 0
+        lme_dict[i]["nitrate"] = lme_dict[i]["nitrate"].clip(lower=0)
     # return the dataframe
     return lme_dict
 
