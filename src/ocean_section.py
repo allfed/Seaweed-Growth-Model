@@ -131,6 +131,16 @@ class OceanSection():
         self.section_df = section_df
 
 
+    def calculate_mean_growth_rate(self):
+        """
+        Calculates the mean growth rate and returns it
+        """
+        # check if the dataframe has been created
+        assert self.section_df is not None
+        # calculate the mean growth rate
+        return self.section_df["seaweed_growth_rate"].mean()
+
+
     def select_section_df_date(self, date):
         """
         Selectes a date from the section df and returns it

@@ -126,6 +126,47 @@ class SeaweedModel:
         plt.close()
 
 
+    def calculate_mean_groth_rate_by_lme(self):
+        """
+        Calculates the mean growth rate for a LME for the whole
+        time period modelled. 
+        """
+        assert self.lme_or_grid == "lme"        
+        growth_rate_dict = {}
+        for section_name, section_instance in self.sections.items():
+            growth_rate_dict[section_name] = section_instance.calculate_mean_growth_rate()
+        growth_df = pd.DataFrame.from_dict(growth_rate_dict, orient="index")
+        growth_df.columns = ["mean_growth_rate"]
+        print("LMEs with highest mean growth rates are:")
+        print(growth_df["mean_growth_rate"].sort_values(ascending=False).head())
+            
+
+    def plot_growth_rate_by_best_lme_as_line(self, path=""):
+        """
+        Takes the growthrate of the 5 best LMEs (by mean growth rate)
+        29    0.391329
+        11    0.309920
+        38    0.304329
+        37    0.299366
+        31    0.266062
+        and plots them over time. 
+        """
+        assert self.lme_or_grid == "lme"
+        best_lme = [29,11,38,37,31]
+        colors = ["red", "blue", "green", "orange", "purple"]
+        ax = plt.gca()
+        i = 0
+        for section_name, section_instance in self.sections.items():
+            if section_name in best_lme:
+                section_instance.section_df["seaweed_growth_rate"].plot(ax=ax, label=section_name, color=colors[i])
+                i += 1
+        ax.set_title("Growth Rate of the 5 best LMEs")
+        fig = plt.gcf()
+        fig.set_size_inches(10, 5)
+        plt.savefig(path + "growth_rate_by_best.png",dpi=200)
+        plt.close()
+
+
     def plot_growth_rate_by_grid(self, date):
         """
         Plots the growth rate for the model based on grid
@@ -146,7 +187,15 @@ if __name__ == "__main__":
     # one year after nuclear war
     # two years after nuclear war
     # and so forth
-    dates = ['2001-01-31', '2001-06-30', "2002-06-30", "2003-06-30", "2004-06-30", "2005-06-30", "2006-06-30", "2007-06-30", "2008-06-30", "2009-06-30", "2010-06-30", "2011-06-30", "2012-06-30", "2013-06-30", "2014-06-30", "2015-06-30", "2016-06-30", "2017-06-30", "2018-06-30", "2019-06-30", "2020-06-30"]
+    dates = ['2001-01-31'] + ["200" + str(i) + "-06-30" for i in range(2, 10)] + \
+            ["20" + str(i) + "-06-30" for i in range(10, 18)]
+
     for date in dates:
         model.plot_growth_rate_by_lme_bar(date, path="results/lme/")
         model.plot_growth_rate_by_lme_global(date, path="results/lme/")
+
+    # Print the best 5 LMEs by mean growth rate
+    model.calculate_mean_groth_rate_by_lme()
+
+    # Plot the growth rate of the 5 best LMEs
+    model.plot_growth_rate_by_best_lme_as_line(path="results/lme/")
