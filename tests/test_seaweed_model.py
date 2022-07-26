@@ -69,5 +69,7 @@ def test_construct_dataframe_from_section_data():
                             "data/seaweed_environment_data_in_nuclear_war.csv")
     model.calculate_factors()
     model.calculate_growth_rate()
-    sections_df = model.construct_df_from_sections_for_date()
+    model.create_section_dfs()
+    sections_df = model.construct_df_from_sections_for_date("2001-01-31")
     assert len(sections_df.index) == number_sections
+    assert len(sections_df.columns) == 11

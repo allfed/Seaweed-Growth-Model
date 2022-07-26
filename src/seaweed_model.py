@@ -57,6 +57,15 @@ class SeaweedModel:
         for section in self.sections.values():
             section.calculate_growth_rate()
 
+
+    def create_section_dfs(self):
+        """
+        Creates a dataframe for each section in the model.
+        """
+        for section in self.sections.values():
+            section.create_section_df()
+
+
     def construct_df_from_sections_for_date(self, date):
         """
         Constructs a dataframe from the data in the model for a given date.
@@ -65,10 +74,13 @@ class SeaweedModel:
         Returns:
             a dataframe
         """
-        pass
+        date_dict = {}
+        for section_name, section_object in self.sections.items():
+            date_dict[section_name] = section_object.select_section_df_date(date)
+        return pd.DataFrame.from_dict(date_dict, orient="index")
+    
 
-
-    def plot_growth_rate_by_lme(self):
+    def plot_growth_rate_by_lme(self, date):
         """
         Plots the growth rate for the model based on LME
         """
@@ -78,7 +90,7 @@ class SeaweedModel:
         sections_df["seaweed_growth_rate"].plot(kind="bar")
 
 
-    def plot_growth_rate_by_grid(self):
+    def plot_growth_rate_by_grid(self, date):
         """
         Plots the growth rate for the model based on grid
         """

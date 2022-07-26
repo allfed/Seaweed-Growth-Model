@@ -142,11 +142,10 @@ class OceanSection():
         # check if the dataframe has been created
         assert self.section_df is not None
         # select the dataframe for the date
-        section_df = self.section_df.loc[date]
-        return section_df
+        return self.section_df.loc[date]
 
 
 if __name__ == "__main__":
     test_section = OceanSection(1)
-    test_section.get_lme_data("data/seaweed_environment_data_in_nuclear_war.csv")
+    test_section.get_lme_data("../data/seaweed_environment_data_in_nuclear_war.csv")
     test_section.calculate_factors()

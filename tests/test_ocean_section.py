@@ -75,7 +75,7 @@ def test_failed_creation_section_df():
         test_section.create_section_df()
 
 
-def test_section_df_shape_lme():
+def test_section_df_shape():
     """
     Tests if the dataframe has the correct shape when it is created
     for LMEs data
@@ -89,4 +89,26 @@ def test_section_df_shape_lme():
 
 
 def test_select_section_df_date():
-    pass
+    """
+    Tests if a dataframe can be selected by date
+    """
+    test_section = OceanSection(1)
+    test_section.get_lme_data("data/seaweed_environment_data_in_nuclear_war.csv")
+    test_section.calculate_factors()
+    test_section.calculate_growth_rate()
+    test_section.create_section_df()
+    date_df = test_section.select_section_df_date('2001-01-31')
+    assert date_df.shape == (11,)
+
+
+def test_select_section_df_date_fail():
+    """
+    Tests if a dataframe can be selected by date 
+    if the section df has not yet been created
+    """
+    test_section = OceanSection(1)
+    test_section.get_lme_data("data/seaweed_environment_data_in_nuclear_war.csv")
+    test_section.calculate_factors()
+    test_section.calculate_growth_rate()
+    with pytest.raises(AssertionError):
+        test_section.select_section_df_date('2001-01-31')
