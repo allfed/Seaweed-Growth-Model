@@ -1,8 +1,10 @@
 """
-File contains the class OceanSection, which is used to represent 
+File contains the class OceanSection, which is used to represent
 a section of the ocean. This can be either a large marine ecosystem
-or simply a part of a global grid. 
+or simply a part of a global grid.
 """
+import pandas as pd
+
 from src import read_write_files as rwf
 from src import seaweed_growth as sg
 
@@ -28,6 +30,9 @@ class OceanSection():
         self.illumination_factor = None
         self.temp_factor = None
         self.seaweed_growth_rate = None
+        # Add the dataframe
+        self.section_df = None
+
 
     def get_lme_data(self, file):
         """
@@ -48,6 +53,7 @@ class OceanSection():
         self.ammonium = lme["ammonium"]
         self.phosphate = lme["phosphate"]
         self.illumination = lme["illumination"]
+
 
     def get_grid_data(self, file):
         """
@@ -84,6 +90,7 @@ class OceanSection():
         self.illumination_factor = sg.calculate_illumination_factor(self.illumination)
         self.temp_factor = sg.calculate_temperature_factor(self.temperature)
 
+
     def calculate_growth_rate(self):
         """
         Calculates the growth rate for the ocean section
@@ -94,6 +101,49 @@ class OceanSection():
         """
         # Calculate the growth rate
         self.seaweed_growth_rate = sg.growth_factor_combination(self.illumination_factor, self.temp_factor, self.nutrient_factor, self.salinity_factor)
+    
+
+    def create_section_df(self):
+        """
+        Creates a dataframe that contains all the data for a given section
+        This can only be run once the factors have been calculated
+        """
+        # check if the factors have been calculated
+        assert self.salinity_factor is not None
+        assert self.nutrient_factor is not None
+        assert self.illumination_factor is not None
+        assert self.temp_factor is not None
+        assert self.seaweed_growth_rate is not None
+
+        # Create the dataframe
+        section_df = pd.DataFrame({"salinity": self.salinity,
+                            "temperature": self.temperature,
+                            "nitrate": self.nitrate,
+                            "ammonium": self.ammonium,
+                            "phosphate": self.phosphate,
+                            "illumination": self.illumination,
+                            "salinity_factor": self.salinity_factor,
+                            "nutrient_factor": self.nutrient_factor,
+                            "illumination_factor": self.illumination_factor,
+                            "temp_factor": self.temp_factor,
+                            "seaweed_growth_rate": self.seaweed_growth_rate})
+        section_df.name = self.name
+        self.section_df = section_df
+
+
+    def select_section_df_date(self, date):
+        """
+        Selectes a date from the section df and returns it
+        Arguments:
+            date: the date to select
+        Returns:
+            the dataframe for the date
+        """
+        # check if the dataframe has been created
+        assert self.section_df is not None
+        # select the dataframe for the date
+        section_df = self.section_df.loc[date]
+        return section_df
 
 
 if __name__ == "__main__":
