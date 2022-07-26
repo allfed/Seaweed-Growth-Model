@@ -2,6 +2,7 @@
 Main Interface
 """
 import pandas as pd
+import geopandas as gpd
 import matplotlib.pyplot as plt
 from src import ocean_section as oc_se
 
@@ -94,7 +95,7 @@ class SeaweedModel:
 
     def plot_growth_rate_by_lme_bar(self, date, path=""):
         """
-        Plots the growth rate for the model based on LME
+        Plots the growth rate for the model based on LME as a bar chart
         """
         assert self.lme_or_grid == "lme"
         date_section_df = self.construct_df_from_sections_for_date(date)
@@ -104,7 +105,25 @@ class SeaweedModel:
         ax.set_ylabel("Fraction of optimal growth rate")
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
-        plt.savefig(path + "growth_rate_by_lme_bar.png",dpi=200)
+        plt.savefig(path + "growth_rate_by_lme_bar"+str(date)+".png",dpi=200)
+        plt.close()
+
+
+    def plot_growth_rate_by_lme_global(self, date, path=""):
+        """
+        Plots the growth rate fraction for all LME on a global map
+        """
+        assert self.lme_or_grid == "lme"
+        date_section_df = self.construct_df_from_sections_for_date(date)
+        lme_shape = gpd.read_file("data/lme_shp/lme66.shp")
+        lme_global = lme_shape.merge(date_section_df, left_on="LME_NUMBER", right_index=True)
+        ax = lme_global.plot(column="seaweed_growth_rate", cmap="Greens", legend=True, 
+                            edgecolor="black", linewidth=0.3)
+        ax.set_title("Fraction of optimal growth rate on date: " + str(date))
+        fig = plt.gcf()
+        fig.set_size_inches(10, 5)
+        plt.savefig(path + "growth_rate_by_lme_global_"+str(date)+".png",dpi=200)
+        plt.close()
 
 
     def plot_growth_rate_by_grid(self, date):
@@ -121,5 +140,13 @@ if __name__ == "__main__":
     model.calculate_factors()
     model.calculate_growth_rate()
     model.create_section_dfs()
-    model.plot_growth_rate_by_lme_bar('2001-01-31')
-    
+    # Plot for a selection of dates
+    # beginning of simulation before nuclear war
+    # one month after nuclear war
+    # one year after nuclear war
+    # two years after nuclear war
+    # and so forth
+    dates = ['2001-01-31', '2001-06-30', "2002-06-30", "2003-06-30", "2004-06-30", "2005-06-30", "2006-06-30", "2007-06-30", "2008-06-30", "2009-06-30", "2010-06-30", "2011-06-30", "2012-06-30", "2013-06-30", "2014-06-30", "2015-06-30", "2016-06-30", "2017-06-30", "2018-06-30", "2019-06-30", "2020-06-30"]
+    for date in dates:
+        model.plot_growth_rate_by_lme_bar(date, path="results/lme/")
+        model.plot_growth_rate_by_lme_global(date, path="results/lme/")
