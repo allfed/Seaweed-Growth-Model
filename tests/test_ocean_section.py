@@ -5,7 +5,7 @@ import pytest
 import pandas as pd
 
 from src.ocean_section import OceanSection
-from src.seaweed_model import SeaweedModel
+
 
 def create_test_dataframe_reasonable_values():
     """
@@ -117,3 +117,16 @@ def test_select_section_df_date_fail():
     test_section.calculate_growth_rate()
     with pytest.raises(AssertionError):
         test_section.select_section_df_date('2001-01-01')
+
+
+def test_calculate_mean_growth_rate():
+    """
+    Tests if the mean growth rate can be calculated
+    """
+    df = create_test_dataframe_reasonable_values()
+    test_section = OceanSection(1,df)
+    test_section.calculate_factors()
+    test_section.calculate_growth_rate()
+    test_section.create_section_df()
+    test_section.calculate_mean_growth_rate()
+    assert test_section.calculate_mean_growth_rate() == 0.0006159845582776335
