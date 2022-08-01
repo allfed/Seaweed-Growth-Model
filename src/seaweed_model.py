@@ -5,6 +5,7 @@ import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
 from src import ocean_section as oc_se
+from src import read_files
 
 class SeaweedModel:
     """
@@ -14,25 +15,7 @@ class SeaweedModel:
     def __init__(self):
         self.sections = {}
         self.lme_or_grid = None
-
-
-    def add_data_by_grid(self, grid_names, file):
-        """
-        Adds data from the database to the model.
-        Based on a grid.
-        Arguments:
-            grid_names: a list of grid names
-        Returns:
-            None
-        """
-        # Make sure that the model is empty
-        assert self.lme_or_grid is None
-        # Set the model to grid
-        self.lme_or_grid = "grid"
-        # Add the data to the model
-        for grid_name in grid_names:
-            self.sections[grid_name] = oc_se.OceanSection(grid_name)
-            self.sections[grid_name].get_grid_data(file)
+        self.data = None
 
 
     def add_data_by_lme(self, lme_names, file):
@@ -48,9 +31,11 @@ class SeaweedModel:
         assert self.lme_or_grid is None
         # Set the model to LME
         self.lme_or_grid = "lme"
+        # Add the data to the model
+        data_lme = read_files.DataLME(file)
+        # Add the sections to the model
         for lme_name in lme_names:
-            self.sections[lme_name] = oc_se.OceanSection(lme_name)
-            self.sections[lme_name].get_lme_data(file)
+            self.sections[lme_name] = oc_se.OceanSection(lme_name, data_lme.provide_data(lme_name))
 
 
     def calculate_factors(self):
@@ -167,16 +152,9 @@ class SeaweedModel:
         plt.close()
 
 
-    def plot_growth_rate_by_grid(self, date):
-        """
-        Plots the growth rate for the model based on grid
-        """
-        assert self.lme_or_grid == "grid"
-
-
 if __name__ == "__main__":
     model = SeaweedModel()
-    model.add_data_by_lme([i for i in range(1, 67)], 
+    model.add_data_by_lme([i for i in range(1, 67)],
                             "data/seaweed_environment_data_in_nuclear_war.csv")
     model.calculate_factors()
     model.calculate_growth_rate()
