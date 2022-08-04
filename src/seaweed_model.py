@@ -171,9 +171,9 @@ if __name__ == "__main__":
     dates = ['2001-01-31'] + ["200" + str(i) + "-06-30" for i in range(2, 10)] + \
             ["20" + str(i) + "-06-30" for i in range(10, 18)]
 
-   # for date in dates:
-        # model.plot_growth_rate_by_lme_bar(date, path="results/lme/")
-        # model.plot_growth_rate_by_lme_global(date, path="results/lme/")
+    for date in dates:
+        model.plot_growth_rate_by_lme_bar(date, path="results/lme/")
+        model.plot_growth_rate_by_lme_global(date, path="results/lme/")
 
     # Print the best 3 LMEs by mean growth rate
     model.calculate_mean_groth_rate_by_lme()
