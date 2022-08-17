@@ -1,0 +1,58 @@
+digraph ModelOverview{
+    // Inputs for the model
+    salinity [label="Salinity", style="filled", color="#88CC88"];
+    temperature [label="Water Temperature", style="filled", color="#88CC88"];
+    illumination [label="Illumination", style="filled", color="#88CC88"];
+    nutrients [label="Nutrients", style="filled", color="#88CC88"];
+    // link nutrients
+    nitrate [label="Nitrate",style="filled", color="white"];
+    ammonium [label="Ammonium",style="filled", color="white"];
+    phosphate [label="Phosphate",style="filled", color="white"];
+    // link nutrients to nutrients
+    nitrate -> nutrients
+    ammonium -> nutrients
+    phosphate -> nutrients
+
+    env_data [label="Environmental Data in Nuclear Winter", style="filled",color="#55AA55"];
+    // link env_data to nutrients
+    nutrients -> env_data;
+    illumination -> env_data;
+    temperature -> env_data;
+    salinity -> env_data;
+
+    // link env_data to the model
+    model_growth [label="Seaweed Growth Model", shape=box, style="filled", fillcolor="#669999"];
+    env_data -> model_growth;
+
+    // Outputs of the model
+    growth [label="Seaweed Growth Rates", shape=octagon, color="#D49A6A", style="filled"];
+    // link growth to model
+    model_growth -> growth;
+
+    // link growth to upscaling model
+    upscaling_model [label="Upscaling Model", shape=box, style="filled", fillcolor="#669999"];
+    growth -> upscaling_model;
+
+    // add additional data for the upscaling model
+    food_demands [label="Food Demands", style="filled", color="#88CC88"];
+    farm_design [label="Seaweed Farm Design", style="filled", color="#88CC88"];
+    rope_production [label="Rope Production", style="filled", color="#88CC88"];
+    assumptions [label="Upscaling Assumptions", style="filled",color="#55AA55"];
+    food_demands -> assumptions;
+    farm_design -> assumptions;
+    rope_production -> assumptions;
+    assumptions -> upscaling_model;
+
+    // link upscaling model to the output
+    area_needed [label="Global Area Needed", shape=octagon, color="#D49A6A", style="filled"];
+    upscaling_model -> area_needed;
+    upscaling_speed [label="Upscaling Speed", shape=octagon, color="#D49A6A", style="filled"];
+    upscaling_model -> upscaling_speed;
+
+
+
+
+
+
+
+}
