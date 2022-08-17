@@ -197,7 +197,6 @@ if __name__ == "__main__":
         model.plot_growth_rate_by_lme_bar(date, path="results/lme/")
         model.plot_growth_rate_by_lme_global(date, path="results/lme/")
 
-
     # Print the best 3 LMEs by mean growth rate
     model.calculate_mean_groth_rate_by_lme()
 
