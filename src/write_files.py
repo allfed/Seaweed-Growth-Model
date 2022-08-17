@@ -1,7 +1,6 @@
 """
 Reads in the ocean data after nuclear war provided by Cherryl Harrison
 """
-import pandas as pd
 
 
 def write_factors_by_section(file, factors):
