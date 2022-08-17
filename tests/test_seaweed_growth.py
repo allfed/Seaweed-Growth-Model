@@ -57,10 +57,10 @@ def test_growth_factor_combination_single_value():
     assert growth_factor_combination_single_value(1, 1, 1, 0.25) == 0.25
     # Test 4
     with pytest.raises(AssertionError):
-        result = growth_factor_combination_single_value(1, 1, 1, -1) == -1
+        growth_factor_combination_single_value(1, 1, 1, -1) == -1
     # Test 5
     with pytest.raises(AssertionError):
-        result = growth_factor_combination_single_value(1, 1, 1, 2) == 2
+        growth_factor_combination_single_value(1, 1, 1, 2) == 2
 
 
 def test_growth_factor_combination_reasonable_values():
@@ -107,7 +107,7 @@ def test_calculate_illumination_factor_unreasonable_values():
     This should fail
     """
     with pytest.raises(AssertionError):
-        illumination_factor = calculate_illumination_factor(
+        calculate_illumination_factor(
             create_test_dataframe_non_reasonable_values()["illumination"]
         )
 
@@ -132,7 +132,7 @@ def test_calculate_temperature_factor_unreasonable_values():
     This should fail
     """
     with pytest.raises(AssertionError):
-        temperature_factor = calculate_temperature_factor(
+        calculate_temperature_factor(
             create_test_dataframe_non_reasonable_values()["temperature"]
         )
 
@@ -154,7 +154,7 @@ def test_calculate_nutrient_factor_unreasonable_values():
     This should fail
     """
     with pytest.raises(AssertionError):
-        nutrient_factor = calculate_nutrient_factor(
+        calculate_nutrient_factor(
             create_test_dataframe_non_reasonable_values()["nitrate"],
             create_test_dataframe_non_reasonable_values()["phosphate"],
             create_test_dataframe_non_reasonable_values()["ammonium"],
@@ -180,6 +180,6 @@ def test_calculate_salinity_factor_unreasonable_values():
     This should fail
     """
     with pytest.raises(AssertionError):
-        salinity_factor = calculate_salinity_factor(
+        calculate_salinity_factor(
             create_test_dataframe_non_reasonable_values()["salinity"]
         )
