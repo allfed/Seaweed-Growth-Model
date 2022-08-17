@@ -7,12 +7,14 @@ import pandas as pd
 
 from src import seaweed_growth as sg
 
-class OceanSection():
+
+class OceanSection:
     """
     Class the represents a section of the ocean.
     alculates for every section how quickly seaweed can grow
     and also saves the single factors for growth
     """
+
     def __init__(self, name, lme_data):
         # Add the name
         self.name = name
@@ -32,7 +34,6 @@ class OceanSection():
         # Add the dataframe
         self.section_df = None
 
-
     def calculate_factors(self):
         """
         Calculates the factors and growth rate for the ocean section
@@ -43,10 +44,11 @@ class OceanSection():
         """
         # Calculate the factors
         self.salinity_factor = sg.calculate_salinity_factor(self.salinity)
-        self.nutrient_factor = sg.calculate_nutrient_factor(self.nitrate, self.ammonium, self.phosphate)
+        self.nutrient_factor = sg.calculate_nutrient_factor(
+            self.nitrate, self.ammonium, self.phosphate
+        )
         self.illumination_factor = sg.calculate_illumination_factor(self.illumination)
         self.temp_factor = sg.calculate_temperature_factor(self.temperature)
-
 
     def calculate_growth_rate(self):
         """
@@ -57,8 +59,12 @@ class OceanSection():
             None
         """
         # Calculate the growth rate
-        self.seaweed_growth_rate = sg.growth_factor_combination(self.illumination_factor, self.temp_factor, self.nutrient_factor, self.salinity_factor)
-    
+        self.seaweed_growth_rate = sg.growth_factor_combination(
+            self.illumination_factor,
+            self.temp_factor,
+            self.nutrient_factor,
+            self.salinity_factor,
+        )
 
     def create_section_df(self):
         """
@@ -73,20 +79,23 @@ class OceanSection():
         assert self.seaweed_growth_rate is not None
 
         # Create the dataframe
-        section_df = pd.DataFrame({"salinity": self.salinity,
-                            "temperature": self.temperature,
-                            "nitrate": self.nitrate,
-                            "ammonium": self.ammonium,
-                            "phosphate": self.phosphate,
-                            "illumination": self.illumination,
-                            "salinity_factor": self.salinity_factor,
-                            "nutrient_factor": self.nutrient_factor,
-                            "illumination_factor": self.illumination_factor,
-                            "temp_factor": self.temp_factor,
-                            "seaweed_growth_rate": self.seaweed_growth_rate})
+        section_df = pd.DataFrame(
+            {
+                "salinity": self.salinity,
+                "temperature": self.temperature,
+                "nitrate": self.nitrate,
+                "ammonium": self.ammonium,
+                "phosphate": self.phosphate,
+                "illumination": self.illumination,
+                "salinity_factor": self.salinity_factor,
+                "nutrient_factor": self.nutrient_factor,
+                "illumination_factor": self.illumination_factor,
+                "temp_factor": self.temp_factor,
+                "seaweed_growth_rate": self.seaweed_growth_rate,
+            }
+        )
         section_df.name = self.name
         self.section_df = section_df
-
 
     def calculate_mean_growth_rate(self):
         """
@@ -96,7 +105,6 @@ class OceanSection():
         assert self.section_df is not None
         # calculate the mean growth rate
         return self.section_df["seaweed_growth_rate"].mean()
-
 
     def select_section_df_date(self, date):
         """
