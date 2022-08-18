@@ -26,25 +26,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pytest-cov
+          pip install pytest
           pip install -e .
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with pytest
         run: |
-          pytest --cache-clear --cov=app tests/ > pytest-coverage.txt
-      - name: Pytest coverage comment
-        uses: MishaKav/pytest-coverage-comment@main
-        with:
-          pytest-coverage-path: ./tests/pytest-coverage.txt
-          title: My Coverage Report Title
-          badge-title: My Badge Coverage Title
-          hide-badge: false
-          hide-report: false
-          create-new-comment: false
-          hide-comment: false
-          report-only-changed-files: false
-          remove-link-from-badge: false
-          junitxml-path: ./tests/pytest.xml
-          junitxml-title: My JUnit Xml Summary Title
-
+          pytest
 
