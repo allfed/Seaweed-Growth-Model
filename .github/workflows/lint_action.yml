@@ -25,10 +25,13 @@ jobs:
           python-version: 3.9
 
       - name: Install Python dependencies
-        run: pip install black pylint
+        run: pip install black flake8
 
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
+          auto_fix: true
           black: true
-          pylint: true
+          black_auto_fix: true
+          flake8: true
+          flake8_auto_fix: false
