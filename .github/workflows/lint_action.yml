@@ -22,16 +22,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Install Python dependencies
-        run: pip install black flake8
+        run: pip install black pylint
 
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
-          auto_fix: true
           black: true
-          black_auto_fix: true
-          flake8: true
-          flake8_auto_fix: false
+          pylint: true
