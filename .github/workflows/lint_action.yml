@@ -34,4 +34,3 @@ jobs:
           black: true
           black_auto_fix: true
           pylint: true
-          pylint_auto_fix: false
