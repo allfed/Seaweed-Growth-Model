@@ -1,4 +1,4 @@
-name: Python package
+name: Build passing
 
 on:
   # Trigger the workflow on push or pull request,
@@ -33,3 +33,9 @@ jobs:
       - name: Test with pytest
         run: |
           pytest
+          
+      - name: Pytest coverage comment
+	uses: MishaKav/pytest-coverage-comment@main
+	with:
+	pytest-coverage-path: ./pytest-coverage.txt
+	junitxml-path: ./pytest.xml
