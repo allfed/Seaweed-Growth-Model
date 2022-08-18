@@ -11,7 +11,8 @@ on:
       - main
 
 jobs:
-  Running Tests:
+  build:
+    name: Running Tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
