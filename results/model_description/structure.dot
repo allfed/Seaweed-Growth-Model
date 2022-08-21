@@ -36,11 +36,11 @@ digraph ModelOverview{
     // add additional data for the upscaling model
     food_demands [label="Food Demands", style="filled", color="#88CC88"];
     farm_design [label="Seaweed Farm Design", style="filled", color="#88CC88"];
-    rope_production [label="Rope Production", style="filled", color="#88CC88"];
+    comp_prod [label="Component Construction", style="filled", color="#88CC88"];
     assumptions [label="Upscaling Assumptions", style="filled",color="#55AA55"];
     food_demands -> assumptions;
     farm_design -> assumptions;
-    rope_production -> assumptions;
+    comp_prod -> farm_design;
     assumptions -> upscaling_model;
 
     // link upscaling model to the output
