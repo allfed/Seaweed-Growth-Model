@@ -88,7 +88,7 @@ class SeaweedModel:
         ax.set_ylabel("Fraction of optimal growth rate")
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
-        plt.savefig(path + "growth_rate_by_lme_bar" + str(date) + ".png", dpi=200)
+        plt.savefig(path + "growth_rate_by_lme_bar" + str(date) + ".png", dpi=200, bbox_inches="tight")
         plt.close()
 
     def plot_growth_rate_by_lme_global(self, date, path=""):
@@ -113,7 +113,7 @@ class SeaweedModel:
         ax.set_title("Fraction of optimal growth rate on date: " + str(date))
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
-        plt.savefig(path + "growth_rate_by_lme_global_" + str(date) + ".png", dpi=200)
+        plt.savefig(path + "growth_rate_by_lme_global_" + str(date) + ".png", dpi=200, bbox_inches="tight")
         plt.close()
 
     def calculate_mean_groth_rate_by_lme(self):
@@ -169,7 +169,7 @@ class SeaweedModel:
         ax.set_ylabel("Fraction of optimal growth rate")
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
-        plt.savefig(path + "growth_rate_by_best.png", dpi=200)
+        plt.savefig(path + "growth_rate_by_best.png", dpi=200, bbox_inches="tight")
         plt.close()
 
 
