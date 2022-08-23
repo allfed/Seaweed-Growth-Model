@@ -18,20 +18,6 @@ pages:
       - fix
       - indent
 
-  - page: "modules/tests/test_ocean_section.md"
-    source: "tests/test_ocean_section.py"
-    functions:
-      - create_test_dataframe_reasonable_values
-      - test_initialization
-      - test_get_section_data
-      - test_calculate_factors
-      - test_calculate_growth_rate
-      - test_create_section_df
-      - test_failed_creation_section_df
-      - test_select_section_df_date
-      - test_select_section_df_date_fail
-      - test_calculate_mean_growth_rate
-
   - page: "modules/tests/test_read_files.md"
     source: "tests/test_read_files.py"
     functions:
@@ -63,15 +49,19 @@ pages:
       - test_calculating_growth_rate
       - test_construct_dataframe_from_section_data
 
-  - page: "modules/src/read_files.md"
-    source: "src/read_files.py"
-    classes:
-      - DataLME
-
-  - page: "modules/src/write_files.md"
-    source: "src/write_files.py"
+  - page: "modules/tests/test_ocean_section.md"
+    source: "tests/test_ocean_section.py"
     functions:
-      - write_factors_by_section
+      - create_test_dataframe_reasonable_values
+      - test_initialization
+      - test_get_section_data
+      - test_calculate_factors
+      - test_calculate_growth_rate
+      - test_create_section_df
+      - test_failed_creation_section_df
+      - test_select_section_df_date
+      - test_select_section_df_date_fail
+      - test_calculate_mean_growth_rate
 
   - page: "modules/src/seaweed_growth.md"
     source: "src/seaweed_growth.py"
@@ -96,4 +86,14 @@ pages:
     source: "src/ocean_section.py"
     classes:
       - OceanSection
+
+  - page: "modules/src/read_files.md"
+    source: "src/read_files.py"
+    classes:
+      - DataLME
+
+  - page: "modules/src/write_files.md"
+    source: "src/write_files.py"
+    functions:
+      - write_factors_by_section
 
