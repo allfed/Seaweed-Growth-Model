@@ -37,7 +37,16 @@ jobs:
           pip install mkgendocs==0.9.0
           pip install jinja2==2.11
           gendocs --config mkgendocs.yml
-          
+
+
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs/sources # The folder the action should deploy.  
+       
+      
+                    
           
 
       - name: Commit any changes to docs
@@ -58,12 +67,4 @@ jobs:
 
 
 
-
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: docs/sources # The folder the action should deploy.  
-       
-      
-          
           
