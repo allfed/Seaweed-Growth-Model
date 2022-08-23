@@ -132,3 +132,14 @@ Takes the growthrate of the 3 best LMEs (by mean growth rate)
 11    0.309920
 38    0.304329
 and plots them over time.
+
+
+**Arguments**
+
+* **path**  : the path to save the plot to
+* **window**  : the window size for the rolling mean
+
+
+**Returns**
+
+None
