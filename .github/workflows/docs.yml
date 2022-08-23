@@ -27,7 +27,6 @@ jobs:
       - name: Autogenerate new documentation
         continue-on-error: true
         run: |
-          pip install -r requirements.txt
           python automate_mkdocs.py
           git add .
       - name: Update and Build GH Pages
