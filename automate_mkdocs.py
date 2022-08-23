@@ -19,10 +19,7 @@ def add_val(indices, value, data):
 
 
 def automate_mkdocs_from_docstring(
-    mkdocs_dir: Union[str, Path],
-    mkgendocs_f: str,
-    repo_dir: Path,
-    match_string: str
+    mkdocs_dir: Union[str, Path], mkgendocs_f: str, repo_dir: Path, match_string: str
 ) -> dict:
     """Automates the -pages for mkgendocs package by adding all Python functions in a
     directory to the mkgendocs config.
