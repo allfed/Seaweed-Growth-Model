@@ -40,15 +40,10 @@ jobs:
           
           
 
-      - name: deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          #CUSTOM_DOMAIN: optionaldomain.com
-          CONFIG_FILE: mkdocs.yml
-          EXTRA_PACKAGES: build-base
-          # GITHUB_DOMAIN: github.myenterprise.com
-          # REQUIREMENTS: docs/docs_requirements.txt, separate requirements file to install any themes you may want on your site      
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs # The folder the action should deploy.  
        
       - name: Commit any changes to docs
         continue-on-error: true
