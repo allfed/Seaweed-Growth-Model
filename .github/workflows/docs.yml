@@ -39,14 +39,13 @@ jobs:
           gendocs --config mkgendocs.yml
 
 
+      - name: deploy docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONFIG_FILE: mkdocs.yml
+          EXTRA_PACKAGES: build-base
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: docs/sources # The folder the action should deploy.  
-       
-      
-                    
           
 
       - name: Commit any changes to docs
