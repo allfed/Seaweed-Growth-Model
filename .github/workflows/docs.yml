@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: Running Tests
+    name: Docs
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -40,11 +40,6 @@ jobs:
           
           
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: docs # The folder the action should deploy.  
-       
       - name: Commit any changes to docs
         continue-on-error: true
         run: |
@@ -64,6 +59,11 @@ jobs:
 
 
 
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs # The folder the action should deploy.  
+       
       
           
           
