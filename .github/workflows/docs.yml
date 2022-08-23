@@ -34,6 +34,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install mkdocs==1.2.3
           pip install mkgendocs==0.9.0
+          pip install markupsafe==2.0.1
           pip install jinja2==2.11
           pip install pyyaml
           gendocs --config mkgendocs.yml
