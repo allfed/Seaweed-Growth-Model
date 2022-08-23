@@ -18,19 +18,16 @@ def add_val(indices, value, data):
 
 
 def automate_mkdocs_from_docstring(
-    mkdocs_dir: Union[str, Path],
-    mkgendocs_f: str,
-    repo_dir: Path,
-    match_string: str
+    mkdocs_dir: Union[str, Path], mkgendocs_f: str, repo_dir: Path, match_string: str
 ) -> dict:
-    """Automates the -pages for mkgendocs package by adding all Python functions in a 
+    """Automates the -pages for mkgendocs package by adding all Python functions in a
     directory to the mkgendocs config.
     Args:
-        mkdocs_dir (typing.Union[str, pathlib.Path]): textual directory for 
+        mkdocs_dir (typing.Union[str, pathlib.Path]): textual directory for
         the hierarchical directory & navigation in Mkdocs
         mkgendocs_f (str): The configurations file for the mkgendocs package
         repo_dir (pathlib.Path): textual directory to search for Python functions in
-        match_string (str): the text to be matches, after which the functions will be 
+        match_string (str): the text to be matches, after which the functions will be
         added in mkgendocs format
     Example:
         >>>
@@ -135,14 +132,14 @@ def automate_nav_structure(
     match_string: str,
     structure: dict,
 ) -> str:
-    """Automates the -pages for mkgendocs package by adding all Python 
+    """Automates the -pages for mkgendocs package by adding all Python
     functions in a directory to the mkgendocs config.
     Args:
-        mkdocs_dir (typing.Union[str, pathlib.Path]): textual directory for 
+        mkdocs_dir (typing.Union[str, pathlib.Path]): textual directory for
         the hierarchical directory & navigation in Mkdocs
         mkgendocs_f (str): The configurations file for the mkgendocs package
         repo_dir (pathlib.Path): textual directory to search for Python functions in
-        match_string (str): the text to be matches, after which the functions 
+        match_string (str): the text to be matches, after which the functions
         will be added in mkgendocs format
     Example:
         >>>
