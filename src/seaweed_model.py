@@ -88,7 +88,11 @@ class SeaweedModel:
         ax.set_ylabel("Fraction of optimal growth rate")
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
-        plt.savefig(path + "growth_rate_by_lme_bar" + str(date) + ".png", dpi=200)
+        plt.savefig(
+            path + "growth_rate_by_lme_bar" + str(date) + ".png",
+            dpi=200,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def plot_growth_rate_by_lme_global(self, date, path=""):
@@ -113,7 +117,11 @@ class SeaweedModel:
         ax.set_title("Fraction of optimal growth rate on date: " + str(date))
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
-        plt.savefig(path + "growth_rate_by_lme_global_" + str(date) + ".png", dpi=200)
+        plt.savefig(
+            path + "growth_rate_by_lme_global_" + str(date) + ".png",
+            dpi=200,
+            bbox_inches="tight",
+        )
         plt.close()
 
     def calculate_mean_groth_rate_by_lme(self):
@@ -143,6 +151,13 @@ class SeaweedModel:
         11    0.309920
         38    0.304329
         and plots them over time.
+
+        Arguments:
+            path: the path to save the plot to
+            window: the window size for the rolling mean
+        
+        Returns:
+            None
         """
         assert self.lme_or_grid == "lme"
         best_lme = [29, 11, 38]
@@ -169,7 +184,7 @@ class SeaweedModel:
         ax.set_ylabel("Fraction of optimal growth rate")
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
-        plt.savefig(path + "growth_rate_by_best.png", dpi=200)
+        plt.savefig(path + "growth_rate_by_best.png", dpi=200, bbox_inches="tight")
         plt.close()
 
 
@@ -196,6 +211,7 @@ if __name__ == "__main__":
     for date in dates:
         model.plot_growth_rate_by_lme_bar(date, path="results/lme/")
         model.plot_growth_rate_by_lme_global(date, path="results/lme/")
+
 
     # Print the best 3 LMEs by mean growth rate
     model.calculate_mean_groth_rate_by_lme()

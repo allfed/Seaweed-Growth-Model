@@ -1,0 +1,99 @@
+site_name: Seaweed Growth Model
+
+
+# Repository
+repo_name: Seaweed Growth Model
+repo: https://github.com/allfed/Seaweed-Growth-Model
+# Copyright
+copyright: ALLFED
+
+#This specifies the autogeneration portion
+pages:
+  - page: "modules/automate_mkdocs.md"
+    source: "automate_mkdocs.py"
+    functions:
+      - add_val
+      - automate_mkdocs_from_docstring
+      - automate_nav_structure
+      - fix
+      - indent
+
+  - page: "modules/tests/test_read_files.md"
+    source: "tests/test_read_files.py"
+    functions:
+      - test_read_file_by_lme
+
+  - page: "modules/tests/test_seaweed_growth.md"
+    source: "tests/test_seaweed_growth.py"
+    functions:
+      - create_test_dataframe_reasonable_values
+      - create_test_dataframe_non_reasonable_values
+      - test_growth_factor_combination_single_value
+      - test_growth_factor_combination_reasonable_values
+      - test_illumination_single_value
+      - test_calculate_illumination_factor_unreasonable_values
+      - test_temperature_single_value
+      - test_calculate_temperature_factor_unreasonable_values
+      - test_nutrient_single_value
+      - test_calculate_nutrient_factor_unreasonable_values
+      - test_salinity_single_value
+      - test_calculate_salinity_factor_unreasonable_values
+
+  - page: "modules/tests/test_seaweed_model.md"
+    source: "tests/test_seaweed_model.py"
+    functions:
+      - test_create_model_instance
+      - test_reading_in_lme_data
+      - test_reading_in_grid_data
+      - test_calculating_factors
+      - test_calculating_growth_rate
+      - test_construct_dataframe_from_section_data
+
+  - page: "modules/tests/test_ocean_section.md"
+    source: "tests/test_ocean_section.py"
+    functions:
+      - create_test_dataframe_reasonable_values
+      - test_initialization
+      - test_get_section_data
+      - test_calculate_factors
+      - test_calculate_growth_rate
+      - test_create_section_df
+      - test_failed_creation_section_df
+      - test_select_section_df_date
+      - test_select_section_df_date_fail
+      - test_calculate_mean_growth_rate
+
+  - page: "modules/src/seaweed_growth.md"
+    source: "src/seaweed_growth.py"
+    functions:
+      - growth_factor_combination_single_value
+      - growth_factor_combination
+      - illumination_single_value
+      - calculate_illumination_factor
+      - temperature_single_value
+      - calculate_temperature_factor
+      - nutrient_single_value
+      - calculate_nutrient_factor
+      - salinity_single_value
+      - calculate_salinity_factor
+
+  - page: "modules/src/seaweed_model.md"
+    source: "src/seaweed_model.py"
+    classes:
+      - SeaweedModel
+
+  - page: "modules/src/ocean_section.md"
+    source: "src/ocean_section.py"
+    classes:
+      - OceanSection
+
+  - page: "modules/src/read_files.md"
+    source: "src/read_files.py"
+    classes:
+      - DataLME
+
+  - page: "modules/src/write_files.md"
+    source: "src/write_files.py"
+    functions:
+      - write_factors_by_section
+

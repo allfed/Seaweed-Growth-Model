@@ -1,0 +1,41 @@
+site_name: Seaweed Growth Model
+
+
+# Repository
+repo_name: Seaweed Growth Model
+repo_url: https://github.com/allfed/Seaweed-Growth-Model
+edit_uri: ""
+# Copyright
+copyright: ALLFED
+
+docs_dir: "docs/sources"
+
+plugins:
+  - search
+
+theme:
+  name: 'readthedocs'
+  custom_dir: 'docs'
+  palette:
+    primary: 'white'
+  logo: 'assets/images/logo_full.svg'
+  favicon: 'assets/images/favicon.svg'
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - instant
+nav:
+  - Home: index.md
+  - modules:
+    - automate_mkdocs: modules/automate_mkdocs.md
+    - src:
+      - ocean_section: modules/src/ocean_section.md
+      - read_files: modules/src/read_files.md
+      - seaweed_growth: modules/src/seaweed_growth.md
+      - seaweed_model: modules/src/seaweed_model.md
+      - write_files: modules/src/write_files.md
+    - tests:
+      - test_ocean_section: modules/tests/test_ocean_section.md
+      - test_read_files: modules/tests/test_read_files.md
+      - test_seaweed_growth: modules/tests/test_seaweed_growth.md
+      - test_seaweed_model: modules/tests/test_seaweed_model.md
