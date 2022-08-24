@@ -118,8 +118,16 @@ Plots the growth rate fraction for all LME on a global map
 Calculates the mean growth rate for a LME for the whole
 time period modelled.
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ### .plot_growth_rate_by_best_lme_as_line
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/seaweed_model.py/#L147)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/seaweed_model.py/#L151)
 ```python
 .plot_growth_rate_by_best_lme_as_line(
    path = '', window = 10
