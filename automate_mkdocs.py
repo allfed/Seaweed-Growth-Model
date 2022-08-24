@@ -196,7 +196,7 @@ def indent(string: str) -> int:
 
 def main():
     """Execute when running this script."""
-    python_tips_dir = Path.cwd().joinpath("")
+    python_tips_dir = Path.cwd().joinpath("") + os.sep + "src"
     # python_tips_dir = Path.cwd().joinpath("Python tips")
 
     # docstring_from_type_hints(python_tips_dir, overwrite_script=True, test=False)
