@@ -128,6 +128,10 @@ class SeaweedModel:
         """
         Calculates the mean growth rate for a LME for the whole
         time period modelled.
+        Arguments:
+            None
+        Returns:
+            None
         """
         assert self.lme_or_grid == "lme"
         growth_rate_dict = {}
