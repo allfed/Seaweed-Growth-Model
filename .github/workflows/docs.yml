@@ -27,6 +27,9 @@ jobs:
       - name: Autogenerate new documentation
         continue-on-error: true
         run: |
+          pip install -e .
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pyyaml
           python automate_mkdocs.py
           git add .
       - name: Update and Build GH Pages
@@ -36,7 +39,6 @@ jobs:
           pip install mkgendocs==0.9.0
           pip install markupsafe==2.0.1
           pip install jinja2==2.11
-          pip install pyyaml
           gendocs --config mkgendocs.yml
       - name: deploy
         run: |
