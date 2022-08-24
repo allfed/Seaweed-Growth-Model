@@ -2,7 +2,7 @@
 
 
 ### add_val
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L12)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L13)
 ```python
 .add_val(
    indices, value, data
@@ -14,7 +14,7 @@
 
 
 ### automate_mkdocs_from_docstring
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L21)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L22)
 ```python
 .automate_mkdocs_from_docstring(
    mkdocs_dir: Union[str, Path], mkgendocs_f: str, repo_dir: Path,
@@ -52,7 +52,7 @@ added in mkgendocs format
 
 
 ### automate_nav_structure
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L129)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L130)
 ```python
 .automate_nav_structure(
    mkdocs_dir: Union[str, Path], mkdocs_f: str, repo_dir: Path, match_string: str,
@@ -90,7 +90,7 @@ will be added in mkgendocs format
 
 
 ### fix
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L173)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L174)
 ```python
 .fix(
    f
@@ -115,7 +115,7 @@ Allows creation of arbitrary length dict item
 
 
 ### indent
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L186)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/automate_mkdocs.py/#L187)
 ```python
 .indent(
    string: str
