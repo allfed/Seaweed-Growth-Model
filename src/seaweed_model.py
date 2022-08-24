@@ -128,6 +128,10 @@ class SeaweedModel:
         """
         Calculates the mean growth rate for a LME for the whole
         time period modelled.
+        Arguments:
+            None
+        Returns:
+            None
         """
         assert self.lme_or_grid == "lme"
         growth_rate_dict = {}
@@ -155,7 +159,7 @@ class SeaweedModel:
         Arguments:
             path: the path to save the plot to
             window: the window size for the rolling mean
-        
+
         Returns:
             None
         """
@@ -211,7 +215,6 @@ if __name__ == "__main__":
     for date in dates:
         model.plot_growth_rate_by_lme_bar(date, path="results/lme/")
         model.plot_growth_rate_by_lme_global(date, path="results/lme/")
-
 
     # Print the best 3 LMEs by mean growth rate
     model.calculate_mean_groth_rate_by_lme()
