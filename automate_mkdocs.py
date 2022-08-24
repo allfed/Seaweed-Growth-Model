@@ -197,7 +197,7 @@ def indent(string: str) -> int:
 def main():
     """Execute when running this script."""
     # This is the path the script will look for code to document
-    python_tips_dir = Path.cwd().joinpath("")
+    python_tips_dir = Path.cwd().joinpath("src")
     # This is the path of the overall directoy
     root_repo_dir = Path.cwd()
 

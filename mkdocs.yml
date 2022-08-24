@@ -24,4 +24,12 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - instant
-
+nav:
+  - Home: index.md
+  - modules:
+    - src:
+      - ocean_section: modules/src/ocean_section.md
+      - read_files: modules/src/read_files.md
+      - seaweed_growth: modules/src/seaweed_growth.md
+      - seaweed_model: modules/src/seaweed_model.md
+      - write_files: modules/src/write_files.md
