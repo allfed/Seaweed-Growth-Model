@@ -196,10 +196,10 @@ def indent(string: str) -> int:
 
 def main():
     """Execute when running this script."""
-    python_tips_dir = Path.cwd().joinpath("")
-    # python_tips_dir = Path.cwd().joinpath("Python tips")
-
-    # docstring_from_type_hints(python_tips_dir, overwrite_script=True, test=False)
+    # This is the path the script will look for code to document
+    python_tips_dir = Path.cwd().joinpath("src")
+    # This is the path of the overall directoy
+    root_repo_dir = Path.cwd()
 
     structure = automate_mkdocs_from_docstring(
         mkdocs_dir="modules",
@@ -211,7 +211,7 @@ def main():
     automate_nav_structure(
         mkdocs_dir="modules",
         mkdocs_f="mkdocs.yml",
-        repo_dir=python_tips_dir,
+        repo_dir=root_repo_dir,
         match_string="- Home: index.md\n",
         structure=structure,
     )
