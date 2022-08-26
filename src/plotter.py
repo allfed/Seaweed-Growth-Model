@@ -154,7 +154,7 @@ def main():
     plotter.calculate_mean_groth_rate_by_lme()
 
     # Plot the growth rate of the 5 best LMEs
-    plotter.plot_growth_rate_by_best_lme_as_line(path="results/lme/", window=25)
+    plotter.plot_growth_rate_by_best_lme_as_line(path="results/lme/", window=1)
 
 
 

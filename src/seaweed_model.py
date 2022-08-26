@@ -2,8 +2,6 @@
 Main Interface
 """
 import pandas as pd
-import geopandas as gpd
-import matplotlib.pyplot as plt
 from src import ocean_section as oc_se
 from src import read_files
 
