@@ -32,7 +32,8 @@ def prep_nw_data(path, file, length_time, env_param):
         del (env_time_df["z_t"])
     # Convert it to a geodataframe
     env_time_df_geo = gpd.GeoDataFrame(env_time_df,
-                            geometry=gpd.points_from_xy(env_time_df.TLONG, env_time_df.TLAT))
+                                        geometry=gpd.points_from_xy(
+                                                        env_time_df.TLONG, env_time_df.TLAT))
     # Create a new index to remove redundant information
     env_time_df_geo.reset_index(inplace=True)
     env_time_df_geo.set_index(["time", "TLONG", "TLAT"], inplace=True)
