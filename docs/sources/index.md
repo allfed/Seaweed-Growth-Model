@@ -10,5 +10,5 @@
 
 ---
 
-An explanation of how to use the model can be found in the scripts folder. 
+An explanation of how to use the model can be found in the scripts folder (not fully fleshed out). 
 
