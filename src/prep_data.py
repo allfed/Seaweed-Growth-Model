@@ -27,19 +27,20 @@ def prep_nw_data(path, file, length_time, env_param):
     env_time_df = env_time.to_dataframe()
     # Delete the depth column, as it is not needed
     if env_param == "PAR_avg":
-        del(env_time_df["z_t_150m"])
+        del (env_time_df["z_t_150m"])
     else:
-        del(env_time_df["z_t"])
+        del (env_time_df["z_t"])
     # Convert it to a geodataframe
-    env_time_df_geo = gpd.GeoDataFrame(env_time_df, geometry=gpd.points_from_xy(env_time_df.TLONG, env_time_df.TLAT))
+    env_time_df_geo = gpd.GeoDataFrame(env_time_df,
+        geometry=gpd.points_from_xy(env_time_df.TLONG, env_time_df.TLAT))
     # Create a new index to remove redundant information
     env_time_df_geo.reset_index(inplace=True)
     env_time_df_geo.set_index(["time", "TLONG", "TLAT"], inplace=True)
     # delte the nlat and nlon columns, as thy are not needed anymore
-    del(env_time_df_geo["nlat"])
-    del(env_time_df_geo["nlon"])
+    del (env_time_df_geo["nlat"])
+    del (env_time_df_geo["nlon"])
     # Save to pickle
-    env_time_df_geo.to_pickle("nw_" + env_param+"_" + str(length_time) + "_months_pickle.pkl")
+    env_time_df_geo.to_pickle("nw_" + env_param + "_" + str(length_time) + "_months_pickle.pkl")
 
 
 if __name__ == "__main__":
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf"]
     for env_param in env_params:
         path = '/glade/u/home/chsharri/Work/NW/'
-        file = 'nw_ur_150_07.pop.h.'+env_param+'.nc'
+        file = 'nw_ur_150_07.pop.h.' + env_param + '.nc'
         length_time = 3
         if env_param == "PAR_surf":
             env_param = "PAR_avg"
