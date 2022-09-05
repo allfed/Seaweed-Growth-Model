@@ -3,6 +3,7 @@ import geopandas as gpd
 import pandas as pd
 from src.seaweed_model import SeaweedModel
 
+
 class Plotter:
     """
     Class to organize all the plotting functions
@@ -155,7 +156,6 @@ def main():
 
     # Plot the growth rate of the 5 best LMEs
     plotter.plot_growth_rate_by_best_lme_as_line(path="results/lme/", window=1)
-
 
 
 if __name__ == "__main__":
