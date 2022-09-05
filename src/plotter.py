@@ -8,6 +8,7 @@ class Plotter:
     """
     Class to organize all the plotting functions
     """
+
     def __init__(self, seaweed_model):
         self.seaweed_model = seaweed_model
 
