@@ -90,8 +90,8 @@ def construct_dataframe_from_section_data():
     number_sections = 3
     model = SeaweedModel()
     model.add_data_by_lme(
-        [i for i in range(1, number_sections + 1)], 
-        "data/seaweed_environment_data_in_nuclear_war.csv", 
+        [i for i in range(1, number_sections + 1)],
+        "data/seaweed_environment_data_in_nuclear_war.csv",
     )
     model.calculate_factors()
     model.calculate_growth_rate()

@@ -58,7 +58,7 @@ def prepare_gridded_data(path):
         # Convert back to geodataframe before saving
         data_dict[lat_lon] = gpd.GeoDataFrame(concat_latlon_dfs)
     # Make pickle out of it, so we don't have to run this every time
-    with open ("data_gridded_all_parameters.pkl", "wb") as handle:
+    with open("data_gridded_all_parameters.pkl", "wb") as handle:
         pickle.dump(data_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
