@@ -15,7 +15,7 @@ Journal of Computational Biology, 17(7), 895−906.
 """
 import math
 import pandas as pd
-
+import numpy as np
 
 def growth_factor_combination_single_value(
     illumination_factor: float,
@@ -34,6 +34,14 @@ def growth_factor_combination_single_value(
         fraction of the actual production rate the seaweed could
         reach in optimal circumstances
     """
+    # Return nan if any of the factors is nan
+    if (
+        np.isnan(illumination_factor)
+        or np.isnan(temperature_factor)
+        or np.isnan(nutrient_factor)
+        or np.isnan(salinity_factor)
+    ):
+        return np.nan
     # Make sure all factors are between 0 and 1
     factors = [
         illumination_factor,
@@ -88,6 +96,9 @@ def illumination_single_value(illumination: float):
     Returns:
         The illumination factor
     """
+    # Return nan if the illumination is nan
+    if np.isnan(illumination):
+        return np.nan
     # Make sure the values are in a reasonable range
     # 1361 is the maximum illumination that reaches the atmosphere
     assert 0 <= illumination <= 1361
@@ -114,6 +125,9 @@ def temperature_single_value(temperature: float):
     Returns:
         The temperature factor as a float
     """
+    # Return nan if the temperature is nan
+    if np.isnan(temperature):
+        return np.nan
     # make sure the temperature is in a reasonable range
     assert -20 <= temperature <= 50
     # where Kt1 = 0.017°C−2 and Kt2 = 0.06°C−2. These coefficients were determined by
@@ -152,6 +166,9 @@ def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float):
     Returns:
         The nutrient factor as a float
     """
+    # Return nan if any of the nutrients ia nan
+    if np.isnan(nitrate) or np.isnan(ammonium) or np.isnan(phosphate):
+        return np.nan
     # Make sure all three nutrients are in a reasonable range
     assert 0 <= nitrate <= 50
     assert 0 <= ammonium <= 50
@@ -195,8 +212,11 @@ def salinity_single_value(salinity: float):
     """
     Calculates the salinity factor for a single salinity value
     """
+    # Return nan if salinity is nan
+    if np.isnan(salinity):
+        return np.nan
     # Make sure the salinity is in a reasonable range
-    assert 0 <= salinity <= 50
+    assert 0 <= salinity <= 100
     # with  = 0.007 ppt−2 and = 0.063 ppt−2.
     kS1 = 0.007
     kS2 = 0.063

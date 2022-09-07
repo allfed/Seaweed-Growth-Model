@@ -38,5 +38,5 @@ def test_read_file_by_grid():
     assert len(data_grid.grid_dict) == 122880  # number of lat_lon combos
     for df in data_grid.grid_dict.values():
         assert isinstance(df, gpd.GeoDataFrame)
-        # 240 months, 6 parameters
-        assert df.shape[1] == 8
+        # 6 parameters + geometry + lat + lon
+        assert df.shape[1] == 9

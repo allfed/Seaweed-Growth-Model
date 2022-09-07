@@ -20,7 +20,7 @@ class OceanSection:
         self.name = name
         # Add the data
         self.salinity = data["salinity"]
-        self.temperature = data["surface_temperature"]
+        self.temperature = data["temperature"]
         self.nitrate = data["nitrate"]
         self.ammonium = data["ammonium"]
         self.phosphate = data["phosphate"]
@@ -94,6 +94,9 @@ class OceanSection:
                 "seaweed_growth_rate": self.seaweed_growth_rate,
             }
         )
+        # Add a column with the month since war
+        section_df["months_since_war"] = list(range(-3, section_df.shape[0] - 3, 1))
+        # Add the dataframe to the class
         section_df.name = self.name
         self.section_df = section_df
 
@@ -106,7 +109,7 @@ class OceanSection:
         # calculate the mean growth rate
         return self.section_df["seaweed_growth_rate"].mean()
 
-    def select_section_df_date(self, date):
+    def select_section_df_date(self, min_month, max_month):
         """
         Selectes a date from the section df and returns it
         Arguments:
@@ -117,4 +120,4 @@ class OceanSection:
         # check if the dataframe has been created
         assert self.section_df is not None
         # select the dataframe for the date
-        return self.section_df.loc[date]
+        return self.section_df[self.section_df["months_since_war"].between(min_month, max_month)]

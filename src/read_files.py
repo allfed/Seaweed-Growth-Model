@@ -45,7 +45,7 @@ class DataLME:
             self.lme_dict[i].index = pd.to_datetime(self.lme_dict[i].index)
             # rename columns
             self.lme_dict[i].columns = [
-                "surface_temperature",
+                "temperature",
                 "salinity",
                 "nitrate",
                 "illumination",

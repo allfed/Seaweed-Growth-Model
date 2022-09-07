@@ -47,6 +47,8 @@ def prepare_gridded_data(path):
         concat_latlon_dfs = pd.concat(list_env_param_latlon_df, axis=1)
         # Remove duplicate columns
         concat_latlon_dfs = concat_latlon_dfs.loc[:,~concat_latlon_dfs.columns.duplicated()].copy()
+        # Add a column with the month since war
+        concat_latlon_dfs["months_since_war"] = list(range(-4,concat_latlon_dfs.shape[0] -4,1))
         # Convert back to geodataframe before saving
         data_dict[lat_lon] = gpd.GeoDataFrame(concat_latlon_dfs)
     # Make pickle out of it, so we don't have to run this every time
