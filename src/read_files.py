@@ -2,7 +2,7 @@
 Reads in the ocean data after nuclear war provided by Cherryl Harrison
 """
 import pandas as pd
-
+import pickle
 
 class DataLME:
     """
@@ -87,7 +87,8 @@ class DataGrid:
         """
         Reads in the gridded data
         """
-        self.grid_dict = pd.read_csv(self.file)
+        with open(self.file, "rb") as handle:
+            self.grid_dict = pickle.load(handle)
 
     def provide_data_grid(self, lat_lon):
         """
