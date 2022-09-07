@@ -30,6 +30,7 @@ nav:
     - src:
       - ocean_section: modules/src/ocean_section.md
       - plotter: modules/src/plotter.md
+      - prep_grid_data: modules/src/prep_grid_data.md
       - read_files: modules/src/read_files.md
       - scrape_data_in_cluster: modules/src/scrape_data_in_cluster.md
       - seaweed_growth: modules/src/seaweed_growth.md
