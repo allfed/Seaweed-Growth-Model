@@ -2,7 +2,7 @@ import xarray as xr
 import geopandas as gpd
 
 
-def prep_nw_data(path, file, length_time, env_param):
+def scrape_data(path, file, length_time, env_param):
     """
     Reads the nuclear war data from Cheryls workspace.
     Creates a geopandas dataframe for it for a given
@@ -47,11 +47,6 @@ def prep_nw_data(path, file, length_time, env_param):
 
 
 if __name__ == "__main__":
-    path = "/glade/u/home/chsharri/Work/NW/"
-    file = "nw_ur_150_07.pop.h.TEMP.nc"
-    length_time = 3
-    env_param = "TEMP"
-    prep_nw_data(path, file, length_time, env_param)
     env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf"]
     for env_param in env_params:
         path = "/glade/u/home/chsharri/Work/NW/"
@@ -59,5 +54,5 @@ if __name__ == "__main__":
         length_time = 3
         if env_param == "PAR_surf":
             env_param = "PAR_avg"
-        prep_nw_data(path, file, length_time, env_param)
+        scrape_data(path, file, length_time, env_param)
     print("done")
