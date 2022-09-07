@@ -31,11 +31,11 @@ class SeaweedModel:
         # Set the model to LME
         self.lme_or_grid = "lme"
         # Add the data to the model
-        data_lme = read_files.DataLME(file)
+        data_lme = read_files.DataLME(file, "lme")
         # Add the sections to the model
         for lme_name in lme_names:
             self.sections[lme_name] = oc_se.OceanSection(
-                lme_name, data_lme.provide_data(lme_name)
+                lme_name, data_lme.provide_data_lme(lme_name)
             )
 
     def calculate_factors(self):

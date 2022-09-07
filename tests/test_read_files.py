@@ -9,7 +9,7 @@ def test_read_file_by_lme():
     """
     Tests the read_file class DataLME
     """
-    data_LME = read_files.DataLME("data/seaweed_environment_data_in_nuclear_war.csv")
+    data_LME = read_files.DataLME("data/seaweed_environment_data_in_nuclear_war.csv", "lme")
     # Make sure the correct object gets created
     assert isinstance(data_LME, read_files.DataLME)
     assert data_LME is not None

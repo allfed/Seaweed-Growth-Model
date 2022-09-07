@@ -11,22 +11,36 @@ class DataLME:
     and provide the data for each LME as needed
     """
 
-    def __init__(self, file):
+    def __init__(self, file, lme_or_grid):
         assert file is not None
         self.file = file
         self.lme_data = None
         self.lme_dict = {}
+        # Make sure that the model if is run in LME mode or grid mode
+        self.lme_or_grid = None
         # Prepare the data
-        self.read_data()
-        self.sort_data()
+        if lme_or_grid == "lme":
+            self.read_data_lme()
+            self.sort_data_lme()
+        elif lme_or_grid == "grid":
+            self.read_data_grid()
+            self.sort_data_grid()
 
-    def read_data(self):
+    def read_data_lme(self):
         """
         read in the file
         """
         self.lme_data = pd.read_csv(self.file)
 
-    def sort_data(self):
+
+    def read_data_grid(self):
+        """
+        Reads in the gridded data
+        """
+        self.lme_or_grid = "grid"
+        self.lme_data = pd.read_csv(self.file)
+
+    def sort_data_lme(self):
         """
         Sorts as a dictionary of pandas dataframes
         The data is ocean data after nuclear war seperated by
@@ -55,7 +69,16 @@ class DataLME:
             # Set those to 0
             self.lme_dict[i]["nitrate"] = self.lme_dict[i]["nitrate"].clip(lower=0)
 
-    def provide_data(self, lme_number):
+    def sort_data_grid(self):
+        """
+        Sorts as a dictionary of pandas dataframes
+        The data is ocean data after nuclear war seperated by
+        grid cells. Key is the location of the grid cell. 
+        """
+        
+  
+
+    def provide_data_lme(self, lme_number):
         """
         Provides the data for a given LME
         Arguments:
