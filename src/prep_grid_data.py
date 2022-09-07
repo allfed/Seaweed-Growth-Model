@@ -28,7 +28,7 @@ def prepare_gridded_data(path):
         "TEMP": "temperature"}
     dict_env_dfs = {}
     for science_name in env_params.keys():
-        env_df = pd.read_pickle("nw_"+science_name+"_3_months_pickle.pkl")
+        env_df = pd.read_pickle("nw_" + science_name + "_3_months_pickle.pkl")
         env_df.reset_index(inplace=True)
         env_df.columns = ["time", "TLONG", "TLAT", env_params[science_name], "geometry"]
         dict_env_dfs[science_name] = gpd.GeoDataFrame(env_df)
@@ -40,7 +40,8 @@ def prepare_gridded_data(path):
         assert list_env_dfs_geometry[i].equals(list_env_dfs_geometry[i + 1])
         i += 1
     # Create all the groupby objects
-    dict_env_dfs_grouped = {env_param: dict_env_dfs[env_param].groupby(["TLAT", "TLONG"]) for env_param in env_params.keys()}
+    dict_env_dfs_grouped = {env_param: dict_env_dfs[env_param].groupby(
+        ["TLAT", "TLONG"]) for env_param in env_params.keys()}
     data_dict = {}
     # Itereate over all the lat_lon combos, those are the same for all environmental parameters
     for lat_lon in dict_env_dfs_grouped["NO3"].groups.keys():
@@ -51,14 +52,15 @@ def prepare_gridded_data(path):
             list_env_param_latlon_df.append(pd.DataFrame(env_param_latlon_df))
         concat_latlon_dfs = pd.concat(list_env_param_latlon_df, axis=1)
         # Remove duplicate columns
-        concat_latlon_dfs = concat_latlon_dfs.loc[:,~concat_latlon_dfs.columns.duplicated()].copy()
+        concat_latlon_dfs = concat_latlon_dfs.loc[:, ~concat_latlon_dfs.columns.duplicated()].copy()
         # Add a column with the month since war
-        concat_latlon_dfs["months_since_war"] = list(range(-4,concat_latlon_dfs.shape[0] -4,1))
+        concat_latlon_dfs["months_since_war"] = list(range(-4, concat_latlon_dfs.shape[0] - 4, 1))
         # Convert back to geodataframe before saving
         data_dict[lat_lon] = gpd.GeoDataFrame(concat_latlon_dfs)
     # Make pickle out of it, so we don't have to run this every time
     with open ("data_gridded_all_parameters.pkl", "wb") as handle:
-        pickle.dump(data_dict, handle, protocol = pickle.HIGHEST_PROTOCOL)
+        pickle.dump(data_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
 
 if __name__ == "__main__":
     prepare_gridded_data(".")

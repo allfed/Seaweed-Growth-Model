@@ -4,6 +4,7 @@ Reads in the ocean data after nuclear war provided by Cherryl Harrison
 import pandas as pd
 import pickle
 
+
 class DataLME:
     """
     Creates a data object for the LME
@@ -19,13 +20,11 @@ class DataLME:
         self.read_data_lme()
         self.sort_data_lme()
 
-
     def read_data_lme(self):
         """
         read in the file
         """
         self.lme_data = pd.read_csv(self.file)
-
 
     def sort_data_lme(self):
         """
@@ -55,7 +54,6 @@ class DataLME:
             # For some reason some of the nitrate values are below 0, which is impossible.
             # Set those to 0
             self.lme_dict[i]["nitrate"] = self.lme_dict[i]["nitrate"].clip(lower=0)
- 
 
     def provide_data_lme(self, lme_number):
         """
