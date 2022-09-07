@@ -28,15 +28,34 @@ class SeaweedModel:
         """
         # Make sure that the model is empty
         assert self.lme_or_grid is None
-        # Set the model to LME
-        self.lme_or_grid = "lme"
         # Add the data to the model
-        data_lme = read_files.DataLME(file, "lme")
+        data_lme = read_files.DataLME(file)
         # Add the sections to the model
         for lme_name in lme_names:
             self.sections[lme_name] = oc_se.OceanSection(
                 lme_name, data_lme.provide_data_lme(lme_name)
             )
+        self.lme_or_grid = "lme"
+
+    def add_data_by_grid(self, lat_lons, file):
+        """
+        Adds data from the database to the model.
+        Based on a grid.
+        Arguments:
+            lat_lons: a list of lat_lon tuples
+        Returns:
+            None
+        """
+        # Make sure that the model is empty
+        assert self.lme_or_grid is None
+        # Add the data to the model
+        data_grid = read_files.DataGrid(file)
+        # Add the sections to the model
+        for lat_lon in lat_lons:
+            self.sections[lat_lon] = oc_se.OceanSection(
+                lat_lon, data_grid.provide_data_grid(lat_lon)
+            )
+        self.lme_or_grid = "grid"
 
     def calculate_factors(self):
         """

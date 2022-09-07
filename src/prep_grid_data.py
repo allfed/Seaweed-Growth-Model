@@ -20,22 +20,27 @@ def prepare_gridded_data(path):
         and longitude.
     """
     # Read in all the geopandas dataframes for the environmental parameters
-    env_params = ["NO3", "NH4", "PAR_avg", "PO4", "SALT", "TEMP"]
-    dict_env_dfs = {env_param: gpd.GeoDataFrame(pd.read_pickle("nw_"+env_param+"_3_months_pickle.pkl")).reset_index() for env_param in env_params}
+    env_params = {"NO3":"nitrate", "NH4":"ammonium", "PAR_avg":"illumination", "PO4":"phosphate", "SALT":"salinity", "TEMP":"temperature"}
+    dict_env_dfs = {}
+    for science_name in env_params.keys():
+        env_df = pd.read_pickle("nw_"+science_name+"_3_months_pickle.pkl")
+        env_df.reset_index(inplace=True)
+        env_df.columns = ["time", "TLONG", "TLAT", env_params[science_name], "geometry"]
+        dict_env_dfs[science_name] = gpd.GeoDataFrame(env_df)
     # Assert if they all have the same geometry
     # This is needed so we can use the geometry of all dfs interchangeably
-    list_env_dfs_geometry = [dict_env_dfs[env_param]["geometry"] for env_param in env_params]
+    list_env_dfs_geometry = [dict_env_dfs[env_param]["geometry"] for env_param in env_params.keys()]
     i = 0
     while i < len(list_env_dfs_geometry) -1:
         assert list_env_dfs_geometry[i].equals(list_env_dfs_geometry[i+1])
         i += 1
     # Create all the groupby objects
-    dict_env_dfs_grouped = {env_param: dict_env_dfs[env_param].groupby(["TLAT", "TLONG"]) for env_param in env_params}
+    dict_env_dfs_grouped = {env_param: dict_env_dfs[env_param].groupby(["TLAT", "TLONG"]) for env_param in env_params.keys()}
     data_dict = {}
     # Itereate over all the lat_lon combos, those are the same for all environmental parameters
     for lat_lon in dict_env_dfs_grouped["NO3"].groups.keys():
         list_env_param_latlon_df = []
-        for env_param in env_params:
+        for env_param in env_params.keys():
             env_param_latlon_df = dict_env_dfs_grouped[env_param].get_group(lat_lon)
             env_param_latlon_df.set_index("time", inplace=True)
             list_env_param_latlon_df.append(pd.DataFrame(env_param_latlon_df))
@@ -47,7 +52,6 @@ def prepare_gridded_data(path):
     # Make pickle out of it, so we don't have to run this every time
     with open ("data_gridded_all_parameters.pkl", "wb") as handle:
         pickle.dump(data_dict, handle, protocol = pickle.HIGHEST_PROTOCOL)
-
 
 if __name__ == "__main__":
     prepare_gridded_data(".")

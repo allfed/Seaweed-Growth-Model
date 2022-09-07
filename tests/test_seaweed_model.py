@@ -24,15 +24,18 @@ def test_reading_in_lme_data():
     assert len(model.sections.keys()) == 3
 
 
-def test_reading_in_grid_data():
+def test_read_in_grid_data():
     """
     Test the reading in of grid data
     """
-    pass
-    # TODO implement this test once I have the grid data
+    model = SeaweedModel()
+    model.add_data_by_grid([(-79.2205226074621, 1.0625000295666882)],
+        "data/gridded_data_test_dataset/data_gridded_all_parameters.pkl"
+    )
+    assert len(model.sections.keys()) == 1
 
 
-def test_calculating_factors():
+def test_calculating_factors_lme():
     """
     Test the calculation of factors
     """

@@ -15,16 +15,16 @@ class OceanSection:
     and also saves the single factors for growth
     """
 
-    def __init__(self, name, lme_data):
+    def __init__(self, name, data):
         # Add the name
         self.name = name
         # Add the data
-        self.salinity = lme_data["salinity"]
-        self.temperature = lme_data["surface_temperature"]
-        self.nitrate = lme_data["nitrate"]
-        self.ammonium = lme_data["ammonium"]
-        self.phosphate = lme_data["phosphate"]
-        self.illumination = lme_data["illumination"]
+        self.salinity = data["salinity"]
+        self.temperature = data["surface_temperature"]
+        self.nitrate = data["nitrate"]
+        self.ammonium = data["ammonium"]
+        self.phosphate = data["phosphate"]
+        self.illumination = data["illumination"]
         # Add the factors
         self.salinity_factor = None
         self.nutrient_factor = None
