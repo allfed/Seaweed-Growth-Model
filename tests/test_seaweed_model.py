@@ -1,7 +1,8 @@
 """
 Test the whole model
 """
-
+import pytest
+import os
 from src.seaweed_model import SeaweedModel
 
 
@@ -24,6 +25,9 @@ def test_reading_in_lme_data():
     assert len(model.sections.keys()) == 3
 
 
+# Skip this when not run locally, as it requires the data to be present
+# Had to skip this file for Github as it is too large
+@pytest.mark.skipif("zorin" not in os.environ)
 def test_grid_data():
     """
     Test the reading in of grid data and the calculation of factors
@@ -31,7 +35,9 @@ def test_grid_data():
     """
     # Testing the reading
     model = SeaweedModel()
-    model.add_data_by_grid([(-79.2205226074621, 1.0625000295666882)],
+    model.add_data_by_grid
+    (
+        [(-79.2205226074621, 1.0625000295666882)],
         "data/gridded_data_test_dataset/data_gridded_all_parameters.pkl"
     )
     assert len(model.sections.keys()) == 1
@@ -84,8 +90,8 @@ def construct_dataframe_from_section_data():
     number_sections = 3
     model = SeaweedModel()
     model.add_data_by_lme(
-        [i for i in range(1, number_sections + 1)],
-        "data/seaweed_environment_data_in_nuclear_war.csv",
+        [i for i in range(1, number_sections + 1)], 
+        "data/seaweed_environment_data_in_nuclear_war.csv", 
     )
     model.calculate_factors()
     model.calculate_growth_rate()

@@ -17,6 +17,7 @@ import math
 import pandas as pd
 import numpy as np
 
+
 def growth_factor_combination_single_value(
     illumination_factor: float,
     temperature_factor: float,

@@ -2,6 +2,8 @@
 Tests the reading and writing of files
 """
 import pandas as pd
+import pytest
+import os
 from src import read_files
 import geopandas as gpd
 
@@ -24,11 +26,16 @@ def test_read_file_by_lme():
         assert df.shape == (240, 6)
 
 
+# Skip this when not run locally, as it requires the data to be present
+# Had to skip this file for Github as it is too large
+@pytest.mark.skipif("zorin" not in os.environ)
 def test_read_file_by_grid():
     """
     Tests the read_file class DataGrid
     """
-    data_grid = read_files.DataGrid("data/gridded_data_test_dataset/data_gridded_all_parameters.pkl")
+    data_grid = read_files.DataGrid(
+        "data/gridded_data_test_dataset/data_gridded_all_parameters.pkl"
+        )
     # Make sure the correct object gets created
     assert isinstance(data_grid, read_files.DataGrid)
     assert data_grid is not None

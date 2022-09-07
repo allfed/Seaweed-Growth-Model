@@ -1,12 +1,11 @@
 import pickle
 import pandas as pd
-import pickle
 import geopandas as gpd
 
 
 def prepare_gridded_data(path):
     """
-    Reads in the pickles of the geodataframes of the 
+    Reads in the pickles of the geodataframes of the
     different environmental paramters. Checks if they
     all have the same geometry and reorders them to fit
     the rest of the code.
@@ -15,12 +14,18 @@ def prepare_gridded_data(path):
         path: the path for the pickled files
     Returns:
         None, but saves a pickle of the dictionary of geo
-        dataframes. Each geodataframe is assigned a key 
+        dataframes. Each geodataframe is assigned a key
         consisting of a tuple of floats of the latitude
         and longitude.
     """
     # Read in all the geopandas dataframes for the environmental parameters
-    env_params = {"NO3":"nitrate", "NH4":"ammonium", "PAR_avg":"illumination", "PO4":"phosphate", "SALT":"salinity", "TEMP":"temperature"}
+    env_params = {
+        "NO3": "nitrate",
+        "NH4": "ammonium",
+        "PAR_avg": "illumination",
+        "PO4": "phosphate",
+        "SALT": "salinity",
+        "TEMP": "temperature"}
     dict_env_dfs = {}
     for science_name in env_params.keys():
         env_df = pd.read_pickle("nw_"+science_name+"_3_months_pickle.pkl")
@@ -31,8 +36,8 @@ def prepare_gridded_data(path):
     # This is needed so we can use the geometry of all dfs interchangeably
     list_env_dfs_geometry = [dict_env_dfs[env_param]["geometry"] for env_param in env_params.keys()]
     i = 0
-    while i < len(list_env_dfs_geometry) -1:
-        assert list_env_dfs_geometry[i].equals(list_env_dfs_geometry[i+1])
+    while i < len(list_env_dfs_geometry) - 1:
+        assert list_env_dfs_geometry[i].equals(list_env_dfs_geometry[i + 1])
         i += 1
     # Create all the groupby objects
     dict_env_dfs_grouped = {env_param: dict_env_dfs[env_param].groupby(["TLAT", "TLONG"]) for env_param in env_params.keys()}

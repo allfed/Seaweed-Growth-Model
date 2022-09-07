@@ -83,7 +83,7 @@ class SeaweedModel:
     def construct_df_from_sections_for_date(self, min_month, max_month):
         """
         Constructs a dataframe from the data in the model for a given date.
-        This uses the months since the beginning of the nuclear war. 
+        This uses the months since the beginning of the nuclear war.
         Mininum is -3, as the data starts before the war.
         Maximum is 357, as the data ends after the war.
         Arguments:
@@ -95,6 +95,9 @@ class SeaweedModel:
         assert self.lme_or_grid == "lme"
         date_dict = {}
         for section_name, section_object in self.sections.items():
-            date_dict[section_name] = section_object.select_section_df_date_lme(min_month, max_month)
+            date_dict[section_name] = section_object.select_section_df_date_lme
+            (
+                min_month, 
+                max_month
+            )
         return pd.DataFrame.from_dict(date_dict, orient="index")
-
