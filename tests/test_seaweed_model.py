@@ -25,9 +25,11 @@ def test_reading_in_lme_data():
     assert len(model.sections.keys()) == 3
 
 
-# Skip this when not run locally, as it requires the data to be present
-# Had to skip this file for Github as it is too large
-@pytest.mark.skipif("zorin" not in os.environ)
+reason = """Skip this when not run locally, as it requires the data to be present
+ Had to skip this file for Github as it is too large """
+
+
+@pytest.mark.skipif("zorin" not in os.environ, reason=reason)
 def test_grid_data():
     """
     Test the reading in of grid data and the calculation of factors
