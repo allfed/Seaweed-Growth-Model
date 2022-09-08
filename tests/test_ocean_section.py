@@ -13,7 +13,7 @@ def create_test_dataframe_reasonable_values():
     """
     df = pd.DataFrame()
     df["illumination"] = [50, 55, 65, 70, 0, 10, 5]
-    df["surface_temperature"] = [5, 15, 5, 10, 0.25, -1, 2]
+    df["temperature"] = [5, 15, 5, 10, 0.25, -1, 2]
     df["nitrate"] = [5, 15, 5, 10, 0, 1, 2]
     df["phosphate"] = [5, 15, 5, 10, 0, 1, 2]
     df["ammonium"] = [5, 15, 5, 10, 0, 1, 2]
@@ -102,8 +102,8 @@ def test_select_section_df_date():
     test_section.calculate_factors()
     test_section.calculate_growth_rate()
     test_section.create_section_df()
-    date_df = test_section.select_section_df_date("2001-01-01")
-    assert date_df.shape == (11,)
+    date_df = test_section.select_section_df_date(0, 1)
+    assert date_df.shape == (2, 12)
 
 
 def test_select_section_df_date_fail():
@@ -116,7 +116,7 @@ def test_select_section_df_date_fail():
     test_section.calculate_factors()
     test_section.calculate_growth_rate()
     with pytest.raises(AssertionError):
-        test_section.select_section_df_date("2001-01-01")
+        test_section.select_section_df_date(0, 1)
 
 
 def test_calculate_mean_growth_rate():

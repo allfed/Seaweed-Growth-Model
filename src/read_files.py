@@ -2,6 +2,7 @@
 Reads in the ocean data after nuclear war provided by Cherryl Harrison
 """
 import pandas as pd
+import pickle
 
 
 class DataLME:
@@ -10,23 +11,22 @@ class DataLME:
     Meant to only read in the data once
     and provide the data for each LME as needed
     """
-
     def __init__(self, file):
         assert file is not None
         self.file = file
         self.lme_data = None
         self.lme_dict = {}
         # Prepare the data
-        self.read_data()
-        self.sort_data()
+        self.read_data_lme()
+        self.sort_data_lme()
 
-    def read_data(self):
+    def read_data_lme(self):
         """
         read in the file
         """
         self.lme_data = pd.read_csv(self.file)
 
-    def sort_data(self):
+    def sort_data_lme(self):
         """
         Sorts as a dictionary of pandas dataframes
         The data is ocean data after nuclear war seperated by
@@ -44,7 +44,7 @@ class DataLME:
             self.lme_dict[i].index = pd.to_datetime(self.lme_dict[i].index)
             # rename columns
             self.lme_dict[i].columns = [
-                "surface_temperature",
+                "temperature",
                 "salinity",
                 "nitrate",
                 "illumination",
@@ -55,7 +55,7 @@ class DataLME:
             # Set those to 0
             self.lme_dict[i]["nitrate"] = self.lme_dict[i]["nitrate"].clip(lower=0)
 
-    def provide_data(self, lme_number):
+    def provide_data_lme(self, lme_number):
         """
         Provides the data for a given LME
         Arguments:
@@ -64,3 +64,37 @@ class DataLME:
             a dataframe
         """
         return self.lme_dict[lme_number]
+
+
+class DataGrid:
+    """
+    Creates a data object for the gridded data
+    Meant to only read in the data once
+    and provide the data for each grid cell as needed
+    """
+    def __init__(self, file):
+        assert file is not None
+        self.file = file
+        self.grid_dict = {}
+        # Prepare the data
+        self.read_data_grid()
+        # The gridded data does not have to be sorted
+        # As it is already sorted in prep_data.py
+
+    def read_data_grid(self):
+        """
+        Reads in the gridded data
+        """
+        with open(self.file, "rb") as handle:
+            self.grid_dict = pickle.load(handle)
+
+    def provide_data_grid(self, lat_lon):
+        """
+        Provides the data for a given grid cell
+        Arguments:
+            lat_lon: the lat_lon coordinates as tuple of floats
+        Returns:
+            a geodataframe with all the environmental data
+            for this grid cell
+        """
+        return self.grid_dict[lat_lon]

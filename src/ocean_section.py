@@ -4,7 +4,6 @@ a section of the ocean. This can be either a large marine ecosystem
 or simply a part of a global grid.
 """
 import pandas as pd
-
 from src import seaweed_growth as sg
 
 
@@ -15,16 +14,16 @@ class OceanSection:
     and also saves the single factors for growth
     """
 
-    def __init__(self, name, lme_data):
+    def __init__(self, name, data):
         # Add the name
         self.name = name
         # Add the data
-        self.salinity = lme_data["salinity"]
-        self.temperature = lme_data["surface_temperature"]
-        self.nitrate = lme_data["nitrate"]
-        self.ammonium = lme_data["ammonium"]
-        self.phosphate = lme_data["phosphate"]
-        self.illumination = lme_data["illumination"]
+        self.salinity = data["salinity"]
+        self.temperature = data["temperature"]
+        self.nitrate = data["nitrate"]
+        self.ammonium = data["ammonium"]
+        self.phosphate = data["phosphate"]
+        self.illumination = data["illumination"]
         # Add the factors
         self.salinity_factor = None
         self.nutrient_factor = None
@@ -94,6 +93,9 @@ class OceanSection:
                 "seaweed_growth_rate": self.seaweed_growth_rate,
             }
         )
+        # Add a column with the month since war
+        section_df["months_since_war"] = list(range(-3, section_df.shape[0] - 3, 1))
+        # Add the dataframe to the class
         section_df.name = self.name
         self.section_df = section_df
 
@@ -106,7 +108,7 @@ class OceanSection:
         # calculate the mean growth rate
         return self.section_df["seaweed_growth_rate"].mean()
 
-    def select_section_df_date(self, date):
+    def select_section_df_date(self, min_month, max_month):
         """
         Selectes a date from the section df and returns it
         Arguments:
@@ -117,4 +119,4 @@ class OceanSection:
         # check if the dataframe has been created
         assert self.section_df is not None
         # select the dataframe for the date
-        return self.section_df.loc[date]
+        return self.section_df[self.section_df["months_since_war"].between(min_month, max_month)]

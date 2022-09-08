@@ -1,7 +1,8 @@
 """
 Test the whole model
 """
-
+import pytest
+import os
 from src.seaweed_model import SeaweedModel
 
 
@@ -24,15 +25,37 @@ def test_reading_in_lme_data():
     assert len(model.sections.keys()) == 3
 
 
-def test_reading_in_grid_data():
-    """
-    Test the reading in of grid data
-    """
-    pass
-    # TODO implement this test once I have the grid data
+reason = """Skip this when not run locally, as it requires the data to be present
+ Had to skip this file for Github as it is too large """
 
 
-def test_calculating_factors():
+@pytest.mark.skipif("zorin" not in os.environ, reason=reason)
+def test_grid_data():
+    """
+    Test the reading in of grid data and the calculation of factors
+    This all happens in one function, so it only has to be read in once
+    """
+    # Testing the reading
+    model = SeaweedModel()
+    model.add_data_by_grid
+    (
+        [(-79.2205226074621, 1.0625000295666882)],
+        "data/gridded_data_test_dataset/data_gridded_all_parameters.pkl"
+    )
+    assert len(model.sections.keys()) == 1
+    # Testing the calculation of factors
+    model.calculate_factors()
+    section_1 = model.sections[(-79.2205226074621, 1.0625000295666882)]
+    assert section_1.salinity_factor is not None
+    assert section_1.nutrient_factor is not None
+    assert section_1.illumination_factor is not None
+    assert section_1.temp_factor is not None
+    # Testing the calculation of growth rate
+    model.calculate_growth_rate()
+    assert section_1.seaweed_growth_rate is not None
+
+
+def test_calculating_factors_lme():
     """
     Test the calculation of factors
     """
@@ -62,7 +85,7 @@ def test_calculating_growth_rate():
     assert section_1.seaweed_growth_rate is not None
 
 
-def test_construct_dataframe_from_section_data():
+def construct_dataframe_from_section_data():
     """
     Tests if the dataframe is correctly constructed from the sections
     """
@@ -75,6 +98,6 @@ def test_construct_dataframe_from_section_data():
     model.calculate_factors()
     model.calculate_growth_rate()
     model.create_section_dfs()
-    sections_df = model.construct_df_from_sections_for_date("2001-01-31")
+    sections_df = model.construct_df_from_sections_for_date(0, 1)
     assert len(sections_df.index) == number_sections
-    assert len(sections_df.columns) == 11
+    assert len(sections_df.columns) == 12
