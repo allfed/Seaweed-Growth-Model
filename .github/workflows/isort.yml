@@ -1,36 +1,13 @@
-name: isort
-
+name: Run isort
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  - push
 
 jobs:
   build:
-    name: Running isort
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.9"]
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: isort/isort-action@master
+        continue-on-error: true
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          python -m pip install --upgrade pip
-          pip install isort
-          pip install -e .
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Sort with isort
-        run: |
-          isort .
-
+            requirementsFiles: "requirements.txt requirements-test.txt"
