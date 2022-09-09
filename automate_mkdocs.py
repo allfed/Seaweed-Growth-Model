@@ -3,10 +3,11 @@
 import ast
 import importlib
 import json
-import yaml
 from collections import defaultdict
 from pathlib import Path
 from typing import Union
+
+import yaml
 
 
 def add_val(indices, value, data):

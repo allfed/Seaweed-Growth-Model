@@ -1,8 +1,10 @@
 """
 Test the whole model
 """
-import pytest
 import os
+
+import pytest
+
 from src.seaweed_model import SeaweedModel
 
 

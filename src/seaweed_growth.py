@@ -14,8 +14,9 @@ in an open-channel raceway
 Journal of Computational Biology, 17(7), 895−906.
 """
 import math
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 
 
 def growth_factor_combination_single_value(

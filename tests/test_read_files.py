@@ -1,11 +1,13 @@
 """
 Tests the reading and writing of files
 """
+import os
+
+import geopandas as gpd
 import pandas as pd
 import pytest
-import os
+
 from src import read_files
-import geopandas as gpd
 
 
 def test_read_file_by_lme():

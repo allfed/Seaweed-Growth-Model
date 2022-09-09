@@ -1,8 +1,9 @@
 """
 Reads in the ocean data after nuclear war provided by Cherryl Harrison
 """
-import pandas as pd
 import pickle
+
+import pandas as pd
 
 
 class DataLME:
