@@ -27,7 +27,7 @@ jobs:
         run: |
           sudo apt update
           python -m pip install --upgrade pip
-          pip install pytest
+          pip install isort
           pip install -e .
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Sort with isort
