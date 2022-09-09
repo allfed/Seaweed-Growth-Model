@@ -4,15 +4,18 @@ Tests the growth functions
 import pandas as pd
 import pytest
 
-from src.seaweed_growth import (calculate_illumination_factor,
-                                calculate_nutrient_factor,
-                                calculate_salinity_factor,
-                                calculate_temperature_factor,
-                                growth_factor_combination,
-                                growth_factor_combination_single_value,
-                                illumination_single_value,
-                                nutrient_single_value, salinity_single_value,
-                                temperature_single_value)
+from src.seaweed_growth import (
+    calculate_illumination_factor,
+    calculate_nutrient_factor,
+    calculate_salinity_factor,
+    calculate_temperature_factor,
+    growth_factor_combination,
+    growth_factor_combination_single_value,
+    illumination_single_value,
+    nutrient_single_value,
+    salinity_single_value,
+    temperature_single_value,
+)
 
 
 def create_test_dataframe_reasonable_values():
