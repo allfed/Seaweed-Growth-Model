@@ -2,6 +2,7 @@ import pickle
 
 import geopandas as gpd
 import pandas as pd
+import os
 
 
 def prepare_gridded_data(path):
@@ -30,7 +31,7 @@ def prepare_gridded_data(path):
     }
     dict_env_dfs = {}
     for science_name in env_params.keys():
-        env_df = pd.read_pickle("nw_" + science_name + "_3_months_pickle.pkl")
+        env_df = pd.read_pickle(path+os.sep+"data" + os.sep + "gridded_data_test_dataset" + os.sep + "nw_" + science_name + "_3_months_pickle.pkl")
         env_df.reset_index(inplace=True)
         env_df.columns = ["time", "TLONG", "TLAT", env_params[science_name], "geometry"]
         dict_env_dfs[science_name] = gpd.GeoDataFrame(env_df)

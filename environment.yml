@@ -1,4 +1,4 @@
-name: seaweed_growth_model
+name: seaweed-growth-model
 channels:
   - conda-forge
   - defaults
