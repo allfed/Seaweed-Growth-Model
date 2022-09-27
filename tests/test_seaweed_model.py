@@ -1,8 +1,10 @@
 """
 Test the whole model
 """
-import pytest
 import os
+
+import pytest
+
 from src.seaweed_model import SeaweedModel
 
 
@@ -40,7 +42,7 @@ def test_grid_data():
     model.add_data_by_grid
     (
         [(-79.2205226074621, 1.0625000295666882)],
-        "data/gridded_data_test_dataset/data_gridded_all_parameters.pkl"
+        "data/gridded_data_test_dataset/data_gridded_all_parameters.pkl",
     )
     assert len(model.sections.keys()) == 1
     # Testing the calculation of factors

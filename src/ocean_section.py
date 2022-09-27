@@ -4,6 +4,7 @@ a section of the ocean. This can be either a large marine ecosystem
 or simply a part of a global grid.
 """
 import pandas as pd
+
 from src import seaweed_growth as sg
 
 
@@ -119,4 +120,6 @@ class OceanSection:
         # check if the dataframe has been created
         assert self.section_df is not None
         # select the dataframe for the date
-        return self.section_df[self.section_df["months_since_war"].between(min_month, max_month)]
+        return self.section_df[
+            self.section_df["months_since_war"].between(min_month, max_month)
+        ]

@@ -1,8 +1,9 @@
 """
 Reads in the ocean data after nuclear war provided by Cherryl Harrison
 """
-import pandas as pd
 import pickle
+
+import pandas as pd
 
 
 class DataLME:
@@ -11,6 +12,7 @@ class DataLME:
     Meant to only read in the data once
     and provide the data for each LME as needed
     """
+
     def __init__(self, file):
         assert file is not None
         self.file = file
@@ -72,6 +74,7 @@ class DataGrid:
     Meant to only read in the data once
     and provide the data for each grid cell as needed
     """
+
     def __init__(self, file):
         assert file is not None
         self.file = file

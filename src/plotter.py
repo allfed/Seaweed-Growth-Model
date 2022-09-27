@@ -1,7 +1,8 @@
-import matplotlib.pyplot as plt
-import geopandas as gpd
-import pandas as pd
 from src.seaweed_model import SeaweedModel
+
+import geopandas as gpd
+import matplotlib.pyplot as plt
+import pandas as pd
 
 
 class Plotter:

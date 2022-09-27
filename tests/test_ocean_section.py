@@ -1,8 +1,8 @@
 """
 Tests the ocean section class
 """
-import pytest
 import pandas as pd
+import pytest
 
 from src.ocean_section import OceanSection
 

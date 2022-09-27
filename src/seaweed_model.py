@@ -2,6 +2,7 @@
 Main Interface
 """
 import pandas as pd
+
 from src import ocean_section as oc_se
 from src import read_files
 
@@ -96,8 +97,5 @@ class SeaweedModel:
         date_dict = {}
         for section_name, section_object in self.sections.items():
             date_dict[section_name] = section_object.select_section_df_date_lme
-            (
-                min_month,
-                max_month
-            )
+            (min_month, max_month)
         return pd.DataFrame.from_dict(date_dict, orient="index")
