@@ -1,10 +1,6 @@
 """
 Test the whole model
 """
-import os
-
-import pytest
-
 from src.seaweed_model import SeaweedModel
 
 
@@ -27,11 +23,6 @@ def test_reading_in_lme_data():
     assert len(model.sections.keys()) == 3
 
 
-reason = """Skip this when not run locally, as it requires the data to be present
- Had to skip this file for Github as it is too large """
-
-
-@pytest.mark.skipif("zorin" not in os.environ, reason=reason)
 def test_grid_data():
     """
     Test the reading in of grid data and the calculation of factors
@@ -39,15 +30,14 @@ def test_grid_data():
     """
     # Testing the reading
     model = SeaweedModel()
-    model.add_data_by_grid
-    (
-        [(-79.2205226074621, 1.0625000295666882)],
-        "data/gridded_data_test_dataset/data_gridded_all_parameters.pkl",
+    model.add_data_by_grid(
+        [(17.474949344648152, 296.9649842693172)],
+        "data/gridded_data_test_dataset_US_only/data_gridded_all_parameters.pkl",
     )
     assert len(model.sections.keys()) == 1
     # Testing the calculation of factors
     model.calculate_factors()
-    section_1 = model.sections[(-79.2205226074621, 1.0625000295666882)]
+    section_1 = model.sections[(17.474949344648152, 296.9649842693172)]
     assert section_1.salinity_factor is not None
     assert section_1.nutrient_factor is not None
     assert section_1.illumination_factor is not None
