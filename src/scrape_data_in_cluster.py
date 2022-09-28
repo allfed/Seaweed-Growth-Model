@@ -48,6 +48,7 @@ def prep_nw_data(path, file, min_lat, max_lat, min_lon, max_lon, length_time, en
     # Save to pickle
     env_time_df_geo.to_pickle("nw_" + env_param + "_" + str(length_time) + "_months_pickle.pkl")
 
+
 if __name__ == "__main__":
     env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf", "NH4"]
     for env_param in env_params:

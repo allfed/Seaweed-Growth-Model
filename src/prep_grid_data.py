@@ -31,8 +31,8 @@ def prepare_gridded_data(path):
     }
     dict_env_dfs = {}
     for science_name in env_params.keys():
-        full_path = path + os.sep + "data" + os.sep + "gridded_data_test_dataset" + os.sep
-        env_df = pd.read_pickle(full_path + "nw_" + science_name + "_3_months_pickle.pkl")
+        full_path = path + os.sep + "data" + os.sep + "gridded_data_test_dataset_US_only" + os.sep
+        env_df = pd.read_pickle(full_path + "nw_" + science_name + "_36_months_pickle.pkl")
         env_df.reset_index(inplace=True)
         env_df.columns = ["time", "TLONG", "TLAT", env_params[science_name], "geometry"]
         dict_env_dfs[science_name] = gpd.GeoDataFrame(env_df)
@@ -70,7 +70,8 @@ def prepare_gridded_data(path):
         # Convert back to geodataframe before saving
         data_dict[lat_lon] = gpd.GeoDataFrame(concat_latlon_dfs)
     # Make pickle out of it, so we don't have to run this every time
-    with open("data_gridded_all_parameters.pkl", "wb") as handle:
+    full_path = path + os.sep + "data" + os.sep + "gridded_data_test_dataset_US_only" + os.sep
+    with open(full_path + "data_gridded_all_parameters.pkl", "wb") as handle:
         pickle.dump(data_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
