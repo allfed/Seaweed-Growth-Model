@@ -31,10 +31,9 @@ def test_grid_data():
     # Testing the reading
     model = SeaweedModel()
     model.add_data_by_grid(
-        [(17.474949344648152, 296.9649842693172)],
         "data/gridded_data_test_dataset_US_only/data_gridded_all_parameters.pkl",
     )
-    assert len(model.sections.keys()) == 1
+    assert len(model.sections.keys()) == 4550
     # Testing the calculation of factors
     model.calculate_factors()
     section_1 = model.sections[(17.474949344648152, 296.9649842693172)]

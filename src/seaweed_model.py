@@ -38,12 +38,13 @@ class SeaweedModel:
             )
         self.lme_or_grid = "lme"
 
-    def add_data_by_grid(self, lat_lons, file):
+    def add_data_by_grid(self, file):
         """
         Adds data from the database to the model.
         Based on a grid.
         Arguments:
             lat_lons: a list of lat_lon tuples
+            file: the file to read the data from
         Returns:
             None
         """
@@ -52,7 +53,7 @@ class SeaweedModel:
         # Add the data to the model
         data_grid = read_files.DataGrid(file)
         # Add the sections to the model
-        for lat_lon in lat_lons:
+        for lat_lon in data_grid.grid_dict.keys():
             self.sections[lat_lon] = oc_se.OceanSection(
                 lat_lon, data_grid.provide_data_grid(lat_lon)
             )

@@ -57,6 +57,10 @@ def prepare_gridded_data(path):
         for env_param in env_params.keys():
             env_param_latlon_df = dict_env_dfs_grouped[env_param].get_group(lat_lon)
             env_param_latlon_df.set_index("time", inplace=True)
+            # Add some fixes to the data, as some of them go slightly out of bounds
+            # This is happening due to the way the climate model works
+            if env_param == "NO3":
+                env_param_latlon_df.loc[env_param_latlon_df["nitrate"] < 0, "nitrate"] = 0
             list_env_param_latlon_df.append(pd.DataFrame(env_param_latlon_df))
         concat_latlon_dfs = pd.concat(list_env_param_latlon_df, axis=1)
         # Remove duplicate columns

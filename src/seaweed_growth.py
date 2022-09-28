@@ -52,7 +52,7 @@ def growth_factor_combination_single_value(
         salinity_factor,
     ]
     for factor in factors:
-        assert 0 <= factor <= 1
+        assert 0 <= factor <= 1, "factor has the value {}".format(factor)
     # Calculate the actual production rate
     return illumination_factor * temperature_factor * nutrient_factor * salinity_factor
 
@@ -103,7 +103,7 @@ def illumination_single_value(illumination: float):
         return np.nan
     # Make sure the values are in a reasonable range
     # 1361 is the maximum illumination that reaches the atmosphere
-    assert 0 <= illumination <= 1361
+    assert 0 <= illumination <= 1361, "illumination has the value {}".format(illumination)
     if illumination < 21.9:
         return illumination / 21.9
     elif illumination > 100:
@@ -131,7 +131,7 @@ def temperature_single_value(temperature: float):
     if np.isnan(temperature):
         return np.nan
     # make sure the temperature is in a reasonable range
-    assert -20 <= temperature <= 50
+    assert -20 <= temperature <= 50, "temperature has the value {}".format(temperature)
     # where Kt1 = 0.017°C−2 and Kt2 = 0.06°C−2. These coefficients were determined by
     # fitting the preceding equation such that g(15°C) = 0.25 and g(36°C) = 0.1
     kt1 = 0.017
@@ -172,9 +172,9 @@ def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float):
     if np.isnan(nitrate) or np.isnan(ammonium) or np.isnan(phosphate):
         return np.nan
     # Make sure all three nutrients are in a reasonable range
-    assert 0 <= nitrate <= 50
-    assert 0 <= ammonium <= 50
-    assert 0 <= phosphate <= 50
+    assert 0 <= nitrate <= 50, "nitrate has the value {}".format(nitrate)
+    assert 0 <= ammonium <= 50, "ammonium has the value {}".format(ammonium)
+    assert 0 <= phosphate <= 50, "phosphate has the value {}".format(phosphate)
 
     # where KNO3 = 0.4 μM, KNH4 = 0.3 μM, and KPO4 = 0.1 μM.
     # were implemented because these yield growth rates consistent with
@@ -218,7 +218,7 @@ def salinity_single_value(salinity: float):
     if np.isnan(salinity):
         return np.nan
     # Make sure the salinity is in a reasonable range
-    assert 0 <= salinity <= 100
+    assert 0 <= salinity <= 100, "salinity has the value {}".format(salinity)
     # with  = 0.007 ppt−2 and = 0.063 ppt−2.
     kS1 = 0.007
     kS2 = 0.063

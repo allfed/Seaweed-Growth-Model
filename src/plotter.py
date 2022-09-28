@@ -1,11 +1,11 @@
 from src.seaweed_model import SeaweedModel
-
+import os
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import pandas as pd
 
 
-class Plotter:
+class PlotterLME:
     """
     Class to organize all the plotting functions
     """
@@ -129,7 +129,15 @@ class Plotter:
         plt.close()
 
 
-def main():
+class PlotterGrid:
+    def __init__(self, seaweed_model):
+        self.seaweed_model = seaweed_model
+
+
+def lme():
+    """
+    Initializes all the data for the LME model and calls the plotting functions
+    """
     model = SeaweedModel()
     model.add_data_by_lme(
         [i for i in range(1, 67)], "data/seaweed_environment_data_in_nuclear_war.csv"
@@ -148,7 +156,7 @@ def main():
         + ["200" + str(i) + "-06-30" for i in range(2, 10)]
         + ["20" + str(i) + "-06-30" for i in range(10, 18)]
     )
-    plotter = Plotter(model)
+    plotter = PlotterLME(model)
     for date in dates:
         plotter.plot_growth_rate_by_lme_bar(date, path="results/lme/")
         plotter.plot_growth_rate_by_lme_global(date, path="results/lme/")
@@ -160,5 +168,21 @@ def main():
     plotter.plot_growth_rate_by_best_lme_as_line(path="results/lme/", window=1)
 
 
+def grid_US():
+    """
+    Initializes all the data for the grid model for the US and calls the plotting functions
+    """
+    model = SeaweedModel()
+    path = "data" + os.sep + "gridded_data_test_dataset_US_only"
+    file = "data_gridded_all_parameters.pkl"
+    model.add_data_by_grid(path + os.sep + file)
+    model.calculate_factors()
+    model.calculate_growth_rate()
+
+
 if __name__ == "__main__":
-    main()
+    grid_or_lme = "grid"
+    if grid_or_lme == "lme":
+        lme()
+    elif grid_or_lme == "grid":
+        grid_US()
