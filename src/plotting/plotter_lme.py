@@ -1,4 +1,4 @@
-from src.seaweed_model import SeaweedModel
+from src.model.seaweed_model import SeaweedModel
 import os
 import geopandas as gpd
 import matplotlib.pyplot as plt

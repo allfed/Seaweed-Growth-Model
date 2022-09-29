@@ -4,7 +4,7 @@ Tests the ocean section class
 import pandas as pd
 import pytest
 
-from src.ocean_section import OceanSection
+from src.model.ocean_section import OceanSection
 
 
 def create_test_dataframe_reasonable_values():

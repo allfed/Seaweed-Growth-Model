@@ -4,7 +4,7 @@ Tests the growth functions
 import pandas as pd
 import pytest
 
-from src.seaweed_growth import (
+from src.model.seaweed_growth import (
     calculate_illumination_factor,
     calculate_nutrient_factor,
     calculate_salinity_factor,

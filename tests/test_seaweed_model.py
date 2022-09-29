@@ -1,7 +1,7 @@
 """
 Test the whole model
 """
-from src.seaweed_model import SeaweedModel
+from src.model.seaweed_model import SeaweedModel
 
 
 def test_create_model_instance():

@@ -4,7 +4,7 @@ Tests the reading and writing of files
 import geopandas as gpd
 import pandas as pd
 
-from src.read_files import DataGrid, DataLME
+from src.processing.read_files import DataGrid, DataLME
 
 
 def test_read_file_by_lme():
