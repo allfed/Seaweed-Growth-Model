@@ -1,11 +1,7 @@
 """
 Test the whole model
 """
-import os
-
-import pytest
-
-from src.seaweed_model import SeaweedModel
+from src.model.seaweed_model import SeaweedModel
 
 
 def test_create_model_instance():
@@ -27,11 +23,6 @@ def test_reading_in_lme_data():
     assert len(model.sections.keys()) == 3
 
 
-reason = """Skip this when not run locally, as it requires the data to be present
- Had to skip this file for Github as it is too large """
-
-
-@pytest.mark.skipif("zorin" not in os.environ, reason=reason)
 def test_grid_data():
     """
     Test the reading in of grid data and the calculation of factors
@@ -39,15 +30,13 @@ def test_grid_data():
     """
     # Testing the reading
     model = SeaweedModel()
-    model.add_data_by_grid
-    (
-        [(-79.2205226074621, 1.0625000295666882)],
-        "data/gridded_data_test_dataset/data_gridded_all_parameters.pkl",
+    model.add_data_by_grid(
+        "data/gridded_data_test_dataset_US_only/data_gridded_all_parameters.pkl",
     )
-    assert len(model.sections.keys()) == 1
+    assert len(model.sections.keys()) == 4550
     # Testing the calculation of factors
     model.calculate_factors()
-    section_1 = model.sections[(-79.2205226074621, 1.0625000295666882)]
+    section_1 = model.sections[(17.474949344648152, 296.9649842693172)]
     assert section_1.salinity_factor is not None
     assert section_1.nutrient_factor is not None
     assert section_1.illumination_factor is not None
@@ -87,7 +76,7 @@ def test_calculating_growth_rate():
     assert section_1.seaweed_growth_rate is not None
 
 
-def construct_dataframe_from_section_data():
+def test_construct_dataframe_from_section_data():
     """
     Tests if the dataframe is correctly constructed from the sections
     """
@@ -100,6 +89,26 @@ def construct_dataframe_from_section_data():
     model.calculate_factors()
     model.calculate_growth_rate()
     model.create_section_dfs()
-    sections_df = model.construct_df_from_sections_for_date(0, 1)
+    sections_df = model.construct_df_from_sections_for_date(0)
     assert len(sections_df.index) == number_sections
     assert len(sections_df.columns) == 12
+
+
+def test_construct_df_for_parameter():
+    """
+    Tests if the dataframe is correctly constructed from the sections
+    """
+    parameter = "seaweed_growth_rate"
+    model = SeaweedModel()
+    model.add_data_by_lme(
+        [i for i in range(1, 3 + 1)],
+        "data/seaweed_environment_data_in_nuclear_war.csv",
+    )
+    model.calculate_factors()
+    model.calculate_growth_rate()
+    model.create_section_dfs()
+    parameter_df = model.construct_df_for_parameter(parameter)
+    # 240 is the number of months in the dataset
+    # 3 is the number of sections
+    assert len(parameter_df.index) == 240
+    assert len(parameter_df.columns) == 3

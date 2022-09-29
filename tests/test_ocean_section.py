@@ -4,7 +4,7 @@ Tests the ocean section class
 import pandas as pd
 import pytest
 
-from src.ocean_section import OceanSection
+from src.model.ocean_section import OceanSection
 
 
 def create_test_dataframe_reasonable_values():
@@ -102,8 +102,8 @@ def test_select_section_df_date():
     test_section.calculate_factors()
     test_section.calculate_growth_rate()
     test_section.create_section_df()
-    date_df = test_section.select_section_df_date(0, 1)
-    assert date_df.shape == (2, 12)
+    date_df = test_section.select_section_df_date(0)
+    assert date_df.shape == (12)
 
 
 def test_select_section_df_date_fail():
@@ -116,7 +116,7 @@ def test_select_section_df_date_fail():
     test_section.calculate_factors()
     test_section.calculate_growth_rate()
     with pytest.raises(AssertionError):
-        test_section.select_section_df_date(0, 1)
+        test_section.select_section_df_date(0)
 
 
 def test_calculate_mean_growth_rate():
