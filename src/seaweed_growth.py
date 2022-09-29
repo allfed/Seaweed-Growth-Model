@@ -103,7 +103,9 @@ def illumination_single_value(illumination: float):
         return np.nan
     # Make sure the values are in a reasonable range
     # 1361 is the maximum illumination that reaches the atmosphere
-    assert 0 <= illumination <= 1361, "illumination has the value {}".format(illumination)
+    assert 0 <= illumination <= 1361, "illumination has the value {}".format(
+        illumination
+    )
     if illumination < 21.9:
         return illumination / 21.9
     elif illumination > 100:

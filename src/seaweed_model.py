@@ -96,9 +96,7 @@ class SeaweedModel:
         """
         date_dict = {}
         for section_name, section_object in self.sections.items():
-            date_dict[section_name] = section_object.select_section_df_date(
-                months
-            )
+            date_dict[section_name] = section_object.select_section_df_date(months)
         return pd.DataFrame.from_dict(date_dict, orient="index")
 
     def construct_df_for_parameter(self, parameter):

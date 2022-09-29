@@ -34,8 +34,17 @@ def prepare_gridded_data(path):
     }
     dict_env_dfs = {}
     for science_name in env_params.keys():
-        full_path = path + os.sep + "data" + os.sep + "gridded_data_test_dataset_US_only" + os.sep
-        env_df = pd.read_pickle(full_path + "nw_" + science_name + "_36_months_pickle.pkl")
+        full_path = (
+            path
+            + os.sep
+            + "data"
+            + os.sep
+            + "gridded_data_test_dataset_US_only"
+            + os.sep
+        )
+        env_df = pd.read_pickle(
+            full_path + "nw_" + science_name + "_36_months_pickle.pkl"
+        )
         env_df.reset_index(inplace=True)
         env_df.columns = ["time", "TLONG", "TLAT", env_params[science_name], "geometry"]
         dict_env_dfs[science_name] = gpd.GeoDataFrame(env_df)
@@ -63,7 +72,9 @@ def prepare_gridded_data(path):
             # Add some fixes to the data, as some of them go slightly out of bounds
             # This is happening due to the way the climate model works
             if env_param == "NO3":
-                env_param_latlon_df.loc[env_param_latlon_df["nitrate"] < 0, "nitrate"] = 0
+                env_param_latlon_df.loc[
+                    env_param_latlon_df["nitrate"] < 0, "nitrate"
+                ] = 0
             list_env_param_latlon_df.append(pd.DataFrame(env_param_latlon_df))
         concat_latlon_dfs = pd.concat(list_env_param_latlon_df, axis=1)
         # Remove duplicate columns
@@ -77,11 +88,16 @@ def prepare_gridded_data(path):
         # Convert back to geodataframe before saving
         data_dict[lat_lon] = gpd.GeoDataFrame(concat_latlon_dfs)
     # Make pickle out of it, so we don't have to run this every time
-    full_path = path + os.sep + "data" + os.sep + "gridded_data_test_dataset_US_only" + os.sep
+    full_path = (
+        path + os.sep + "data" + os.sep + "gridded_data_test_dataset_US_only" + os.sep
+    )
     with open(full_path + "data_gridded_all_parameters.pkl", "wb") as handle:
         pickle.dump(data_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-def prep_nw_data(path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param):
+
+def prep_nw_data(
+    path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param
+):
     """
     ### This code is only used on the NCAR cluster. ###
 
@@ -111,27 +127,31 @@ def prep_nw_data(path, file, min_lat, max_lat, min_lon, max_lon, length_time, en
     env_time_df = env_time.to_dataframe()
     # Delete the depth column, as it is not needed
     if env_param == "PAR_avg":
-        del (env_time_df["z_t_150m"])
+        del env_time_df["z_t_150m"]
     else:
-        del (env_time_df["z_t"])
+        del env_time_df["z_t"]
     # Convert it to a geodataframe
     env_time_df_geo = gpd.GeoDataFrame(
-        env_time_df, geometry=gpd.points_from_xy(env_time_df.TLONG, env_time_df.TLAT))
+        env_time_df, geometry=gpd.points_from_xy(env_time_df.TLONG, env_time_df.TLAT)
+    )
     # Create a new index to remove redundant information
     env_time_df_geo.reset_index(inplace=True)
     env_time_df_geo.set_index(["time", "TLONG", "TLAT"], inplace=True)
     # delte the nlat and nlon columns, as thy are not needed anymore
-    del (env_time_df_geo["nlat"])
-    del (env_time_df_geo["nlon"])
+    del env_time_df_geo["nlat"]
+    del env_time_df_geo["nlon"]
     # Save to pickle
-    env_time_df_geo.to_pickle("nw_" + env_param + "_" + str(length_time) + "_months_pickle.pkl")
+    env_time_df_geo.to_pickle(
+        "nw_" + env_param + "_" + str(length_time) + "_months_pickle.pkl"
+    )
+
 
 def call_prep_nw_data():
     env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf", "NH4"]
     for env_param in env_params:
         print(env_param)
-        path = '/glade/u/home/chsharri/Work/NW/'
-        file = 'nw_ur_150_07.pop.h.' + env_param + '.nc'
+        path = "/glade/u/home/chsharri/Work/NW/"
+        file = "nw_ur_150_07.pop.h." + env_param + ".nc"
         # Index positions of the US in the dataset
         min_lat = 250
         max_lat = 320
@@ -140,7 +160,9 @@ def call_prep_nw_data():
         length_time = 36
         if env_param == "PAR_surf":
             env_param = "PAR_avg"
-        prep_nw_data(path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param)
+        prep_nw_data(
+            path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param
+        )
     print("done")
 
 

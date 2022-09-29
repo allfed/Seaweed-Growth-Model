@@ -18,7 +18,9 @@ class PlotterLME:
         Plots the growth rate for the model based on LME as a bar chart
         """
         assert self.seaweed_model.lme_or_grid == "lme"
-        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(date, date)
+        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(
+            date, date
+        )
         ax = date_section_df.seaweed_growth_rate.sort_values().plot(kind="bar")
         ax.set_title("Growth Rate by LME")
         ax.set_xlabel("LME")
@@ -37,7 +39,9 @@ class PlotterLME:
         Plots the growth rate fraction for all LME on a global map
         """
         assert self.seaweed_model.lme_or_grid == "lme"
-        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(date, date)
+        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(
+            date, date
+        )
         lme_shape = gpd.read_file("data/lme_shp/lme66.shp")
         lme_global = lme_shape.merge(
             date_section_df, left_on="LME_NUMBER", right_index=True
@@ -173,7 +177,6 @@ def grid_US():
     model.create_section_dfs()
     df = model.construct_df_for_parameter("seaweed_growth_rate")
     df.plot(subplots=True, figsize=(50, 50))
-
 
 
 if __name__ == "__main__":

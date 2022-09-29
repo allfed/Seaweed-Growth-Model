@@ -30,7 +30,8 @@ def test_read_file_by_grid():
     Tests the read_file class DataGrid
     """
     data_grid = DataGrid(
-        "data/gridded_data_test_dataset_US_only/data_gridded_all_parameters.pkl")
+        "data/gridded_data_test_dataset_US_only/data_gridded_all_parameters.pkl"
+    )
     # Make sure the correct object gets created
     assert data_grid is not None
     assert isinstance(data_grid, DataGrid)
