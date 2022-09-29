@@ -96,6 +96,7 @@ class OceanSection:
         )
         # Add a column with the month since war
         section_df["months_since_war"] = list(range(-3, section_df.shape[0] - 3, 1))
+        section_df.set_index("months_since_war", inplace=True)
         # Add the dataframe to the class
         section_df.name = self.name
         self.section_df = section_df
@@ -120,6 +121,4 @@ class OceanSection:
         # check if the dataframe has been created
         assert self.section_df is not None
         # select the dataframe for the date
-        return self.section_df[
-            self.section_df["months_since_war"].where("months_since_war", month)
-        ]
+        return self.section_df.loc[month, :]

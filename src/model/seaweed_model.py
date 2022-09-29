@@ -110,7 +110,5 @@ class SeaweedModel:
         """
         parameter_dict = {}
         for section_name, section_object in self.sections.items():
-            section_df = section_object.section_df
-            section_df.index = section_df["months_since_war"]
             parameter_dict[section_name] = section_object.section_df[parameter]
         return pd.DataFrame.from_dict(parameter_dict)
