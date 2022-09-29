@@ -29,7 +29,7 @@ nav:
   - modules:
     - src:
       - ocean_section: modules/src/ocean_section.md
-      - plotter: modules/src/plotter.md
+      - plotter_lme: modules/src/plotter_lme.md
       - preprocessing: modules/src/preprocessing.md
       - read_files: modules/src/read_files.md
       - seaweed_growth: modules/src/seaweed_growth.md
