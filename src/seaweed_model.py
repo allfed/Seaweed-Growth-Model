@@ -82,7 +82,7 @@ class SeaweedModel:
         for section in self.sections.values():
             section.create_section_df()
 
-    def construct_df_from_sections_for_date(self, min_month, max_month):
+    def construct_df_from_sections_for_date(self, months):
         """
         Constructs a dataframe from the data in the model for a given date.
         This uses the months since the beginning of the nuclear war.
@@ -94,9 +94,25 @@ class SeaweedModel:
         Returns:
             a dataframe
         """
-        assert self.lme_or_grid == "lme"
         date_dict = {}
         for section_name, section_object in self.sections.items():
-            date_dict[section_name] = section_object.select_section_df_date_lme
-            (min_month, max_month)
+            date_dict[section_name] = section_object.select_section_df_date(
+                months
+            )
         return pd.DataFrame.from_dict(date_dict, orient="index")
+
+    def construct_df_for_parameter(self, parameter):
+        """
+        Constructs a dataframe that contains complete time series of a given
+        parameter for all sections in the model.
+        Arguments:
+            parameter: the parameter to construct the dataframe for
+        Returns:
+            a dataframe with the date as index and the sections as columns
+        """
+        parameter_dict = {}
+        for section_name, section_object in self.sections.items():
+            section_df = section_object.section_df
+            section_df.index = section_df["months_since_war"]
+            parameter_dict[section_name] = section_object.section_df[parameter]
+        return pd.DataFrame.from_dict(parameter_dict)

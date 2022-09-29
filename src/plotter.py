@@ -18,7 +18,7 @@ class PlotterLME:
         Plots the growth rate for the model based on LME as a bar chart
         """
         assert self.seaweed_model.lme_or_grid == "lme"
-        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(date)
+        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(date, date)
         ax = date_section_df.seaweed_growth_rate.sort_values().plot(kind="bar")
         ax.set_title("Growth Rate by LME")
         ax.set_xlabel("LME")
@@ -37,7 +37,7 @@ class PlotterLME:
         Plots the growth rate fraction for all LME on a global map
         """
         assert self.seaweed_model.lme_or_grid == "lme"
-        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(date)
+        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(date, date)
         lme_shape = gpd.read_file("data/lme_shp/lme66.shp")
         lme_global = lme_shape.merge(
             date_section_df, left_on="LME_NUMBER", right_index=True
@@ -145,19 +145,9 @@ def lme():
     model.calculate_factors()
     model.calculate_growth_rate()
     model.create_section_dfs()
-    # Plot for a selection of dates
-    # beginning of simulation before nuclear war
-    # one month after nuclear war
-    # one year after nuclear war
-    # two years after nuclear war
-    # and so forth
-    dates = (
-        ["2001-01-31"]
-        + ["200" + str(i) + "-06-30" for i in range(2, 10)]
-        + ["20" + str(i) + "-06-30" for i in range(10, 18)]
-    )
     plotter = PlotterLME(model)
-    for date in dates:
+
+    for date in [dates for dates in range(-3, 237, 10)]:
         plotter.plot_growth_rate_by_lme_bar(date, path="results/lme/")
         plotter.plot_growth_rate_by_lme_global(date, path="results/lme/")
 
@@ -166,6 +156,8 @@ def lme():
 
     # Plot the growth rate of the 5 best LMEs
     plotter.plot_growth_rate_by_best_lme_as_line(path="results/lme/", window=1)
+    df = model.construct_df_for_parameter("seaweed_growth_rate")
+    df.plot(subplots=True, figsize=(50, 50))
 
 
 def grid_US():
@@ -178,10 +170,14 @@ def grid_US():
     model.add_data_by_grid(path + os.sep + file)
     model.calculate_factors()
     model.calculate_growth_rate()
+    model.create_section_dfs()
+    df = model.construct_df_for_parameter("seaweed_growth_rate")
+    df.plot(subplots=True, figsize=(50, 50))
+
 
 
 if __name__ == "__main__":
-    grid_or_lme = "grid"
+    grid_or_lme = "lme"
     if grid_or_lme == "lme":
         lme()
     elif grid_or_lme == "grid":

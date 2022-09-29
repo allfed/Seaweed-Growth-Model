@@ -14,7 +14,6 @@ class OceanSection:
     alculates for every section how quickly seaweed can grow
     and also saves the single factors for growth
     """
-
     def __init__(self, name, data):
         # Add the name
         self.name = name
@@ -109,7 +108,7 @@ class OceanSection:
         # calculate the mean growth rate
         return self.section_df["seaweed_growth_rate"].mean()
 
-    def select_section_df_date(self, min_month, max_month):
+    def select_section_df_date(self, month):
         """
         Selectes a date from the section df and returns it
         Arguments:
@@ -121,5 +120,5 @@ class OceanSection:
         assert self.section_df is not None
         # select the dataframe for the date
         return self.section_df[
-            self.section_df["months_since_war"].between(min_month, max_month)
+            self.section_df["months_since_war"].where("months_since_war", month)
         ]
