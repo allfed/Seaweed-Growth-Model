@@ -32,8 +32,6 @@ nav:
         - ocean_section: modules/src/model/ocean_section.md
         - seaweed_growth: modules/src/model/seaweed_growth.md
         - seaweed_model: modules/src/model/seaweed_model.md
-      - plotting:
-        - plotter_lme: modules/src/plotting/plotter_lme.md
       - processing:
         - preprocessing: modules/src/processing/preprocessing.md
         - read_files: modules/src/processing/read_files.md
