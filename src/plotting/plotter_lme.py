@@ -2,7 +2,7 @@ from src.model.seaweed_model import SeaweedModel
 import os
 import geopandas as gpd
 import matplotlib.pyplot as plt
-import pandas as pd
+import modin.pandas as pd
 
 
 class PlotterLME:
