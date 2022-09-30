@@ -99,8 +99,7 @@ def prepare_gridded_data(path):
 
 
 def prep_nw_data(
-    path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param
-):
+    path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param, all_cells=False):
     """
     ### This code is only used on the NCAR cluster. ###
 
@@ -118,14 +117,17 @@ def prep_nw_data(
         length_time: how much of the original dataset should
                      be used. Measured in month, max = 300
         env_param: the environmental parameter to look at
+        all_cells: if True, all cells are used, if False, only selection
     Returns:
         None
     """
     # Read in the data
     ds = xr.open_dataset(path + file)
     # 0 here means we are only using the uppermost layer of the ocean
-
-    env_time = ds[env_param][:length_time, 0, min_lat:max_lat, min_lon:max_lon]
+    if all_cells:
+        env_time = ds[env_param][:length_time, 0, :, :]    
+    else:
+        env_time = ds[env_param][:length_time, 0, min_lat:max_lat, min_lon:max_lon]
     # Make it a dataframe
     env_time_df = env_time.to_dataframe()
     # Delete the depth column, as it is not needed
@@ -133,16 +135,14 @@ def prep_nw_data(
         del env_time_df["z_t_150m"]
     else:
         del env_time_df["z_t"]
-    # Convert it to a geodataframe
-#    env_time_df_geo = gpd.GeoDataFrame(
-#        env_time_df, geometry=gpd.points_from_xy(env_time_df.TLONG, env_time_df.TLAT)
-#    )
     # Create a new index to remove redundant information
     env_time_df.reset_index(inplace=True)
     env_time_df.set_index(["time", "TLONG", "TLAT"], inplace=True)
     # delte the nlat and nlon columns, as thy are not needed anymore
     del env_time_df["nlat"]
     del env_time_df["nlon"]
+    # remove all columns that are only nan
+    env_time_df.dropna(axis=0, how="all", inplace=True)
     # Save to pickle
     env_time_df.to_pickle(
         "nw_" + env_param + "_" + str(length_time) + "_months_pickle.pkl"

@@ -33,7 +33,8 @@ def test_grid_data():
     model.add_data_by_grid(
         "data/temporary_files/data_gridded_all_parameters.pkl",
     )
-    assert len(model.sections.keys()) == 4550
+    # Number of grid cells with water
+    assert len(model.sections.keys()) == 2259
     # Testing the calculation of factors
     model.calculate_factors()
     section_1 = model.sections[(17.474949344648152, 296.9649842693172)]

@@ -42,8 +42,7 @@ def time_series_analysis(growth_df):
     Returns:
         clustered growth_df: pandas.DataFrame
     """
-
-
+    pass
 
 
 if __name__ == "__main__":
@@ -52,10 +51,18 @@ if __name__ == "__main__":
     # only run this if the file does not exist
     if not os.path.isfile("data" + os.sep + "temporary_files" + os.sep + "growth_df.pkl"):
         parameter = "seaweed_growth_rate"
-        path = "data" + os.sep + "gridded_data_test_dataset_US_only"
+        path = "data" + os.sep + "temporary_files"
         file = "data_gridded_all_parameters.pkl"
         growth_df = get_parameter_dataframe(parameter, path, file)
         growth_df.to_pickle("data" + os.sep + "temporary_files" + os.sep + "growth_df.pkl")
     else:
         growth_df = pd.read_pickle("data" + os.sep + "temporary_files" + os.sep + "growth_df.pkl")
     # Do the time series analysis
+    # only run this if the file does not exist
+    if not os.path.isfile("data" + os.sep + "temporary_files" + os.sep + "clustered_growth_df.pkl"):
+        clustered_growth_df = time_series_analysis(growth_df)
+        clustered_growth_df.to_pickle("data" + os.sep + "temporary_files" + os.sep + "clustered_growth_df.pkl")
+    else:
+        clustered_growth_df = pd.read_pickle("data" + os.sep + "temporary_files" + os.sep + "clustered_growth_df.pkl")
+
+    
