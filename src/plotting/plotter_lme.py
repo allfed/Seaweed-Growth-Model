@@ -1,25 +1,23 @@
 from src.model.seaweed_model import SeaweedModel
-import os
 import geopandas as gpd
 import matplotlib.pyplot as plt
-import modin.pandas as pd
+import pandas as pd
 
 
 class PlotterLME:
     """
     Class to organize all the plotting functions
     """
-
     def __init__(self, seaweed_model):
         self.seaweed_model = seaweed_model
 
-    def plot_growth_rate_by_lme_bar(self, date, path=""):
+    def plot_growth_rate_by_lme_bar(self, month, path=""):
         """
         Plots the growth rate for the model based on LME as a bar chart
         """
         assert self.seaweed_model.lme_or_grid == "lme"
         date_section_df = self.seaweed_model.construct_df_from_sections_for_date(
-            date, date
+            month
         )
         ax = date_section_df.seaweed_growth_rate.sort_values().plot(kind="bar")
         ax.set_title("Growth Rate by LME")
@@ -28,38 +26,41 @@ class PlotterLME:
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
         plt.savefig(
-            path + "growth_rate_by_lme_bar" + str(date) + ".png",
+            path + "growth_rate_by_lme_bar" + str(month) + ".png",
             dpi=200,
             bbox_inches="tight",
         )
         plt.close()
 
-    def plot_growth_rate_by_lme_global(self, date, path=""):
+    def plot_growth_rate_by_lme_global(self, month, path=""):
         """
         Plots the growth rate fraction for all LME on a global map
         """
         assert self.seaweed_model.lme_or_grid == "lme"
         date_section_df = self.seaweed_model.construct_df_from_sections_for_date(
-            date, date
+            month
         )
         lme_shape = gpd.read_file("data/lme_shp/lme66.shp")
         lme_global = lme_shape.merge(
             date_section_df, left_on="LME_NUMBER", right_index=True
         )
         ax = lme_global.plot(
-            column="seaweed_growth_rate",
-            cmap="Greens",
-            legend=True,
+            "seaweed_growth_rate",
             edgecolor="black",
             linewidth=0.1,
             vmin=0,
             vmax=0.8,
+            cmap="Greens",
+            legend=True
         )
-        ax.set_title("Fraction of optimal growth rate on date: " + str(date))
+        ax.set_title(
+            "Fraction of optimal growth rate in month after nuclear war: " + str(month)
+        )
+        
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
         plt.savefig(
-            path + "growth_rate_by_lme_global_" + str(date) + ".png",
+            path + "growth_rate_by_lme_global_" + str(month) + ".png",
             dpi=200,
             bbox_inches="tight",
         )
@@ -133,11 +134,6 @@ class PlotterLME:
         plt.close()
 
 
-class PlotterGrid:
-    def __init__(self, seaweed_model):
-        self.seaweed_model = seaweed_model
-
-
 def lme():
     """
     Initializes all the data for the LME model and calls the plotting functions
@@ -151,37 +147,18 @@ def lme():
     model.create_section_dfs()
     plotter = PlotterLME(model)
 
-    for date in [dates for dates in range(-3, 237, 10)]:
-        plotter.plot_growth_rate_by_lme_bar(date, path="results/lme/")
-        plotter.plot_growth_rate_by_lme_global(date, path="results/lme/")
+    for month in [month for month in range(-3, 237, 10)]:
+        plotter.plot_growth_rate_by_lme_bar(month, path="results/lme/")
+        plotter.plot_growth_rate_by_lme_global(month, path="results/lme/")
 
     # Print the best 3 LMEs by mean growth rate
     plotter.calculate_mean_groth_rate_by_lme()
 
     # Plot the growth rate of the 5 best LMEs
-    plotter.plot_growth_rate_by_best_lme_as_line(path="results/lme/", window=1)
-    df = model.construct_df_for_parameter("seaweed_growth_rate")
-    df.plot(subplots=True, figsize=(50, 50))
-
-
-def grid_US():
-    """
-    Initializes all the data for the grid model for the US and calls the plotting functions
-    """
-    model = SeaweedModel()
-    path = "data" + os.sep + "gridded_data_test_dataset_US_only"
-    file = "data_gridded_all_parameters.pkl"
-    model.add_data_by_grid(path + os.sep + file)
-    model.calculate_factors()
-    model.calculate_growth_rate()
-    model.create_section_dfs()
+    plotter.plot_growth_rate_by_best_lme_as_line(path="results/lme/", window=10)
     df = model.construct_df_for_parameter("seaweed_growth_rate")
     df.plot(subplots=True, figsize=(50, 50))
 
 
 if __name__ == "__main__":
-    grid_or_lme = "lme"
-    if grid_or_lme == "lme":
-        lme()
-    elif grid_or_lme == "grid":
-        grid_US()
+    lme()
