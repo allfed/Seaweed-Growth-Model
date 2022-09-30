@@ -8,6 +8,7 @@ class PlotterLME:
     """
     Class to organize all the plotting functions
     """
+
     def __init__(self, seaweed_model):
         self.seaweed_model = seaweed_model
 
@@ -16,9 +17,7 @@ class PlotterLME:
         Plots the growth rate for the model based on LME as a bar chart
         """
         assert self.seaweed_model.lme_or_grid == "lme"
-        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(
-            month
-        )
+        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(month)
         ax = date_section_df.seaweed_growth_rate.sort_values().plot(kind="bar")
         ax.set_title("Growth Rate by LME")
         ax.set_xlabel("LME")
@@ -37,9 +36,7 @@ class PlotterLME:
         Plots the growth rate fraction for all LME on a global map
         """
         assert self.seaweed_model.lme_or_grid == "lme"
-        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(
-            month
-        )
+        date_section_df = self.seaweed_model.construct_df_from_sections_for_date(month)
         lme_shape = gpd.read_file("data/lme_shp/lme66.shp")
         lme_global = lme_shape.merge(
             date_section_df, left_on="LME_NUMBER", right_index=True
@@ -51,7 +48,7 @@ class PlotterLME:
             vmin=0,
             vmax=0.8,
             cmap="Greens",
-            legend=True
+            legend=True,
         )
         ax.set_title(
             "Fraction of optimal growth rate in month after nuclear war: " + str(month)
