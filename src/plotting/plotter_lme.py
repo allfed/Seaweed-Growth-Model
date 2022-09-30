@@ -56,7 +56,7 @@ class PlotterLME:
         ax.set_title(
             "Fraction of optimal growth rate in month after nuclear war: " + str(month)
         )
-        
+
         fig = plt.gcf()
         fig.set_size_inches(10, 5)
         plt.savefig(

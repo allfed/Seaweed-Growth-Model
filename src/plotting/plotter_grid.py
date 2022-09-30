@@ -1,7 +1,5 @@
 import os
 from src.model.seaweed_model import SeaweedModel
-import geopandas as gpd
-import matplotlib.pyplot as plt
 
 
 class PlotterGrid:
