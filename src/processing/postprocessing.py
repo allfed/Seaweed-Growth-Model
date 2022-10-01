@@ -6,9 +6,7 @@ from src.model.seaweed_model import SeaweedModel
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from tslearn.clustering import TimeSeriesKMeans
-import math
 from tslearn.utils import to_time_series_dataset
-import time
 
 
 def get_parameter_dataframe(parameter, path, file):
@@ -42,7 +40,8 @@ def time_series_analysis(growth_df, n_clusters):
         growth_df: pandas.DataFrame
         n_clusters: int - the number of clusters to use
     Returns:
-        clustered growth_df: pandas.DataFrame
+        labels: list - the labels for each time series
+        km: TimeSeriesKMeans - the k-means object
     """
     # Make sure that each entry has a value
     assert growth_df.notna().all().all(), "The dataframe has nan"
@@ -66,7 +65,7 @@ def elbow_method(growth_df, max_clusters):
         growth_df: pandas.DataFrame
         max_clusters: int - the maximum number of clusters to try
     Returns:
-        None, just plots the elbow method
+        None, just plots the elbow method and saves it
     """
     # Find the optimal number of clusters
     inertias = {}
@@ -76,27 +75,37 @@ def elbow_method(growth_df, max_clusters):
         inertias[i] = km.inertia_
     inertias_df = pd.DataFrame.from_dict(inertias, orient="index")
     inertias_df.to_csv(
-        "data" + os.sep + "temporary_files" + os.sep + "inertias.csv",
+        "data" + os.sep + "interim_results" + os.sep + "inertias.csv",
         sep=";",)
     ax = inertias_df.plot()
     ax.set_xlabel("Number of clusters")
     ax.set_ylabel("Distortion")
     ax.set_title("Elbow method")
     ax.get_figure().savefig(
-        "data" + os.sep + "temporary_files" + os.sep + "elbow_method.png")
+        "data" + os.sep + "interim_results" + os.sep + "elbow_method.png")
+
 
 if __name__ == "__main__":
     # Either calculate for the whole world or just the US
     global_or_US = "US"
     # only run this if the file does not exist
-    if not os.path.isfile("data" + os.sep + "temporary_files" + os.sep + "growth_df.pkl"):
+    if not os.path.isfile("data" + os.sep + "interim_results" + os.sep + "growth_df.pkl"):
         parameter = "seaweed_growth_rate"
-        path = "data" + os.sep + "temporary_files"
+        path = "data" + os.sep + "interim_results"
         file = "data_gridded_all_parameters.pkl"
         # Transpose it so we can just attach the cluster at the end
         growth_df = get_parameter_dataframe(parameter, path, file).transpose()
-        growth_df.to_pickle("data" + os.sep + "temporary_files" + os.sep + "growth_df.pkl")
+        growth_df.to_pickle("data" + os.sep + "interim_results" + os.sep + "growth_df.pkl")
     else:
-        growth_df = pd.read_pickle("data" + os.sep + "temporary_files" + os.sep + "growth_df.pkl")
+        growth_df = pd.read_pickle("data" + os.sep + "interim_results" + os.sep + "growth_df.pkl")
     # Do the time series analysis
-    elbow_method(growth_df, 50)
+    # elbow_method(growth_df, 50)
+    # elbow method says 10 is the optimal number of clusters
+    if not os.path.isfile("data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"):
+        labels, km = time_series_analysis(growth_df, 10)
+        growth_df["cluster"] = labels
+        growth_df.to_pickle(
+            "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl")
+    else:
+        growth_df = pd.read_pickle(
+            "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl")

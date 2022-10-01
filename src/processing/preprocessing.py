@@ -80,7 +80,7 @@ def prepare_gridded_data(path):
         data_dict[lat_lon] = concat_latlon_dfs
     # Make pickle out of it, so we don't have to run this every time
     full_path = (
-        path + os.sep + "data" + os.sep + "temporary_files"
+        path + os.sep + "data" + os.sep + "interim_results"
     )
     with open(
         full_path + os.sep + "data_gridded_all_parameters.pkl",
