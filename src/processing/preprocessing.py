@@ -48,15 +48,6 @@ def prepare_gridded_data(path):
         env_df.reset_index(inplace=True)
         env_df.columns = ["time", "TLONG", "TLAT", env_params[science_name]]
         dict_env_dfs[science_name] = env_df
-    # Assert if they all have the same geometry
-    # This is needed so we can use the geometry of all dfs interchangeably
- #   list_env_dfs_geometry = [
- #       dict_env_dfs[env_param]["geometry"] for env_param in env_params.keys()
- #   ]
- #   i = 0
- #   while i < len(list_env_dfs_geometry) - 1:
- #       assert list_env_dfs_geometry[i].equals(list_env_dfs_geometry[i + 1])
- #       i += 1
     # Create all the groupby objects
     dict_env_dfs_grouped = {
         env_param: dict_env_dfs[env_param].groupby(["TLAT", "TLONG"])
@@ -99,7 +90,15 @@ def prepare_gridded_data(path):
 
 
 def prep_nw_data(
-    path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param, all_cells=False):
+        path,
+        file,
+        min_lat,
+        max_lat,
+        min_lon,
+        max_lon,
+        length_time,
+        env_param,
+        all_cells=False):
     """
     ### This code is only used on the NCAR cluster. ###
 
