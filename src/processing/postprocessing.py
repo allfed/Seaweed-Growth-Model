@@ -104,7 +104,7 @@ if __name__ == "__main__":
         # elbow_method(growth_df, 50)
         # elbow method says 5 is the optimal number of clusters
         if not os.path.isfile(
-            "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"):
+                "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"):
             labels, km = time_series_analysis(growth_df, 5)
             growth_df["cluster"] = labels
             growth_df.to_pickle(
