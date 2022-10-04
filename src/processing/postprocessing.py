@@ -98,11 +98,13 @@ if __name__ == "__main__":
             growth_df = get_parameter_dataframe(parameter, path, file).transpose()
             growth_df.to_pickle("data" + os.sep + "interim_results" + os.sep + "growth_df.pkl")
         else:
-            growth_df = pd.read_pickle("data" + os.sep + "interim_results" + os.sep + "growth_df.pkl")
+            growth_df = pd.read_pickle(
+                "data" + os.sep + "interim_results" + os.sep + "growth_df.pkl")
         # Do the time series analysis
         # elbow_method(growth_df, 50)
         # elbow method says 5 is the optimal number of clusters
-        if not os.path.isfile("data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"):
+        if not os.path.isfile(
+            "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"):
             labels, km = time_series_analysis(growth_df, 5)
             growth_df["cluster"] = labels
             growth_df.to_pickle(
