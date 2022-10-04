@@ -37,7 +37,7 @@ class PlotterLME:
         """
         assert self.seaweed_model.lme_or_grid == "lme"
         date_section_df = self.seaweed_model.construct_df_from_sections_for_date(month)
-        lme_shape = gpd.read_file("data/lme_shp/lme66.shp")
+        lme_shape = gpd.read_file("data/geospatial_information/lme_shp/lme66.shp")
         lme_global = lme_shape.merge(
             date_section_df, left_on="LME_NUMBER", right_index=True
         )
@@ -137,7 +137,8 @@ def lme():
     """
     model = SeaweedModel()
     model.add_data_by_lme(
-        [i for i in range(1, 67)], "data/seaweed_environment_data_in_nuclear_war.csv"
+        [i for i in range(1, 67)],
+        "data/lme_data/seaweed_environment_data_in_nuclear_war.csv",
     )
     model.calculate_factors()
     model.calculate_growth_rate()

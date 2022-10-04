@@ -18,7 +18,8 @@ def test_reading_in_lme_data():
     """
     model = SeaweedModel()
     model.add_data_by_lme(
-        [i for i in range(1, 4)], "data/seaweed_environment_data_in_nuclear_war.csv"
+        [i for i in range(1, 4)],
+        "data/lme_data/seaweed_environment_data_in_nuclear_war.csv",
     )
     assert len(model.sections.keys()) == 3
 
@@ -31,9 +32,10 @@ def test_grid_data():
     # Testing the reading
     model = SeaweedModel()
     model.add_data_by_grid(
-        "data/gridded_data_test_dataset_US_only/data_gridded_all_parameters.pkl",
+        "data/interim_results/data_gridded_all_parameters.pkl",
     )
-    assert len(model.sections.keys()) == 4550
+    # Number of grid cells with water
+    assert len(model.sections.keys()) == 2259
     # Testing the calculation of factors
     model.calculate_factors()
     section_1 = model.sections[(17.474949344648152, 296.9649842693172)]
@@ -52,7 +54,8 @@ def test_calculating_factors_lme():
     """
     model = SeaweedModel()
     model.add_data_by_lme(
-        [i for i in range(1, 4)], "data/seaweed_environment_data_in_nuclear_war.csv"
+        [i for i in range(1, 4)],
+        "data/lme_data/seaweed_environment_data_in_nuclear_war.csv",
     )
     model.calculate_factors()
     section_1 = model.sections[1]
@@ -68,7 +71,8 @@ def test_calculating_growth_rate():
     """
     model = SeaweedModel()
     model.add_data_by_lme(
-        [i for i in range(1, 4)], "data/seaweed_environment_data_in_nuclear_war.csv"
+        [i for i in range(1, 4)],
+        "data/lme_data/seaweed_environment_data_in_nuclear_war.csv",
     )
     model.calculate_factors()
     model.calculate_growth_rate()
@@ -84,7 +88,7 @@ def test_construct_dataframe_from_section_data():
     model = SeaweedModel()
     model.add_data_by_lme(
         [i for i in range(1, number_sections + 1)],
-        "data/seaweed_environment_data_in_nuclear_war.csv",
+        "data/lme_data/seaweed_environment_data_in_nuclear_war.csv",
     )
     model.calculate_factors()
     model.calculate_growth_rate()
@@ -102,7 +106,7 @@ def test_construct_df_for_parameter():
     model = SeaweedModel()
     model.add_data_by_lme(
         [i for i in range(1, 3 + 1)],
-        "data/seaweed_environment_data_in_nuclear_war.csv",
+        "data/lme_data/seaweed_environment_data_in_nuclear_war.csv",
     )
     model.calculate_factors()
     model.calculate_growth_rate()

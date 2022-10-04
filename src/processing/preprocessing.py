@@ -3,7 +3,8 @@ This files contains code to make the data ready for the model
 """
 import xarray as xr
 import pickle
-import geopandas as gpd
+
+# import geopandas as gpd
 import pandas as pd
 import os
 
@@ -46,17 +47,8 @@ def prepare_gridded_data(path):
             full_path + "nw_" + science_name + "_36_months_pickle.pkl"
         )
         env_df.reset_index(inplace=True)
-        env_df.columns = ["time", "TLONG", "TLAT", env_params[science_name], "geometry"]
-        dict_env_dfs[science_name] = gpd.GeoDataFrame(env_df)
-    # Assert if they all have the same geometry
-    # This is needed so we can use the geometry of all dfs interchangeably
-    list_env_dfs_geometry = [
-        dict_env_dfs[env_param]["geometry"] for env_param in env_params.keys()
-    ]
-    i = 0
-    while i < len(list_env_dfs_geometry) - 1:
-        assert list_env_dfs_geometry[i].equals(list_env_dfs_geometry[i + 1])
-        i += 1
+        env_df.columns = ["time", "TLONG", "TLAT", env_params[science_name]]
+        dict_env_dfs[science_name] = env_df
     # Create all the groupby objects
     dict_env_dfs_grouped = {
         env_param: dict_env_dfs[env_param].groupby(["TLAT", "TLONG"])
@@ -86,17 +78,23 @@ def prepare_gridded_data(path):
             range(-4, concat_latlon_dfs.shape[0] - 4, 1)
         )
         # Convert back to geodataframe before saving
-        data_dict[lat_lon] = gpd.GeoDataFrame(concat_latlon_dfs)
+        data_dict[lat_lon] = concat_latlon_dfs
     # Make pickle out of it, so we don't have to run this every time
-    full_path = (
-        path + os.sep + "data" + os.sep + "gridded_data_test_dataset_US_only" + os.sep
-    )
-    with open(full_path + "data_gridded_all_parameters.pkl", "wb") as handle:
+    full_path = path + os.sep + "data" + os.sep + "interim_results"
+    with open(full_path + os.sep + "data_gridded_all_parameters.pkl", "wb") as handle:
         pickle.dump(data_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 def prep_nw_data(
-    path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param
+    path,
+    file,
+    min_lat,
+    max_lat,
+    min_lon,
+    max_lon,
+    length_time,
+    env_param,
+    all_cells=False,
 ):
     """
     ### This code is only used on the NCAR cluster. ###
@@ -115,14 +113,17 @@ def prep_nw_data(
         length_time: how much of the original dataset should
                      be used. Measured in month, max = 300
         env_param: the environmental parameter to look at
+        all_cells: if True, all cells are used, if False, only selection
     Returns:
         None
     """
     # Read in the data
     ds = xr.open_dataset(path + file)
     # 0 here means we are only using the uppermost layer of the ocean
-
-    env_time = ds[env_param][:length_time, 0, min_lat:max_lat, min_lon:max_lon]
+    if all_cells:
+        env_time = ds[env_param][:length_time, 0, :, :]
+    else:
+        env_time = ds[env_param][:length_time, 0, min_lat:max_lat, min_lon:max_lon]
     # Make it a dataframe
     env_time_df = env_time.to_dataframe()
     # Delete the depth column, as it is not needed
@@ -130,18 +131,16 @@ def prep_nw_data(
         del env_time_df["z_t_150m"]
     else:
         del env_time_df["z_t"]
-    # Convert it to a geodataframe
-    env_time_df_geo = gpd.GeoDataFrame(
-        env_time_df, geometry=gpd.points_from_xy(env_time_df.TLONG, env_time_df.TLAT)
-    )
     # Create a new index to remove redundant information
-    env_time_df_geo.reset_index(inplace=True)
-    env_time_df_geo.set_index(["time", "TLONG", "TLAT"], inplace=True)
+    env_time_df.reset_index(inplace=True)
+    env_time_df.set_index(["time", "TLONG", "TLAT"], inplace=True)
     # delte the nlat and nlon columns, as thy are not needed anymore
-    del env_time_df_geo["nlat"]
-    del env_time_df_geo["nlon"]
+    del env_time_df["nlat"]
+    del env_time_df["nlon"]
+    # remove all columns that are only nan
+    env_time_df.dropna(axis=0, how="all", inplace=True)
     # Save to pickle
-    env_time_df_geo.to_pickle(
+    env_time_df.to_pickle(
         "nw_" + env_param + "_" + str(length_time) + "_months_pickle.pkl"
     )
 
