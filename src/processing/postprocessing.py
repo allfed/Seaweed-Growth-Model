@@ -48,7 +48,8 @@ def time_series_analysis(growth_df, n_clusters):
     # Normalize the data
     scaler = MinMaxScaler()
     growth_df_scaled = pd.DataFrame(
-        scaler.fit_transform(growth_df), columns=growth_df.columns)
+        scaler.fit_transform(growth_df), columns=growth_df.columns
+    )
     # A good rule of thumb is choosing k as the square root of the number
     # of points in the training data set in kNN
     km = TimeSeriesKMeans(n_clusters=n_clusters, metric="dtw")
@@ -76,13 +77,15 @@ def elbow_method(growth_df, max_clusters):
     inertias_df = pd.DataFrame.from_dict(inertias, orient="index")
     inertias_df.to_csv(
         "data" + os.sep + "interim_results" + os.sep + "inertias.csv",
-        sep=";",)
+        sep=";",
+    )
     ax = inertias_df.plot()
     ax.set_xlabel("Number of clusters")
     ax.set_ylabel("Distortion")
     ax.set_title("Elbow method")
     ax.get_figure().savefig(
-        "data" + os.sep + "interim_results" + os.sep + "elbow_method.png")
+        "data" + os.sep + "interim_results" + os.sep + "elbow_method.png"
+    )
 
 
 if __name__ == "__main__":
@@ -90,25 +93,33 @@ if __name__ == "__main__":
     global_or_US = "US"
     if global_or_US == "US":
         # only run this if the file does not exist
-        if not os.path.isfile("data" + os.sep + "interim_results" + os.sep + "growth_df.pkl"):
+        if not os.path.isfile(
+            "data" + os.sep + "interim_results" + os.sep + "growth_df.pkl"
+        ):
             parameter = "seaweed_growth_rate"
             path = "data" + os.sep + "interim_results"
             file = "data_gridded_all_parameters.pkl"
             # Transpose the dataframe so that the time serieses are the columns
             growth_df = get_parameter_dataframe(parameter, path, file).transpose()
-            growth_df.to_pickle("data" + os.sep + "interim_results" + os.sep + "growth_df.pkl")
+            growth_df.to_pickle(
+                "data" + os.sep + "interim_results" + os.sep + "growth_df.pkl"
+            )
         else:
             growth_df = pd.read_pickle(
-                "data" + os.sep + "interim_results" + os.sep + "growth_df.pkl")
+                "data" + os.sep + "interim_results" + os.sep + "growth_df.pkl"
+            )
         # Do the time series analysis
         # elbow_method(growth_df, 50)
         # elbow method says 5 is the optimal number of clusters
         if not os.path.isfile(
-                "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"):
+            "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"
+        ):
             labels, km = time_series_analysis(growth_df, 5)
             growth_df["cluster"] = labels
             growth_df.to_pickle(
-                "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl")
+                "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"
+            )
         else:
             growth_df = pd.read_pickle(
-                "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl")
+                "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"
+            )
