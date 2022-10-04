@@ -1,7 +1,6 @@
 """
 Tests the reading and writing of files
 """
-import geopandas as gpd
 import pandas as pd
 
 from src.processing.read_files import DataGrid, DataLME
@@ -30,7 +29,7 @@ def test_read_file_by_grid():
     Tests the read_file class DataGrid
     """
     data_grid = DataGrid(
-        "data/temporary_files/data_gridded_all_parameters.pkl"
+        "data/interim_results/data_gridded_all_parameters.pkl"
     )
     # Make sure the correct object gets created
     assert data_grid is not None
