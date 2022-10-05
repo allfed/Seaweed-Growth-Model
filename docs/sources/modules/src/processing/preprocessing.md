@@ -2,7 +2,7 @@
 
 
 ### prepare_gridded_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L11)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L12)
 ```python
 .prepare_gridded_data(
    path
@@ -32,7 +32,7 @@ and longitude.
 
 
 ### prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L92)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L88)
 ```python
 .prep_nw_data(
    path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param,
@@ -70,7 +70,7 @@ None
 
 
 ### call_prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L151)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L148)
 ```python
 .call_prep_nw_data()
 ```
