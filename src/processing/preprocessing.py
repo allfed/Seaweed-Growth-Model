@@ -3,6 +3,7 @@ This files contains code to make the data ready for the model
 """
 import xarray as xr
 import pickle
+
 # import geopandas as gpd
 import pandas as pd
 import os
@@ -79,26 +80,22 @@ def prepare_gridded_data(path):
         # Convert back to geodataframe before saving
         data_dict[lat_lon] = concat_latlon_dfs
     # Make pickle out of it, so we don't have to run this every time
-    full_path = (
-        path + os.sep + "data" + os.sep + "interim_results"
-    )
-    with open(
-        full_path + os.sep + "data_gridded_all_parameters.pkl",
-        "wb"
-    ) as handle:
+    full_path = path + os.sep + "data" + os.sep + "interim_results"
+    with open(full_path + os.sep + "data_gridded_all_parameters.pkl", "wb") as handle:
         pickle.dump(data_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 def prep_nw_data(
-        path,
-        file,
-        min_lat,
-        max_lat,
-        min_lon,
-        max_lon,
-        length_time,
-        env_param,
-        all_cells=False):
+    path,
+    file,
+    min_lat,
+    max_lat,
+    min_lon,
+    max_lon,
+    length_time,
+    env_param,
+    all_cells=False,
+):
     """
     ### This code is only used on the NCAR cluster. ###
 

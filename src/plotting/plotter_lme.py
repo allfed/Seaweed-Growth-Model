@@ -137,7 +137,8 @@ def lme():
     """
     model = SeaweedModel()
     model.add_data_by_lme(
-        [i for i in range(1, 67)], "data/lme_data/seaweed_environment_data_in_nuclear_war.csv"
+        [i for i in range(1, 67)],
+        "data/lme_data/seaweed_environment_data_in_nuclear_war.csv",
     )
     model.calculate_factors()
     model.calculate_growth_rate()
