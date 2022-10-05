@@ -1,9 +1,9 @@
 name: seaweed-growth-model
 channels:
-   - conda-forge
+  - conda-forge
+  - defaults
 dependencies:
   - python=3.8
-  - geoplot
   - pandas=1.4.3
   - setuptools=61.2.0
   - pytest=7.1.2
