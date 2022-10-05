@@ -3,11 +3,10 @@
 import ast
 import importlib
 import json
+import yaml
 from collections import defaultdict
 from pathlib import Path
 from typing import Union
-
-import yaml
 
 
 def add_val(indices, value, data):
@@ -155,6 +154,7 @@ def automate_nav_structure(
     )
     # print(structure)
     with open(f"{repo_dir}/{mkdocs_f}", "r+") as mkgen_config:
+        assert mkgen_config is not None
         contents = mkgen_config.readlines()
         if match_string in contents[-1]:
             contents.append(insert_string)
@@ -199,8 +199,8 @@ def main():
     """Execute when running this script."""
     # This is the path the script will look for code to document
     python_tips_dir = Path.cwd().joinpath("src")
-    # This is the path of the overall directoy
-    root_repo_dir = Path.cwd()
+    # This is the path the script will look for mkgendocs.yml
+    root_dir = Path.cwd()
 
     structure = automate_mkdocs_from_docstring(
         mkdocs_dir="modules",
@@ -212,7 +212,7 @@ def main():
     automate_nav_structure(
         mkdocs_dir="modules",
         mkdocs_f="mkdocs.yml",
-        repo_dir=root_repo_dir,
+        repo_dir=root_dir,
         match_string="- Home: index.md\n",
         structure=structure,
     )
