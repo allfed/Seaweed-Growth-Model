@@ -10,7 +10,6 @@ import geoplot as gplt
 from shapely.geometry import Point
 
 
-
 def cluster_timeseries(growth_df):
     """
     Plots the clusters that were found in postprocessing
@@ -20,7 +19,7 @@ def cluster_timeseries(growth_df):
 
     axes = axes.flatten()
     for cluster, cluster_df in growth_df.groupby("cluster"):
-        del(cluster_df["cluster"])
+        del (cluster_df["cluster"])
         ax = axes[cluster]
         cluster_df.transpose().plot(ax=ax, color="lightgrey", legend=False)
         cluster_df.median().transpose().plot(ax=ax, color="green", legend=False)
@@ -39,7 +38,8 @@ def cluster_spatial(growth_df, global_or_US):
     Creates a spatial plot of the clusters
     """
     if global_or_US == "US":
-        global_map = gpd.read_file("data/geospatial_information/world_map/ne_10m_admin_0_countries.shp")
+        global_map = gpd.read_file(
+            "data/geospatial_information/world_map/ne_10m_admin_0_countries.shp")
     growth_df.set_crs(epsg=4326, inplace=True)
     growth_df.to_crs(global_map.crs, inplace=True)
     growth_df["cluster"] = growth_df["cluster"].astype(str)
@@ -56,7 +56,7 @@ def cluster_spatial(growth_df, global_or_US):
 
 def prepare_geometry(growth_df):
     """
-    Prepares the geometry for the growth_df. For some reason the spatial data has 
+    Prepares the geometry for the growth_df. For some reason the spatial data has
     a longitude that is 0-360 instead of -180 to 180. This function converts it to
     the latter
     """
