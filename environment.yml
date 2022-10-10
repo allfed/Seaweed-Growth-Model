@@ -13,3 +13,4 @@ dependencies:
   - xarray=0.20.1
   - cftime=1.5.1.1
   - scikit-learn=1.1.1
+  - tslearn=0.5.2
