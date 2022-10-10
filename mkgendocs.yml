@@ -39,12 +39,20 @@ pages:
       - prepare_gridded_data
       - prep_nw_data
       - call_prep_nw_data
+      - create_seaweed_land_buffer
 
   - page: "modules/src/processing/read_files.md"
     source: "src/processing/read_files.py"
     classes:
       - DataLME
       - DataGrid
+
+  - page: "modules/src/processing/postprocessing.md"
+    source: "src/processing/postprocessing.py"
+    functions:
+      - get_parameter_dataframe
+      - time_series_analysis
+      - elbow_method
 
   - page: "modules/src/plotting/plotter_lme.md"
     source: "src/plotting/plotter_lme.py"
