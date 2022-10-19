@@ -9,6 +9,18 @@ copyright: ALLFED
 
 #This specifies the autogeneration portion
 pages:
+  - page: "modules/src/plotting/plotter_lme.md"
+    source: "src/plotting/plotter_lme.py"
+    classes:
+      - PlotterLME
+    functions:
+      - lme
+
+  - page: "modules/src/model/seaweed_model.md"
+    source: "src/model/seaweed_model.py"
+    classes:
+      - SeaweedModel
+
   - page: "modules/src/model/ocean_section.md"
     source: "src/model/ocean_section.py"
     classes:
@@ -27,11 +39,6 @@ pages:
       - calculate_nutrient_factor
       - salinity_single_value
       - calculate_salinity_factor
-
-  - page: "modules/src/model/seaweed_model.md"
-    source: "src/model/seaweed_model.py"
-    classes:
-      - SeaweedModel
 
   - page: "modules/src/processing/preprocessing.md"
     source: "src/processing/preprocessing.py"
@@ -53,11 +60,4 @@ pages:
       - get_parameter_dataframe
       - time_series_analysis
       - elbow_method
-
-  - page: "modules/src/plotting/plotter_lme.md"
-    source: "src/plotting/plotter_lme.py"
-    classes:
-      - PlotterLME
-    functions:
-      - lme
 
