@@ -1,0 +1,33 @@
+﻿LICENSE, TERMS OF USE & CITATION
+LICENSE
+Marine Regions’ data is licensed under CC-By (https://creativecommons.org/licenses/by/4.0/).
+Please contact us for other uses of the Licensed Material beyond license terms.
+We kindly request our users not to make our products available for download elsewhere and to always refer to marineregions.org for the most up-to-date products and services.
+
+
+TERMS OF USE
+Marine Regions is not meant to be used for legal, economical (in the sense of exploration of natural resources) or navigational purposes.
+It is developed solely for scientific, educational and research purposes.
+
+VLIZ can in no case be held accountable or liable for faults, of any nature, that might occur in the usage of Marine Regions.
+All those who wish to use Marine Regions do so completely at own risk/under own responsibility and according to the License conditions and the Terms of Use.
+VLIZ expresses no opinion about the legal state neither of any country, territory or area nor concerning its delimitation, frontier or borders.
+The data has no legal value whatsoever.
+
+Marine Regions can be used according to the terms and conditions mentioned in the CC-BY license (CC-BY, https://creativecommons.org/licenses/by/4.0/).
+The provisions above in no way replace the provisions of the CC-license.
+If any of the abovementioned provisions divert from or contradict the provisions of the CC-license in any way, the CC-license provisions prevail.
+
+
+FEEDBACK
+If Marine Regions' data is used for a publication or product, we kindly request to inform us (info@marineregions.org) and we'll add the publication to our users page (https://marineregions.org/stats_pubs.php).
+
+Feedback of the users of Marine Regions is more than welcome.
+In case you notice mistakes, incompleteness or are willing to join us in this endeavor, please contact us on info@marineregions.org.
+
+
+CITATION
+Flanders Marine Institute (2019). Maritime Boundaries Geodatabase: Maritime Boundaries and Exclusive Economic Zones (200NM), version 11. Available online at https://www.marineregions.org/. https://doi.org/10.14284/386
+
+
+

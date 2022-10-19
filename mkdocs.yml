@@ -35,5 +35,6 @@ nav:
       - plotting:
         - plotter_lme: modules/src/plotting/plotter_lme.md
       - processing:
+        - postprocessing: modules/src/processing/postprocessing.md
         - preprocessing: modules/src/processing/preprocessing.md
         - read_files: modules/src/processing/read_files.md

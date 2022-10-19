@@ -2,7 +2,7 @@
 
 
 ### prepare_gridded_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L12)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L13)
 ```python
 .prepare_gridded_data(
    path
@@ -32,7 +32,7 @@ and longitude.
 
 
 ### prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L88)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L89)
 ```python
 .prep_nw_data(
    path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param,
@@ -70,8 +70,31 @@ None
 
 
 ### call_prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L148)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L149)
 ```python
 .call_prep_nw_data()
 ```
+
+
+----
+
+
+### create_seaweed_land_buffer
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L169)
+```python
+.create_seaweed_land_buffer(
+   file_countries, file_harbors, buffer_country, buffer_harbor
+)
+```
+
+---
+Creates a buffer around harbors and countries and saves it GeoJSON.
+
+
+**Arguments**
+
+* **file_countries**  : path to the file with the countries
+* **file_harbors**  : path to the file with the harbors
+* **buffer_harbor**  : size buffer around harbors (km)
+* **buffer_country**  : size buffer around countries (km)
 
