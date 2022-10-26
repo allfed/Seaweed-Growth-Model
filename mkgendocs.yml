@@ -50,7 +50,14 @@ pages:
   - page: "modules/src/model/seaweed_growth.md"
     source: "src/model/seaweed_growth.py"
     functions:
-      - get_parameter_dataframe
-      - time_series_analysis
-      - elbow_method
+      - growth_factor_combination_single_value
+      - growth_factor_combination
+      - illumination_single_value
+      - calculate_illumination_factor
+      - temperature_single_value
+      - calculate_temperature_factor
+      - nutrient_single_value
+      - calculate_nutrient_factor
+      - salinity_single_value
+      - calculate_salinity_factor
 
