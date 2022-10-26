@@ -42,7 +42,7 @@ def cluster_spatial(growth_df, global_or_US):
     Creates a spatial plot of the clusters
     """
     global_map = gpd.read_file(
-        "data/geospatial_information/world_map/ne_10m_admin_0_countries.shp"
+        "data/geospatial_information/Countries/ne_50m_admin_0_countries.shp"
     )
     growth_df.set_crs(epsg=4326, inplace=True)
     growth_df.to_crs(global_map.crs, inplace=True)
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     if global_or_US == "US":
         growth_df = gpd.GeoDataFrame(
             pd.read_pickle(
-                "data" + os.sep + "interim_results" + os.sep + "growth_df_clustered.pkl"
+                "data" + os.sep + "interim_results" + os.sep + "seaweed_growth_rate_clustered_US.pkl"
             )
         )
         cluster_timeseries(growth_df)
