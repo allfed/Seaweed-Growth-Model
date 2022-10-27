@@ -8,8 +8,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import geoplot as gplt
 from shapely.geometry import Point
-# Import the ALLFED stle
-#plt.style.use("https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
+# plt.style.use("https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
 
 
 def cluster_timeseries_only_growth(growth_df):
@@ -27,8 +26,10 @@ def cluster_timeseries_only_growth(growth_df):
         ax = axes[cluster]
         cluster_df.transpose().plot(ax=ax, color="black", legend=False, alpha=0.1)
         # Plot it two times, so the line has a edgecolor
-        cluster_df.median().transpose().plot(ax=ax, color="black", legend=False, linewidth=4, alpha=0.9)
-        cluster_df.median().transpose().plot(ax=ax, color="green", legend=False, linewidth=3, alpha=0.9)
+        cluster_df.median().transpose().plot(
+            ax=ax, color="black", legend=False, linewidth=4, alpha=0.9)
+        cluster_df.median().transpose().plot(
+            ax=ax, color="green", legend=False, linewidth=3, alpha=0.9)
         ax.set_ylabel("Fraction Optimal")
         ax.set_xlabel("Months since war")
         ax.set_title("Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0]))
@@ -101,8 +102,10 @@ def cluster_timeseries_all_parameters(parameters):
             ax = axes[i, j]
             cluster_df.transpose().plot(ax=ax, color="black", legend=False, alpha=0.03)
             # Plot it two times, so the line has a edgecolor
-            cluster_df.median().transpose().plot(ax=ax, color="black", legend=False, linewidth=5, alpha=0.9)
-            cluster_df.median().transpose().plot(ax=ax, color="green", legend=False, linewidth=4, alpha=0.9)
+            cluster_df.median().transpose().plot(
+                ax=ax, color="black", legend=False, linewidth=5, alpha=0.9)
+            cluster_df.median().transpose().plot(
+                ax=ax, color="green", legend=False, linewidth=4, alpha=0.9)
 
             ax.set_ylabel(parameter) 
             ax.set_xlabel("Months since war")
@@ -123,17 +126,20 @@ if __name__ == "__main__":
     global_or_US = "US"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
-            "data" + os.sep + "interim_results" + os.sep + "seaweed_growth_rate_clustered_" + global_or_US +".pkl"
+            "data" + os.sep + "interim_results" + os.sep
+            + "seaweed_growth_rate_clustered_" + global_or_US + ".pkl"
         )
     )
     cluster_timeseries_only_growth(growth_df)
     growth_df = prepare_geometry(growth_df)
     cluster_spatial(growth_df, global_or_US)
     parameters = {}
-    for parameter in  ["salinity_factor", "nutrient_factor", "illumination_factor", "temp_factor", "seaweed_growth_rate"]:
+    for parameter in  ["salinity_factor", "nutrient_factor",
+        "illumination_factor", "temp_factor", "seaweed_growth_rate"]:
         parameters[parameter] = pd.DataFrame(
             pd.read_pickle(
-                "data" + os.sep + "interim_results" + os.sep + parameter + "_clustered_" + global_or_US + ".pkl"
+                "data" + os.sep + "interim_results" + os.sep
+                + parameter + "_clustered_" + global_or_US + ".pkl"
             )
         )
     cluster_timeseries_all_parameters(parameters)
