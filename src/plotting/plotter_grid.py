@@ -88,7 +88,7 @@ def cluster_timeseries_all_parameters(parameters):
     Plots line plots for all clusters and all parameters
     Arguments:
         parameters: a dictionary of dataframes of all parameters
-    Returns: 
+    Returns:
         None, but saves the plot
     """
     fig, axes = plt.subplots(
@@ -107,7 +107,7 @@ def cluster_timeseries_all_parameters(parameters):
             cluster_df.median().transpose().plot(
                 ax=ax, color="green", legend=False, linewidth=4, alpha=0.9)
 
-            ax.set_ylabel(parameter) 
+            ax.set_ylabel(parameter)
             ax.set_xlabel("Months since war")
             if i == 0:
                 ax.set_title("Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0]))
@@ -120,6 +120,7 @@ def cluster_timeseries_all_parameters(parameters):
     )
 
     plt.close()
+
 
 if __name__ == "__main__":
     # Either calculate for the whole world or just the US
@@ -134,8 +135,11 @@ if __name__ == "__main__":
     growth_df = prepare_geometry(growth_df)
     cluster_spatial(growth_df, global_or_US)
     parameters = {}
-    for parameter in  ["salinity_factor", "nutrient_factor",
-        "illumination_factor", "temp_factor", "seaweed_growth_rate"]:
+    parameter_names = [
+        "salinity_factor", "nutrient_factor",
+        "illumination_factor", "temp_factor", "seaweed_growth_rate"
+    ] 
+    for parameter in parameter_names:
         parameters[parameter] = pd.DataFrame(
             pd.read_pickle(
                 "data" + os.sep + "interim_results" + os.sep
@@ -143,4 +147,3 @@ if __name__ == "__main__":
             )
         )
     cluster_timeseries_all_parameters(parameters)
-

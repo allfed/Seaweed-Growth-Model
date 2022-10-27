@@ -102,8 +102,10 @@ if __name__ == "__main__":
     if not os.path.isfile(
         "data" + os.sep + "interim_results" + os.sep + "seaweed_growth_rate.pkl"
     ):
-        parameters = ["salinity_factor", "nutrient_factor",
-            "illumination_factor", "temp_factor", "seaweed_growth_rate"]
+        parameters = [
+            "salinity_factor", "nutrient_factor",
+            "illumination_factor", "temp_factor", "seaweed_growth_rate"
+        ]
         path = "data" + os.sep + "interim_results"
         file = "data_gridded_all_parameters.pkl"
         # Transpose the dataframe so that the time serieses are the columns
