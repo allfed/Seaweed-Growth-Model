@@ -8,9 +8,11 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import geoplot as gplt
 from shapely.geometry import Point
+# Import the ALLFED stle
+plt.style.use("https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
 
 
-def cluster_timeseries(growth_df):
+def cluster_timeseries_only_growth(growth_df):
     """
     Plots the clusters that were found in postprocessing
     The plot is seperated by clusters and the median growth rate is plotted
@@ -78,15 +80,25 @@ def prepare_geometry(growth_df):
     return growth_df
 
 
+def cluster_timeseries_all_parameters(parameters):
+    """
+    Plots line plots for all clusters and all parameters
+    Arguments:
+        parameters: a dictionary of dataframes of all parameters
+    Returns: 
+        None, but saves the plot
+    """
+    pass
+
 if __name__ == "__main__":
     # Either calculate for the whole world or just the US
     global_or_US = "US"
-    if global_or_US == "US":
-        growth_df = gpd.GeoDataFrame(
-            pd.read_pickle(
-                "data" + os.sep + "interim_results" + os.sep + "seaweed_growth_rate_clustered_US.pkl"
-            )
+    growth_df = gpd.GeoDataFrame(
+        pd.read_pickle(
+            "data" + os.sep + "interim_results" + os.sep + "seaweed_growth_rate_clustered_" + global_or_US +".pkl"
         )
-        cluster_timeseries(growth_df)
-        growth_df = prepare_geometry(growth_df)
-        cluster_spatial(growth_df, global_or_US)
+    )
+    cluster_timeseries_only_growth(growth_df)
+    growth_df = prepare_geometry(growth_df)
+    cluster_spatial(growth_df, global_or_US)
+
