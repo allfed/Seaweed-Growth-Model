@@ -138,7 +138,7 @@ if __name__ == "__main__":
     parameter_names = [
         "salinity_factor", "nutrient_factor",
         "illumination_factor", "temp_factor", "seaweed_growth_rate"
-    ] 
+    ]
     for parameter in parameter_names:
         parameters[parameter] = pd.DataFrame(
             pd.read_pickle(
