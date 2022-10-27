@@ -35,8 +35,8 @@ and longitude.
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L88)
 ```python
 .prep_nw_data(
-   path, file, min_lat, max_lat, min_lon, max_lon, length_time, env_param,
-   all_cells = False
+   path, file, length_time, env_param, min_lat = None, max_lat = None, min_lon = None,
+   max_lon = None, all_cells = False
 )
 ```
 
@@ -70,7 +70,7 @@ None
 
 
 ### call_prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L148)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L147)
 ```python
 .call_prep_nw_data()
 ```
@@ -80,7 +80,7 @@ None
 
 
 ### create_seaweed_land_buffer
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L168)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L166)
 ```python
 .create_seaweed_land_buffer(
    file_countries, file_harbors, buffer_country, buffer_harbor
