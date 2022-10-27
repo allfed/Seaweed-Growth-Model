@@ -1,7 +1,6 @@
 """
 This files contains code to make the data ready for the model
 """
-from venv import create
 import xarray as xr
 import pickle
 

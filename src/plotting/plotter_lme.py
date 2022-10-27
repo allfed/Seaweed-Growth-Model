@@ -2,6 +2,10 @@ from src.model.seaweed_model import SeaweedModel
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import pandas as pd
+# Import the ALLFED stle
+plt.style.use(
+    "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
+)
 
 
 class PlotterLME:

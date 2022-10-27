@@ -62,7 +62,7 @@ https://www.kaggle.com/code/izzettunc/introduction-to-time-series-clustering/not
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L68)
 ```python
 .elbow_method(
-   growth_df, max_clusters
+   growth_df, max_clusters, global_or_US
 )
 ```
 
