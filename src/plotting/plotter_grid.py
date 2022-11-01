@@ -8,18 +8,18 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import geoplot as gplt
 from shapely.geometry import Point
-# plt.style.use("https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
+plt.style.use("https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
 
 
-def cluster_timeseries_only_growth(growth_df):
+def cluster_timeseries_only_growth(growth_df, global_or_US):
     """
     Plots the clusters that were found in postprocessing
     The plot is seperated by clusters and the median growth rate is plotted
     """
+    rows = 2 if global_or_US == "global" else 3
     fig, axes = plt.subplots(
-        nrows=3, ncols=2, sharey=True, sharex=True, figsize=(15, 15)
+        nrows=rows, ncols=2, sharey=True, sharex=True, figsize=(15, 15)
     )
-
     axes = axes.flatten()
     for cluster, cluster_df in growth_df.groupby("cluster"):
         del cluster_df["cluster"]
@@ -34,8 +34,8 @@ def cluster_timeseries_only_growth(growth_df):
         ax.set_xlabel("Months since war")
         ax.set_title("Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0]))
     plt.savefig(
-        "results" + os.sep + "grid" + os.sep + "cluster_timeseries.png",
-        dpi=200,
+        "results" + os.sep + "grid" + os.sep + "cluster_timeseries_" + global_or_US +".png",
+        dpi=350,
         bbox_inches="tight",
     )
 
@@ -52,7 +52,10 @@ def cluster_spatial(growth_df, global_or_US):
     growth_df.set_crs(epsg=4326, inplace=True)
     growth_df.to_crs(global_map.crs, inplace=True)
     growth_df["cluster"] = growth_df["cluster"].astype(str)
-    ax = gplt.voronoi(growth_df, hue="cluster", legend=True, linewidth=0.3)
+    # # Make sure that each entry has a value
+    # num_nan = growth_df.isna().sum().sum()
+    # assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
+    ax = gplt.voronoi(growth_df.dropna(), hue="cluster", legend=True, linewidth=0.3)
     fig = plt.gcf()
     fig.set_size_inches(15, 15)
     global_map.plot(ax=ax, color="white", edgecolor="black")
@@ -60,8 +63,8 @@ def cluster_spatial(growth_df, global_or_US):
         ax.set_ylim(18, 55)
         ax.set_xlim(-130, -65)
     plt.savefig(
-        "results" + os.sep + "grid" + os.sep + "cluster_spatial.png",
-        dpi=200,
+        "results" + os.sep + "grid" + os.sep + "cluster_spatial_" + global_or_US + ".png",
+        dpi=350,
         bbox_inches="tight",
     )
 
@@ -83,7 +86,7 @@ def prepare_geometry(growth_df):
     return growth_df
 
 
-def cluster_timeseries_all_parameters(parameters):
+def cluster_timeseries_all_parameters(parameters, global_or_US):
     """
     Plots line plots for all clusters and all parameters
     Arguments:
@@ -91,8 +94,9 @@ def cluster_timeseries_all_parameters(parameters):
     Returns:
         None, but saves the plot
     """
+    clusters = 5 if global_or_US == "US" else 4
     fig, axes = plt.subplots(
-        nrows=5, ncols=5, sharey=True, sharex=True, figsize=(20, 20)
+        nrows=5, ncols=clusters, sharey=True, sharex=True, figsize=(20, 20)
     )
     i = 0
     for parameter, parameter_df in parameters.items():
@@ -114,8 +118,9 @@ def cluster_timeseries_all_parameters(parameters):
             j += 1
         i += 1
     plt.savefig(
-        "results" + os.sep + "grid" + os.sep + "cluster_timeseries_all_param.png",
-        dpi=200,
+        "results" + os.sep + "grid" + os.sep + "cluster_timeseries_all_param_"
+        + global_or_US + ".png",
+        dpi=350,
         bbox_inches="tight",
     )
 
@@ -124,14 +129,17 @@ def cluster_timeseries_all_parameters(parameters):
 
 if __name__ == "__main__":
     # Either calculate for the whole world or just the US
-    global_or_US = "US"
+    global_or_US = "global"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data" + os.sep + "interim_results" + os.sep
             + "seaweed_growth_rate_clustered_" + global_or_US + ".pkl"
         )
     )
-    cluster_timeseries_only_growth(growth_df)
+    # Make sure that each entry has a value
+    num_nan = growth_df.isna().sum().sum()
+    assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
+    cluster_timeseries_only_growth(growth_df, global_or_US)
     growth_df = prepare_geometry(growth_df)
     cluster_spatial(growth_df, global_or_US)
     parameters = {}
@@ -146,4 +154,4 @@ if __name__ == "__main__":
                 + parameter + "_clustered_" + global_or_US + ".pkl"
             )
         )
-    cluster_timeseries_all_parameters(parameters)
+    cluster_timeseries_all_parameters(parameters, global_or_US)
