@@ -32,7 +32,7 @@ for all the grid sections
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L39)
 ```python
 .time_series_analysis(
-   growth_df, n_clusters
+   growth_df, n_clusters, global_or_US
 )
 ```
 
@@ -59,7 +59,7 @@ https://www.kaggle.com/code/izzettunc/introduction-to-time-series-clustering/not
 
 
 ### elbow_method
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L68)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L70)
 ```python
 .elbow_method(
    growth_df, max_clusters, global_or_US

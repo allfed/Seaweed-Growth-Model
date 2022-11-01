@@ -5,7 +5,7 @@
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L12)
 ```python
 .prepare_gridded_data(
-   path
+   path, folder, file_ending, global_or_US
 )
 ```
 
@@ -19,6 +19,9 @@ the rest of the code.
 **Arguments**
 
 * **path**  : the path for the pickled files
+* **folder**  : the folder where the pickled files are
+* **file_ending**  : the ending of the pickled files
+* **global_or_US**  : if "global", the global data is used,
 
 
 **Returns**
@@ -32,7 +35,7 @@ and longitude.
 
 
 ### prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L88)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L99)
 ```python
 .prep_nw_data(
    path, file, length_time, env_param, min_lat = None, max_lat = None, min_lon = None,
@@ -70,7 +73,7 @@ None
 
 
 ### call_prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L147)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L158)
 ```python
 .call_prep_nw_data()
 ```
@@ -80,7 +83,7 @@ None
 
 
 ### create_seaweed_land_buffer
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L166)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L177)
 ```python
 .create_seaweed_land_buffer(
    file_countries, file_harbors, buffer_country, buffer_harbor
