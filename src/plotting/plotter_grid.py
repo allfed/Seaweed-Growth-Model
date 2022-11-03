@@ -42,7 +42,7 @@ def cluster_timeseries_only_growth(growth_df, global_or_US):
     plt.close()
 
 
-def cluster_spatial(growth_df, global_or_US):
+def cluster_spatial_voronoi(growth_df, global_or_US):
     """
     Creates a spatial plot of the clusters
     """
@@ -86,7 +86,7 @@ def prepare_geometry(growth_df):
     return growth_df
 
 
-def cluster_timeseries_all_parameters(parameters, global_or_US):
+def cluster_timeseries_all_parameters_individual_lines(parameters, global_or_US):
     """
     Plots line plots for all clusters and all parameters
     Arguments:
@@ -118,7 +118,7 @@ def cluster_timeseries_all_parameters(parameters, global_or_US):
             j += 1
         i += 1
     plt.savefig(
-        "results" + os.sep + "grid" + os.sep + "cluster_timeseries_all_param_"
+        "results" + os.sep + "grid" + os.sep + "cluster_timeseries_all_param_all_lines_"
         + global_or_US + ".png",
         dpi=350,
         bbox_inches="tight",
@@ -127,9 +127,51 @@ def cluster_timeseries_all_parameters(parameters, global_or_US):
     plt.close()
 
 
+def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
+    """
+    Plots line plots for all clusters and all parameters
+    Arguments:
+        parameters: a dictionary of dataframes of all parameters
+    Returns:
+        None, but saves the plot
+    """
+    clusters = 5 if global_or_US == "US" else 4
+    fig, axes = plt.subplots(
+        nrows=5, ncols=clusters, sharey=True, sharex=True, figsize=(20, 20)
+    )
+    i = 0
+    for parameter, parameter_df in parameters.items():
+        j = 0
+        for cluster, cluster_df in parameter_df.groupby("cluster"):
+            del cluster_df["cluster"]
+            ax = axes[i, j]
+            cluster_df.transpose().plot(ax=ax, color="black", legend=False, alpha=0.03)
+            # Plot it two times, so the line has a edgecolor
+            cluster_df.median().transpose().plot(
+                ax=ax, color="black", legend=False, linewidth=5, alpha=0.9)
+            cluster_df.median().transpose().plot(
+                ax=ax, color="green", legend=False, linewidth=4, alpha=0.9)
+
+            ax.set_ylabel(parameter)
+            ax.set_xlabel("Months since war")
+            if i == 0:
+                ax.set_title("Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0]))
+            j += 1
+        i += 1
+    plt.savefig(
+        "results" + os.sep + "grid" + os.sep + "cluster_timeseries_all_param_q_lines_"
+        + global_or_US + ".png",
+        dpi=350,
+        bbox_inches="tight",
+    )
+
+    plt.close()
+
+
+
 if __name__ == "__main__":
     # Either calculate for the whole world or just the US
-    global_or_US = "global"
+    global_or_US = "US"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data" + os.sep + "interim_results" + os.sep
@@ -141,7 +183,7 @@ if __name__ == "__main__":
     assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
     cluster_timeseries_only_growth(growth_df, global_or_US)
     growth_df = prepare_geometry(growth_df)
-    cluster_spatial(growth_df, global_or_US)
+    cluster_spatial_voronoi(growth_df, global_or_US)
     parameters = {}
     parameter_names = [
         "salinity_factor", "nutrient_factor",
@@ -154,4 +196,5 @@ if __name__ == "__main__":
                 + parameter + "_clustered_" + global_or_US + ".pkl"
             )
         )
-    cluster_timeseries_all_parameters(parameters, global_or_US)
+    cluster_timeseries_all_parameters_individual_lines(parameters, global_or_US)
+    cluster_timeseries_all_parameters_q_lines(parameters, global_or_US)
