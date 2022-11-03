@@ -8,6 +8,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import geoplot as gplt
 from shapely.geometry import Point
+import numpy as np
 plt.style.use("https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
 
 
@@ -55,7 +56,7 @@ def cluster_spatial_voronoi(growth_df, global_or_US):
     # # Make sure that each entry has a value
     # num_nan = growth_df.isna().sum().sum()
     # assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
-    ax = gplt.voronoi(growth_df.dropna(), hue="cluster", legend=True, linewidth=0.3)
+    ax = gplt.voronoi(growth_df.dropna(), hue="cluster", legend=True, linewidth=0.3, cmap="Greens")
     fig = plt.gcf()
     fig.set_size_inches(15, 15)
     global_map.plot(ax=ax, color="white", edgecolor="black")
@@ -145,13 +146,12 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
         for cluster, cluster_df in parameter_df.groupby("cluster"):
             del cluster_df["cluster"]
             ax = axes[i, j]
-            cluster_df.transpose().plot(ax=ax, color="black", legend=False, alpha=0.03)
-            # Plot it two times, so the line has a edgecolor
-            cluster_df.median().transpose().plot(
-                ax=ax, color="black", legend=False, linewidth=5, alpha=0.9)
-            cluster_df.median().transpose().plot(
-                ax=ax, color="green", legend=False, linewidth=4, alpha=0.9)
 
+            for q in np.arange(0.1, 0.6, 0.1):
+                q_up = cluster_df.quantile(1 - q)
+                q_down = cluster_df.quantile(q)
+                ax.fill_between(x=q_up.index.astype(float), y1=q_down, y2=q_up, color="#3A913F", alpha=q * 2)
+            ax.plot(cluster_df.median(), color="black")
             ax.set_ylabel(parameter)
             ax.set_xlabel("Months since war")
             if i == 0:
@@ -166,7 +166,6 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
     )
 
     plt.close()
-
 
 
 if __name__ == "__main__":
