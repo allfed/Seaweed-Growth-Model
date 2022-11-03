@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import geoplot as gplt
 from shapely.geometry import Point
 import numpy as np
@@ -56,7 +57,7 @@ def cluster_spatial_voronoi(growth_df, global_or_US):
     # # Make sure that each entry has a value
     # num_nan = growth_df.isna().sum().sum()
     # assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
-    ax = gplt.voronoi(growth_df.dropna(), hue="cluster", legend=True, linewidth=0.3, cmap="Greens")
+    ax = gplt.voronoi(growth_df.dropna(), hue="cluster", legend=True, linewidth=0.3, cmap="viridis")
     fig = plt.gcf()
     fig.set_size_inches(15, 15)
     global_map.plot(ax=ax, color="white", edgecolor="black")
@@ -150,12 +151,24 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
             for q in np.arange(0.1, 0.6, 0.1):
                 q_up = cluster_df.quantile(1 - q)
                 q_down = cluster_df.quantile(q)
-                ax.fill_between(x=q_up.index.astype(float), y1=q_down, y2=q_up, color="#3A913F", alpha=q * 2)
+                ax.fill_between(
+                    x=q_up.index.astype(float), y1=q_down, y2=q_up, color="#3A913F", alpha=q * 2
+                )
             ax.plot(cluster_df.median(), color="black")
             ax.set_ylabel(parameter)
             ax.set_xlabel("Months since war")
             if i == 0:
                 ax.set_title("Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0]))
+            # Add a legend
+            if j == 0 and i == 0:
+                # Create the legend
+                patches_list = []
+                patches_list.append(mpatches.Patch(color="black", label="Median"))
+                patches_list.append(mpatches.Patch(color="#3A913F", label="Q40 - Q60", alpha=0.8))
+                patches_list.append(mpatches.Patch(color="#3A913F", label="Q30 - Q70", alpha=0.6))
+                patches_list.append(mpatches.Patch(color="#3A913F", label="Q20 - Q80", alpha=0.4))
+                patches_list.append(mpatches.Patch(color="#3A913F", label="Q10 - Q90", alpha=0.2))
+                ax.legend(handles=patches_list)
             j += 1
         i += 1
     plt.savefig(
@@ -170,7 +183,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
 
 if __name__ == "__main__":
     # Either calculate for the whole world or just the US
-    global_or_US = "US"
+    global_or_US = "global"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data" + os.sep + "interim_results" + os.sep
@@ -182,7 +195,7 @@ if __name__ == "__main__":
     assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
     cluster_timeseries_only_growth(growth_df, global_or_US)
     growth_df = prepare_geometry(growth_df)
-    cluster_spatial_voronoi(growth_df, global_or_US)
+   # cluster_spatial_voronoi(growth_df, global_or_US)
     parameters = {}
     parameter_names = [
         "salinity_factor", "nutrient_factor",
@@ -195,5 +208,5 @@ if __name__ == "__main__":
                 + parameter + "_clustered_" + global_or_US + ".pkl"
             )
         )
-    cluster_timeseries_all_parameters_individual_lines(parameters, global_or_US)
+ #   cluster_timeseries_all_parameters_individual_lines(parameters, global_or_US)
     cluster_timeseries_all_parameters_q_lines(parameters, global_or_US)
