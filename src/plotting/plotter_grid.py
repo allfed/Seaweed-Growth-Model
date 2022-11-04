@@ -13,37 +13,6 @@ import numpy as np
 plt.style.use("https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
 
 
-def cluster_timeseries_only_growth(growth_df, global_or_US):
-    """
-    Plots the clusters that were found in postprocessing
-    The plot is seperated by clusters and the median growth rate is plotted
-    """
-    rows = 2 if global_or_US == "global" else 3
-    fig, axes = plt.subplots(
-        nrows=rows, ncols=2, sharey=True, sharex=True, figsize=(15, 15)
-    )
-    axes = axes.flatten()
-    for cluster, cluster_df in growth_df.groupby("cluster"):
-        del cluster_df["cluster"]
-        ax = axes[cluster]
-        cluster_df.transpose().plot(ax=ax, color="black", legend=False, alpha=0.1)
-        # Plot it two times, so the line has a edgecolor
-        cluster_df.median().transpose().plot(
-            ax=ax, color="black", legend=False, linewidth=4, alpha=0.9)
-        cluster_df.median().transpose().plot(
-            ax=ax, color="green", legend=False, linewidth=3, alpha=0.9)
-        ax.set_ylabel("Fraction Optimal")
-        ax.set_xlabel("Months since war")
-        ax.set_title("Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0]))
-    plt.savefig(
-        "results" + os.sep + "grid" + os.sep + "cluster_timeseries_" + global_or_US +".png",
-        dpi=350,
-        bbox_inches="tight",
-    )
-
-    plt.close()
-
-
 def cluster_spatial_voronoi(growth_df, global_or_US):
     """
     Creates a spatial plot of the clusters
@@ -86,47 +55,6 @@ def prepare_geometry(growth_df):
     growth_df = growth_df[["cluster", "geometry"]]
     growth_df = gpd.GeoDataFrame(growth_df)
     return growth_df
-
-
-def cluster_timeseries_all_parameters_individual_lines(parameters, global_or_US):
-    """
-    Plots line plots for all clusters and all parameters
-    Arguments:
-        parameters: a dictionary of dataframes of all parameters
-    Returns:
-        None, but saves the plot
-    """
-    clusters = 5 if global_or_US == "US" else 4
-    fig, axes = plt.subplots(
-        nrows=5, ncols=clusters, sharey=True, sharex=True, figsize=(20, 20)
-    )
-    i = 0
-    for parameter, parameter_df in parameters.items():
-        j = 0
-        for cluster, cluster_df in parameter_df.groupby("cluster"):
-            del cluster_df["cluster"]
-            ax = axes[i, j]
-            cluster_df.transpose().plot(ax=ax, color="black", legend=False, alpha=0.03)
-            # Plot it two times, so the line has a edgecolor
-            cluster_df.median().transpose().plot(
-                ax=ax, color="black", legend=False, linewidth=5, alpha=0.9)
-            cluster_df.median().transpose().plot(
-                ax=ax, color="green", legend=False, linewidth=4, alpha=0.9)
-
-            ax.set_ylabel(parameter)
-            ax.set_xlabel("Months since war")
-            if i == 0:
-                ax.set_title("Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0]))
-            j += 1
-        i += 1
-    plt.savefig(
-        "results" + os.sep + "grid" + os.sep + "cluster_timeseries_all_param_all_lines_"
-        + global_or_US + ".png",
-        dpi=350,
-        bbox_inches="tight",
-    )
-
-    plt.close()
 
 
 def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
