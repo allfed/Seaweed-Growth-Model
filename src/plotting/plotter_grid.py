@@ -55,8 +55,8 @@ def cluster_spatial_voronoi(growth_df, global_or_US):
     growth_df.to_crs(global_map.crs, inplace=True)
     growth_df["cluster"] = growth_df["cluster"].astype(str)
     # # Make sure that each entry has a value
-    # num_nan = growth_df.isna().sum().sum()
-    # assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
+    num_nan = growth_df.isna().sum().sum()
+    assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
     ax = gplt.voronoi(growth_df.dropna(), hue="cluster", legend=True, linewidth=0.3, cmap="viridis")
     fig = plt.gcf()
     fig.set_size_inches(15, 15)
@@ -80,7 +80,7 @@ def prepare_geometry(growth_df):
     growth_df["latlon"] = growth_df.index
     growth_df["latitude"] = growth_df["latlon"].str[0]
     growth_df["longitude"] = growth_df["latlon"].str[1]
-    growth_df["longitude"] = growth_df[growth_df["longitude"] > 180]["longitude"] - 360
+    growth_df["longitude"] = growth_df["longitude"].apply(lambda x: x - 360 if x > 180 else x)
     growth_df["geometry"] = growth_df[["longitude", "latitude"]].apply(tuple, axis=1)
     growth_df["geometry"] = growth_df["geometry"].apply(Point)
     growth_df = growth_df[["cluster", "geometry"]]
@@ -155,8 +155,10 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
                     x=q_up.index.astype(float), y1=q_down, y2=q_up, color="#3A913F", alpha=q * 2
                 )
             ax.plot(cluster_df.median(), color="black")
-            ax.set_ylabel(parameter)
-            ax.set_xlabel("Months since war")
+            if j == 0:
+                ax.set_ylabel(parameter)
+            if (i == 4 and global_or_US == "US") or (i == 3 and global_or_US == "global"):
+                ax.set_xlabel("Months since war")
             if i == 0:
                 ax.set_title("Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0]))
             # Add a legend
@@ -177,25 +179,26 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
         dpi=350,
         bbox_inches="tight",
     )
-
     plt.close()
 
 
 if __name__ == "__main__":
     # Either calculate for the whole world or just the US
-    global_or_US = "global"
+    global_or_US = "US"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data" + os.sep + "interim_results" + os.sep
             + "seaweed_growth_rate_clustered_" + global_or_US + ".pkl"
         )
     )
+    # Add one to the cluster
+    growth_df["cluster"] = growth_df["cluster"] + 1
     # Make sure that each entry has a value
     num_nan = growth_df.isna().sum().sum()
     assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
     cluster_timeseries_only_growth(growth_df, global_or_US)
     growth_df = prepare_geometry(growth_df)
-   # cluster_spatial_voronoi(growth_df, global_or_US)
+    cluster_spatial_voronoi(growth_df, global_or_US)
     parameters = {}
     parameter_names = [
         "salinity_factor", "nutrient_factor",
@@ -207,6 +210,8 @@ if __name__ == "__main__":
                 "data" + os.sep + "interim_results" + os.sep
                 + parameter + "_clustered_" + global_or_US + ".pkl"
             )
+        # Add one to the cluster
+        parameters[parameter]["cluster"] = parameters[parameter]["cluster"] + 1
         )
- #   cluster_timeseries_all_parameters_individual_lines(parameters, global_or_US)
+    cluster_timeseries_all_parameters_individual_lines(parameters, global_or_US)
     cluster_timeseries_all_parameters_q_lines(parameters, global_or_US)
