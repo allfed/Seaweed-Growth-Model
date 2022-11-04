@@ -30,6 +30,13 @@ pages:
       - call_prep_nw_data
       - create_seaweed_land_buffer
 
+  - page: "modules/src/plotting/plotter_grid.md"
+    source: "src/plotting/plotter_grid.py"
+    functions:
+      - cluster_spatial
+      - prepare_geometry
+      - cluster_timeseries_all_parameters_q_lines
+
   - page: "modules/src/plotting/plotter_lme.md"
     source: "src/plotting/plotter_lme.py"
     classes:
