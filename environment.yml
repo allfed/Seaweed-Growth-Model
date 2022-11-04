@@ -14,4 +14,4 @@ dependencies:
   - cftime=1.5.1.1
   - scikit-learn=1.1.1
   - tslearn=0.5.2
-  - geoplot=0.5.1
+

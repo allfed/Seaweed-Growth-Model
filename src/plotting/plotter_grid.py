@@ -7,13 +7,12 @@ import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-import geoplot as gplt
 from shapely.geometry import Point
 import numpy as np
 plt.style.use("https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
 
 
-def cluster_spatial_voronoi(growth_df, global_or_US):
+def cluster_spatial(growth_df, global_or_US):
     """
     Creates a spatial plot of the clusters
     """
@@ -23,16 +22,18 @@ def cluster_spatial_voronoi(growth_df, global_or_US):
     growth_df.set_crs(epsg=4326, inplace=True)
     growth_df.to_crs(global_map.crs, inplace=True)
     growth_df["cluster"] = growth_df["cluster"].astype(str)
-    # # Make sure that each entry has a value
-    num_nan = growth_df.isna().sum().sum()
-    assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
-    ax = gplt.voronoi(growth_df.dropna(), hue="cluster", legend=True, linewidth=0.3, cmap="viridis")
+    ax = growth_df.plot(column="cluster", legend=True, cmap="viridis")
     fig = plt.gcf()
     fig.set_size_inches(15, 15)
-    global_map.plot(ax=ax, color="white", edgecolor="black")
+    global_map.plot(ax=ax, color="white", edgecolor="black", linewidth=0.2)
+    ax.set_xlabel("Longitude")
+    ax.set_ylabel("Latitude")
     if global_or_US == "US":
         ax.set_ylim(18, 55)
         ax.set_xlim(-130, -65)
+    else:
+        ax.set_ylim(-75, 85)
+        ax.set_xlim(-180, 180)
     plt.savefig(
         "results" + os.sep + "grid" + os.sep + "cluster_spatial_" + global_or_US + ".png",
         dpi=350,
@@ -50,8 +51,7 @@ def prepare_geometry(growth_df):
     growth_df["latitude"] = growth_df["latlon"].str[0]
     growth_df["longitude"] = growth_df["latlon"].str[1]
     growth_df["longitude"] = growth_df["longitude"].apply(lambda x: x - 360 if x > 180 else x)
-    growth_df["geometry"] = growth_df[["longitude", "latitude"]].apply(tuple, axis=1)
-    growth_df["geometry"] = growth_df["geometry"].apply(Point)
+    growth_df["geometry"] = growth_df[["longitude", "latitude"]].apply(tuple, axis=1).apply(Point)
     growth_df = growth_df[["cluster", "geometry"]]
     growth_df = gpd.GeoDataFrame(growth_df)
     return growth_df
@@ -112,7 +112,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
 
 if __name__ == "__main__":
     # Either calculate for the whole world or just the US
-    global_or_US = "US"
+    global_or_US = "global"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data" + os.sep + "interim_results" + os.sep
@@ -124,9 +124,8 @@ if __name__ == "__main__":
     # Make sure that each entry has a value
     num_nan = growth_df.isna().sum().sum()
     assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
-    cluster_timeseries_only_growth(growth_df, global_or_US)
     growth_df = prepare_geometry(growth_df)
-    cluster_spatial_voronoi(growth_df, global_or_US)
+    cluster_spatial(growth_df, global_or_US)
     parameters = {}
     parameter_names = [
         "salinity_factor", "nutrient_factor",
@@ -138,8 +137,8 @@ if __name__ == "__main__":
                 "data" + os.sep + "interim_results" + os.sep
                 + parameter + "_clustered_" + global_or_US + ".pkl"
             )
+        )
         # Add one to the cluster
         parameters[parameter]["cluster"] = parameters[parameter]["cluster"] + 1
-        )
-    cluster_timeseries_all_parameters_individual_lines(parameters, global_or_US)
+
     cluster_timeseries_all_parameters_q_lines(parameters, global_or_US)

@@ -92,20 +92,23 @@ def prepare_gridded_data(path, folder, file_ending, global_or_US):
         data_dict[lat_lon] = concat_latlon_dfs
     # Make pickle out of it, so we don't have to run this every time
     full_path = path + os.sep + "data" + os.sep + "interim_results"
-    with open(full_path + os.sep + "data_gridded_all_parameters_" + global_or_US + ".pkl", "wb") as handle:
+    with open(
+        full_path + os.sep + "data_gridded_all_parameters_" + global_or_US + ".pkl", "wb"
+    ) as handle:
         pickle.dump(data_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 def prep_nw_data(
     path,
     file,
-    length_time, 
-    env_param, 
-    min_lat=None, 
-    max_lat=None, 
+    length_time,
+    env_param,
+    min_lat=None,
+    max_lat=None,
     min_lon=None,
     max_lon=None,
-    all_cells=False):
+    all_cells=False
+):
     """
     ### This code is only used on the NCAR cluster. ###
 
@@ -155,7 +158,10 @@ def prep_nw_data(
     )
 
 
-def call_prep_nw_data():
+def call_prep_nw_data(global_or_US):
+    """
+    ### This code is only used on the NCAR cluster. ###
+    """
     env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf", "NH4"]
     for env_param in env_params:
         print(env_param)
@@ -169,8 +175,10 @@ def call_prep_nw_data():
         length_time = 36
         if env_param == "PAR_surf":
             env_param = "PAR_avg"
-        # prep_nw_data(path, file, length_time, env_param, min_lat, max_lat, min_lon, max_lon)
-        prep_nw_data(path, file, 120, env_param, all_cells=True)
+        if global_or_US == "US":
+            prep_nw_data(path, file, length_time, env_param, min_lat, max_lat, min_lon, max_lon)
+        elif global_or_US == "global":
+            prep_nw_data(path, file, 120, env_param, all_cells=True)
     print("done")
 
 
