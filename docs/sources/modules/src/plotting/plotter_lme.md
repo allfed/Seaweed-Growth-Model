@@ -2,7 +2,7 @@
 
 
 ## PlotterLME
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L11)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L12)
 ```python 
 PlotterLME(
    seaweed_model
@@ -18,7 +18,7 @@ Class to organize all the plotting functions
 
 
 ### .plot_growth_rate_by_lme_bar
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L19)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L20)
 ```python
 .plot_growth_rate_by_lme_bar(
    month, path = ''
@@ -29,7 +29,7 @@ Class to organize all the plotting functions
 Plots the growth rate for the model based on LME as a bar chart
 
 ### .plot_growth_rate_by_lme_global
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L38)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L39)
 ```python
 .plot_growth_rate_by_lme_global(
    month, path = ''
@@ -40,7 +40,7 @@ Plots the growth rate for the model based on LME as a bar chart
 Plots the growth rate fraction for all LME on a global map
 
 ### .calculate_mean_groth_rate_by_lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L70)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L71)
 ```python
 .calculate_mean_groth_rate_by_lme()
 ```
@@ -58,7 +58,7 @@ None
 None
 
 ### .plot_growth_rate_by_best_lme_as_line
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L94)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L95)
 ```python
 .plot_growth_rate_by_best_lme_as_line(
    path = '', window = 10
@@ -87,7 +87,7 @@ None
 
 
 ### lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L138)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L139)
 ```python
 .lme()
 ```
