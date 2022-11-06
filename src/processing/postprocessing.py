@@ -36,7 +36,7 @@ def get_parameter_dataframe(parameter, path, file):
     return param_df
 
 
-def time_series_analysis(growth_df, n_clusters):
+def time_series_analysis(growth_df, n_clusters, global_or_US):
     """
     Does time series analysis on the dataframe
     All the time serieses are clustered based on their
@@ -59,7 +59,9 @@ def time_series_analysis(growth_df, n_clusters):
     )
     # A good rule of thumb is choosing k as the square root of the number
     # of points in the training data set in kNN
-    km = TimeSeriesKMeans(n_clusters=n_clusters, metric="dtw")
+    # define the cores
+    cores = None if global_or_US == "US" else -1
+    km = TimeSeriesKMeans(n_clusters=n_clusters, metric="dtw", n_jobs=cores)
     timeseries_ds = to_time_series_dataset(growth_df_scaled)
     labels = km.fit_predict(timeseries_ds)
     return labels, km
@@ -83,7 +85,13 @@ def elbow_method(growth_df, max_clusters, global_or_US):
         inertias[i] = km.inertia_
     inertias_df = pd.DataFrame.from_dict(inertias, orient="index")
     inertias_df.to_csv(
-        "data" + os.sep + "interim_results" + os.sep + "inertias" + global_or_US + ".csv",
+        "data"
+        + os.sep
+        + "interim_results"
+        + os.sep
+        + "inertias"
+        + global_or_US
+        + ".csv",
         sep=";",
     )
     ax = inertias_df.plot()
@@ -91,59 +99,116 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     ax.set_ylabel("Distortion")
     ax.set_title("Elbow method")
     ax.get_figure().savefig(
-        "data" + os.sep + "interim_results" + os.sep + "elbow_method" + global_or_US + ".png"
+        "data"
+        + os.sep
+        + "interim_results"
+        + os.sep
+        + "elbow_method"
+        + global_or_US
+        + ".png"
     )
 
 
 if __name__ == "__main__":
     # Either calculate for the whole world or just the US
-    global_or_US = "US"
+    global_or_US = "global"
+    # Define the parameters we look at
+    parameters = [
+        "salinity_factor",
+        "nutrient_factor",
+        "illumination_factor",
+        "temp_factor",
+        "seaweed_growth_rate",
+    ]
     # only run this if the file does not exist
     if not os.path.isfile(
-        "data" + os.sep + "interim_results" + os.sep + "seaweed_growth_rate.pkl"
+        "data"
+        + os.sep
+        + "interim_results"
+        + os.sep
+        + "seaweed_growth_rate_"
+        + global_or_US
+        + ".pkl"
     ):
-        parameters = [
-            "salinity_factor", "nutrient_factor",
-            "illumination_factor", "temp_factor", "seaweed_growth_rate"
-        ]
+        print("Creating the dataframe")
         path = "data" + os.sep + "interim_results"
-        file = "data_gridded_all_parameters.pkl"
+        file = "data_gridded_all_parameters_" + global_or_US + ".pkl"
         # Transpose the dataframe so that the time serieses are the columns
         # Get all the parameters
         for parameter in parameters:
             print("Getting parameter {}".format(parameter))
             growth_df = get_parameter_dataframe(parameter, path, file).transpose()
             growth_df.to_pickle(
-                "data" + os.sep + "interim_results"
-                + os.sep + parameter + "_" + global_or_US + ".pkl"
+                "data"
+                + os.sep
+                + "interim_results"
+                + os.sep
+                + parameter
+                + "_"
+                + global_or_US
+                + ".pkl"
             )
 
     # Do the time series analysis
+    # growth_df = pd.read_pickle(
+    #     "data" + os.sep + "interim_results" + os.sep
+    #     + "seaweed_growth_rate_" + global_or_US + ".pkl"
+    # )
     # elbow_method(growth_df, 15, global_or_US)
-    # elbow method says 5 is the optimal number of clusters
+    # elbow method says 5 is the optimal number of clusters for US
+    # and 4 for the whole world
+    number_of_clusters = 4 if global_or_US == "global" else 5
     if not os.path.isfile(
-        "data" + os.sep + "interim_results" + os.sep
-        + "seaweed_growth_rate_clustered_" + global_or_US + ".pkl"
+        "data"
+        + os.sep
+        + "interim_results"
+        + os.sep
+        + "seaweed_growth_rate_clustered_"
+        + global_or_US
+        + ".pkl"
     ):
+        print("Clustering the data")
         growth_df = pd.read_pickle(
-            "data" + os.sep + "interim_results" + os.sep
-            + "seaweed_growth_rate_" + global_or_US + ".pkl"
+            "data"
+            + os.sep
+            + "interim_results"
+            + os.sep
+            + "seaweed_growth_rate_"
+            + global_or_US
+            + ".pkl"
         )
-        labels, km = time_series_analysis(growth_df, 5)
+        labels, km = time_series_analysis(growth_df, number_of_clusters, global_or_US)
         growth_df["cluster"] = labels
         for parameter in parameters:
             print("Getting parameter {} for clustering".format(parameter))
             param_df = pd.read_pickle(
-                "data" + os.sep + "interim_results"
-                + os.sep + parameter + "_" + global_or_US + ".pkl"
+                "data"
+                + os.sep
+                + "interim_results"
+                + os.sep
+                + parameter
+                + "_"
+                + global_or_US
+                + ".pkl"
             )
             param_df["cluster"] = labels
             param_df.to_pickle(
-                "data" + os.sep + "interim_results" + os.sep + parameter
-                + "_clustered_" + global_or_US + ".pkl"
+                "data"
+                + os.sep
+                + "interim_results"
+                + os.sep
+                + parameter
+                + "_clustered_"
+                + global_or_US
+                + ".pkl"
             )
     else:
         growth_df = pd.read_pickle(
-            "data" + os.sep + "interim_results" + os.sep
-            + "seaweed_growth_rate_clustered_" + global_or_US + ".pkl"
+            "data"
+            + os.sep
+            + "interim_results"
+            + os.sep
+            + "seaweed_growth_rate_clustered_"
+            + global_or_US
+            + ".pkl"
         )
