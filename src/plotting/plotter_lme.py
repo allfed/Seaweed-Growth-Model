@@ -1,8 +1,6 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
 # Import the ALLFED stle
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
@@ -18,15 +16,18 @@ def cluster_timeseries_all_parameters_q_lines(parameters, lme, lme_dict):
         None, but saves the plot
     """
     fig, axes = plt.subplots(
-        nrows=5, ncols=1, sharey=True, sharex=True, figsize=(20, 20)
+        nrows=5, ncols=1, sharey=True, sharex=True, figsize=(10, 5)
     )
     i = 0
     for parameter, parameter_df in parameters.items():
         ax = axes[i]
         lme_df = parameter_df.loc[lme, :]
-        lme_df.plot(kind="line", ax=ax, legend=False)
+        lme_df.plot(kind="line", ax=ax, legend=False, color="black", linewidth=2)
+        lme_df.plot(kind="line", ax=ax, legend=False, linewidth=1.5)
         ax.set_ylabel(parameter)
         ax.set_xlabel("Months since nuclear war")
+        if i == 0:
+            ax.set_title("LME: " + lme_dict[lme])
         i += 1
 
     plt.savefig(
