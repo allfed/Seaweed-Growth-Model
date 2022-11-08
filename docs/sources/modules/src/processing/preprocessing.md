@@ -35,7 +35,7 @@ and longitude.
 
 
 ### prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L99)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L101)
 ```python
 .prep_nw_data(
    path, file, length_time, env_param, min_lat = None, max_lat = None, min_lon = None,
@@ -73,17 +73,21 @@ None
 
 
 ### call_prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L158)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L161)
 ```python
-.call_prep_nw_data()
+.call_prep_nw_data(
+   global_or_US
+)
 ```
 
+---
+### This code is only used on the NCAR cluster. ###
 
 ----
 
 
 ### create_seaweed_land_buffer
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L177)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L185)
 ```python
 .create_seaweed_land_buffer(
    file_countries, file_harbors, buffer_country, buffer_harbor
