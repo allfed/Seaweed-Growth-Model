@@ -79,3 +79,29 @@ https://predictivehacks.com/k-means-elbow-method-code-for-python/
 **Returns**
 
 None, just plots the elbow method and saves it
+
+----
+
+
+### lme
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L100)
+```python
+.lme()
+```
+
+---
+Calculates growth rate and all the factors for the lme
+and saves it in files appropriate for the plotting functions
+
+----
+
+
+### grid
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L134)
+```python
+.grid()
+```
+
+---
+Calculates growth rate and all the factors for the grid
+and saves it in files appropriate for the plotting functions
