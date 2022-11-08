@@ -82,15 +82,3 @@ and plots them over time.
 **Returns**
 
 None
-
-----
-
-
-### lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L138)
-```python
-.lme()
-```
-
----
-Initializes all the data for the LME model and calls the plotting functions
