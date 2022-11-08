@@ -41,8 +41,9 @@ pages:
 
   - page: "modules/src/plotting/plotter_lme.md"
     source: "src/plotting/plotter_lme.py"
-    classes:
-      - PlotterLME
+    functions:
+      - cluster_timeseries_all_parameters_q_lines
+      - create_name_dict
 
   - page: "modules/src/model/seaweed_model.md"
     source: "src/model/seaweed_model.py"
