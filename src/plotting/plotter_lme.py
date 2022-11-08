@@ -135,32 +135,5 @@ class PlotterLME:
         plt.close()
 
 
-def lme():
-    """
-    Initializes all the data for the LME model and calls the plotting functions
-    """
-    model = SeaweedModel()
-    model.add_data_by_lme(
-        [i for i in range(1, 67)],
-        "data/lme_data/seaweed_environment_data_in_nuclear_war.csv",
-    )
-    model.calculate_factors()
-    model.calculate_growth_rate()
-    model.create_section_dfs()
-    plotter = PlotterLME(model)
-
-    for month in [month for month in range(-3, 237, 10)]:
-        plotter.plot_growth_rate_by_lme_bar(month, path="results/lme/")
-        plotter.plot_growth_rate_by_lme_global(month, path="results/lme/")
-
-    # Print the best 3 LMEs by mean growth rate
-    plotter.calculate_mean_groth_rate_by_lme()
-
-    # Plot the growth rate of the 5 best LMEs
-    plotter.plot_growth_rate_by_best_lme_as_line(path="results/lme/", window=10)
-    df = model.construct_df_for_parameter("seaweed_growth_rate")
-    df.plot(subplots=True, figsize=(50, 50))
 
 
-if __name__ == "__main__":
-    lme()
