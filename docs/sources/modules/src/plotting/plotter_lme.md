@@ -1,6 +1,7 @@
 #
 
 
+
 ## PlotterLME
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L12)
 ```python 
@@ -60,37 +61,33 @@ None
 ### .plot_growth_rate_by_best_lme_as_line
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L95)
 ```python
-.plot_growth_rate_by_best_lme_as_line(
-   path = '', window = 10
+.cluster_timeseries_all_parameters_q_lines(
+   parameters, lme, lme_dict
 )
 ```
 
 ---
-Takes the growthrate of the 3 best LMEs (by mean growth rate)
-29    0.391329
-11    0.309920
-38    0.304329
-and plots them over time.
-
+Plots line plots for all clusters and all parameters
 
 **Arguments**
 
-* **path**  : the path to save the plot to
-* **window**  : the window size for the rolling mean
+* **parameters**  : a dictionary of dataframes of all parameters
 
 
 **Returns**
 
-None
+None, but saves the plot
 
 ----
 
 
-### lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L139)
 ```python
-.lme()
+.create_name_dict()
 ```
 
 ---
-Initializes all the data for the LME model and calls the plotting functions
+Creates a lookup dictionary for the LME names
+
+**Returns**
+
+A dictionary with LME names

@@ -15,6 +15,8 @@ pages:
       - get_parameter_dataframe
       - time_series_analysis
       - elbow_method
+      - lme
+      - grid
 
   - page: "modules/src/processing/read_files.md"
     source: "src/processing/read_files.py"
@@ -39,10 +41,9 @@ pages:
 
   - page: "modules/src/plotting/plotter_lme.md"
     source: "src/plotting/plotter_lme.py"
-    classes:
-      - PlotterLME
     functions:
-      - lme
+      - cluster_timeseries_all_parameters_q_lines
+      - create_name_dict
 
   - page: "modules/src/model/seaweed_model.md"
     source: "src/model/seaweed_model.py"

@@ -109,7 +109,45 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     )
 
 
-if __name__ == "__main__":
+def lme():
+    """
+    Calculates growth rate and all the factors for the lme
+    and saves it in files appropriate for the plotting functions
+    """
+    model = SeaweedModel()
+    model.add_data_by_lme(
+        [i for i in range(1, 67)],
+        "data/lme_data/seaweed_environment_data_in_nuclear_war.csv",
+    )
+    model.calculate_factors()
+    model.calculate_growth_rate()
+    model.create_section_dfs()
+    # Define the parameters we look at
+    parameters = [
+        "salinity_factor", "nutrient_factor",
+        "illumination_factor", "temp_factor", "seaweed_growth_rate"
+    ]
+    # only run this if the file does not exist
+    if not os.path.isfile(
+        "data" + os.sep + "interim_results" + os.sep + "seaweed_growth_rate_LME.pkl"
+    ):
+        print("Creating the dataframe")
+        # Transpose the dataframe so that the time serieses are the columns
+        # Get all the parameters
+        for parameter in parameters:
+            print("Getting parameter {}".format(parameter))
+            growth_df = model.construct_df_for_parameter(parameter).transpose()
+            growth_df.to_pickle(
+                "data" + os.sep + "interim_results"
+                + os.sep + parameter + "_LME.pkl"
+            )
+
+
+def grid():
+    """
+    Calculates growth rate and all the factors for the grid
+    and saves it in files appropriate for the plotting functions
+    """
     # Either calculate for the whole world or just the US
     global_or_US = "global"
     # Define the parameters we look at
@@ -212,3 +250,8 @@ if __name__ == "__main__":
             + global_or_US
             + ".pkl"
         )
+
+
+if __name__ == "__main__":
+    lme()
+    #grid()

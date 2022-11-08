@@ -28,7 +28,7 @@ def cluster_spatial(growth_df, global_or_US):
     ax = growth_df.plot(column="cluster", legend=True, cmap="viridis")
     fig = plt.gcf()
     fig.set_size_inches(15, 15)
-    global_map.plot(ax=ax, color="white", edgecolor="black", linewidth=0.2)
+    global_map.plot(ax=ax, color="lightgrey", edgecolor="black", linewidth=0.2)
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
     if global_or_US == "US":
@@ -144,7 +144,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
     plt.close()
 
 
-if __name__ == "__main__":
+def main():
     # Either calculate for the whole world or just the US
     global_or_US = "global"
     growth_df = gpd.GeoDataFrame(
@@ -190,3 +190,8 @@ if __name__ == "__main__":
         parameters[parameter]["cluster"] = parameters[parameter]["cluster"] + 1
 
     cluster_timeseries_all_parameters_q_lines(parameters, global_or_US)
+
+
+if __name__ == "__main__":
+    main()
+
