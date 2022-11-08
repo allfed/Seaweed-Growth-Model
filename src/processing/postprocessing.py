@@ -85,7 +85,13 @@ def elbow_method(growth_df, max_clusters, global_or_US):
         inertias[i] = km.inertia_
     inertias_df = pd.DataFrame.from_dict(inertias, orient="index")
     inertias_df.to_csv(
-        "data" + os.sep + "interim_results" + os.sep + "inertias" + global_or_US + ".csv",
+        "data"
+        + os.sep
+        + "interim_results"
+        + os.sep
+        + "inertias"
+        + global_or_US
+        + ".csv",
         sep=";",
     )
     ax = inertias_df.plot()
@@ -93,7 +99,13 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     ax.set_ylabel("Distortion")
     ax.set_title("Elbow method")
     ax.get_figure().savefig(
-        "data" + os.sep + "interim_results" + os.sep + "elbow_method" + global_or_US + ".png"
+        "data"
+        + os.sep
+        + "interim_results"
+        + os.sep
+        + "elbow_method"
+        + global_or_US
+        + ".png"
     )
 
 
@@ -140,12 +152,20 @@ def grid():
     global_or_US = "global"
     # Define the parameters we look at
     parameters = [
-        "salinity_factor", "nutrient_factor",
-        "illumination_factor", "temp_factor", "seaweed_growth_rate"
+        "salinity_factor",
+        "nutrient_factor",
+        "illumination_factor",
+        "temp_factor",
+        "seaweed_growth_rate",
     ]
     # only run this if the file does not exist
     if not os.path.isfile(
-        "data" + os.sep + "interim_results" + os.sep + "seaweed_growth_rate_" + global_or_US
+        "data"
+        + os.sep
+        + "interim_results"
+        + os.sep
+        + "seaweed_growth_rate_"
+        + global_or_US
         + ".pkl"
     ):
         print("Creating the dataframe")
@@ -157,8 +177,14 @@ def grid():
             print("Getting parameter {}".format(parameter))
             growth_df = get_parameter_dataframe(parameter, path, file).transpose()
             growth_df.to_pickle(
-                "data" + os.sep + "interim_results"
-                + os.sep + parameter + "_" + global_or_US + ".pkl"
+                "data"
+                + os.sep
+                + "interim_results"
+                + os.sep
+                + parameter
+                + "_"
+                + global_or_US
+                + ".pkl"
             )
 
     # Do the time series analysis
@@ -171,31 +197,58 @@ def grid():
     # and 4 for the whole world
     number_of_clusters = 4 if global_or_US == "global" else 5
     if not os.path.isfile(
-        "data" + os.sep + "interim_results" + os.sep
-        + "seaweed_growth_rate_clustered_" + global_or_US + ".pkl"
+        "data"
+        + os.sep
+        + "interim_results"
+        + os.sep
+        + "seaweed_growth_rate_clustered_"
+        + global_or_US
+        + ".pkl"
     ):
         print("Clustering the data")
         growth_df = pd.read_pickle(
-            "data" + os.sep + "interim_results" + os.sep
-            + "seaweed_growth_rate_" + global_or_US + ".pkl"
+            "data"
+            + os.sep
+            + "interim_results"
+            + os.sep
+            + "seaweed_growth_rate_"
+            + global_or_US
+            + ".pkl"
         )
         labels, km = time_series_analysis(growth_df, number_of_clusters, global_or_US)
         growth_df["cluster"] = labels
         for parameter in parameters:
             print("Getting parameter {} for clustering".format(parameter))
             param_df = pd.read_pickle(
-                "data" + os.sep + "interim_results"
-                + os.sep + parameter + "_" + global_or_US + ".pkl"
+                "data"
+                + os.sep
+                + "interim_results"
+                + os.sep
+                + parameter
+                + "_"
+                + global_or_US
+                + ".pkl"
             )
             param_df["cluster"] = labels
             param_df.to_pickle(
-                "data" + os.sep + "interim_results" + os.sep + parameter
-                + "_clustered_" + global_or_US + ".pkl"
+                "data"
+                + os.sep
+                + "interim_results"
+                + os.sep
+                + parameter
+                + "_clustered_"
+                + global_or_US
+                + ".pkl"
             )
     else:
         growth_df = pd.read_pickle(
-            "data" + os.sep + "interim_results" + os.sep
-            + "seaweed_growth_rate_clustered_" + global_or_US + ".pkl"
+            "data"
+            + os.sep
+            + "interim_results"
+            + os.sep
+            + "seaweed_growth_rate_clustered_"
+            + global_or_US
+            + ".pkl"
         )
 
 

@@ -9,7 +9,10 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from shapely.geometry import Point
 import numpy as np
-plt.style.use("https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
+
+plt.style.use(
+    "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
+)
 
 
 def cluster_spatial(growth_df, global_or_US):
@@ -35,7 +38,13 @@ def cluster_spatial(growth_df, global_or_US):
         ax.set_ylim(-75, 85)
         ax.set_xlim(-180, 180)
     plt.savefig(
-        "results" + os.sep + "grid" + os.sep + "cluster_spatial_" + global_or_US + ".png",
+        "results"
+        + os.sep
+        + "grid"
+        + os.sep
+        + "cluster_spatial_"
+        + global_or_US
+        + ".png",
         dpi=350,
         bbox_inches="tight",
     )
@@ -50,8 +59,12 @@ def prepare_geometry(growth_df):
     growth_df["latlon"] = growth_df.index
     growth_df["latitude"] = growth_df["latlon"].str[0]
     growth_df["longitude"] = growth_df["latlon"].str[1]
-    growth_df["longitude"] = growth_df["longitude"].apply(lambda x: x - 360 if x > 180 else x)
-    growth_df["geometry"] = growth_df[["longitude", "latitude"]].apply(tuple, axis=1).apply(Point)
+    growth_df["longitude"] = growth_df["longitude"].apply(
+        lambda x: x - 360 if x > 180 else x
+    )
+    growth_df["geometry"] = (
+        growth_df[["longitude", "latitude"]].apply(tuple, axis=1).apply(Point)
+    )
     growth_df = growth_df[["cluster", "geometry"]]
     growth_df = gpd.GeoDataFrame(growth_df)
     return growth_df
@@ -80,30 +93,51 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
                 q_up = cluster_df.quantile(1 - q)
                 q_down = cluster_df.quantile(q)
                 ax.fill_between(
-                    x=q_up.index.astype(float), y1=q_down, y2=q_up, color="#3A913F", alpha=q * 2
+                    x=q_up.index.astype(float),
+                    y1=q_down,
+                    y2=q_up,
+                    color="#3A913F",
+                    alpha=q * 2,
                 )
             ax.plot(cluster_df.median(), color="black")
             if j == 0:
                 ax.set_ylabel(parameter)
-            if (i == 4 and global_or_US == "US") or (i == 3 and global_or_US == "global"):
+            if (i == 4 and global_or_US == "US") or (
+                i == 3 and global_or_US == "global"
+            ):
                 ax.set_xlabel("Months since war")
             if i == 0:
-                ax.set_title("Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0]))
+                ax.set_title(
+                    "Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0])
+                )
             # Add a legend
             if j == 0 and i == 0:
                 # Create the legend
                 patches_list = []
                 patches_list.append(mpatches.Patch(color="black", label="Median"))
-                patches_list.append(mpatches.Patch(color="#3A913F", label="Q40 - Q60", alpha=0.8))
-                patches_list.append(mpatches.Patch(color="#3A913F", label="Q30 - Q70", alpha=0.6))
-                patches_list.append(mpatches.Patch(color="#3A913F", label="Q20 - Q80", alpha=0.4))
-                patches_list.append(mpatches.Patch(color="#3A913F", label="Q10 - Q90", alpha=0.2))
+                patches_list.append(
+                    mpatches.Patch(color="#3A913F", label="Q40 - Q60", alpha=0.8)
+                )
+                patches_list.append(
+                    mpatches.Patch(color="#3A913F", label="Q30 - Q70", alpha=0.6)
+                )
+                patches_list.append(
+                    mpatches.Patch(color="#3A913F", label="Q20 - Q80", alpha=0.4)
+                )
+                patches_list.append(
+                    mpatches.Patch(color="#3A913F", label="Q10 - Q90", alpha=0.2)
+                )
                 ax.legend(handles=patches_list)
             j += 1
         i += 1
     plt.savefig(
-        "results" + os.sep + "grid" + os.sep + "cluster_timeseries_all_param_q_lines_"
-        + global_or_US + ".png",
+        "results"
+        + os.sep
+        + "grid"
+        + os.sep
+        + "cluster_timeseries_all_param_q_lines_"
+        + global_or_US
+        + ".png",
         dpi=350,
         bbox_inches="tight",
     )
@@ -115,8 +149,13 @@ def main():
     global_or_US = "global"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
-            "data" + os.sep + "interim_results" + os.sep
-            + "seaweed_growth_rate_clustered_" + global_or_US + ".pkl"
+            "data"
+            + os.sep
+            + "interim_results"
+            + os.sep
+            + "seaweed_growth_rate_clustered_"
+            + global_or_US
+            + ".pkl"
         )
     )
     # Add one to the cluster
@@ -128,14 +167,23 @@ def main():
     cluster_spatial(growth_df, global_or_US)
     parameters = {}
     parameter_names = [
-        "salinity_factor", "nutrient_factor",
-        "illumination_factor", "temp_factor", "seaweed_growth_rate"
+        "salinity_factor",
+        "nutrient_factor",
+        "illumination_factor",
+        "temp_factor",
+        "seaweed_growth_rate",
     ]
     for parameter in parameter_names:
         parameters[parameter] = pd.DataFrame(
             pd.read_pickle(
-                "data" + os.sep + "interim_results" + os.sep
-                + parameter + "_clustered_" + global_or_US + ".pkl"
+                "data"
+                + os.sep
+                + "interim_results"
+                + os.sep
+                + parameter
+                + "_clustered_"
+                + global_or_US
+                + ".pkl"
             )
         )
         # Add one to the cluster
