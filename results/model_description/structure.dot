@@ -30,17 +30,13 @@ digraph ModelOverview{
     model_growth -> growth;
 
     // link growth to upscaling model
-    upscaling_model [label="Upscaling\nModel", shape=box, style="filled", fillcolor="#669999"];
+    upscaling_model [label="Scale-Up\nModel", shape=box, style="filled", fillcolor="#669999"];
     growth -> upscaling_model;
 
     // add additional data for the upscaling model
-    food_demands [label="Food\nDemands", style="filled", color="#88CC88"];
-    farm_design [label="Seaweed\nFarm Design", style="filled", color="#88CC88"];
-    comp_prod [label="Component\nConstruction", style="filled", color="#88CC88"];
+    food_demands [label="Food\nDemands", style="filled", color="#55AA55"];
     assumptions [label="Upscaling\nAssumptions", style="filled",color="#55AA55"];
-    food_demands -> assumptions;
-    farm_design -> assumptions;
-    comp_prod -> farm_design;
+    food_demands -> upscaling_model;
     assumptions -> upscaling_model;
 
     // link upscaling model to the output
