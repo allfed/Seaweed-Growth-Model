@@ -59,7 +59,7 @@ https://www.kaggle.com/code/izzettunc/introduction-to-time-series-clustering/not
 
 
 ### elbow_method
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L71)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L70)
 ```python
 .elbow_method(
    growth_df, max_clusters, global_or_US
@@ -84,7 +84,7 @@ None, just plots the elbow method and saves it
 
 
 ### lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L113)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L112)
 ```python
 .lme()
 ```
@@ -97,7 +97,7 @@ and saves it in files appropriate for the plotting functions
 
 
 ### grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L147)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L146)
 ```python
 .grid()
 ```

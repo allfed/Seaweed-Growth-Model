@@ -2,7 +2,7 @@
 
 
 ### growth_factor_combination_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L22)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L25)
 ```python
 .growth_factor_combination_single_value(
    illumination_factor: float, temperature_factor: float, nutrient_factor: float,
@@ -30,7 +30,7 @@ reach in optimal circumstances
 
 
 ### growth_factor_combination
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L60)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L63)
 ```python
 .growth_factor_combination(
    illumination_factor: pd.Series, temperature_factor: pd.Series,
@@ -46,7 +46,7 @@ And returns it as a pandas series
 
 
 ### illumination_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L93)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L96)
 ```python
 .illumination_single_value(
    illumination: float
@@ -69,7 +69,7 @@ The illumination factor
 
 
 ### calculate_illumination_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L117)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L120)
 ```python
 .calculate_illumination_factor(
    illumination: pd.Series
@@ -83,7 +83,7 @@ Calculates the illumination factor for a whole series
 
 
 ### temperature_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L124)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L127)
 ```python
 .temperature_single_value(
    temperature: float
@@ -106,7 +106,7 @@ The temperature factor as a float
 
 
 ### calculate_temperature_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L150)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L153)
 ```python
 .calculate_temperature_factor(
    temperature: pd.Series
@@ -129,7 +129,7 @@ The temperature factor as a pandas series
 
 
 ### nutrient_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L162)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L165)
 ```python
 .nutrient_single_value(
    nitrate: float, ammonium: float, phosphate: float
@@ -155,7 +155,7 @@ The nutrient factor as a float
 
 
 ### calculate_nutrient_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L198)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L201)
 ```python
 .calculate_nutrient_factor(
    nitrate: pd.Series, ammonium: pd.Series, phosphate: pd.Series
@@ -170,7 +170,7 @@ And returns the nutrient factor as a pandas series
 
 
 ### salinity_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L215)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L218)
 ```python
 .salinity_single_value(
    salinity: float
@@ -184,7 +184,7 @@ Calculates the salinity factor for a single salinity value
 
 
 ### calculate_salinity_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L235)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L238)
 ```python
 .calculate_salinity_factor(
    salinity: pd.Series
