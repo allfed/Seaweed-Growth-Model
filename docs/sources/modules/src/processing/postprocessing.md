@@ -2,7 +2,7 @@
 
 
 ### get_parameter_dataframe
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L19)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L20)
 ```python
 .get_parameter_dataframe(
    parameter, path, file
@@ -29,7 +29,7 @@ for all the grid sections
 
 
 ### time_series_analysis
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L39)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L40)
 ```python
 .time_series_analysis(
    growth_df, n_clusters, global_or_US
@@ -59,7 +59,7 @@ https://www.kaggle.com/code/izzettunc/introduction-to-time-series-clustering/not
 
 
 ### elbow_method
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L70)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L71)
 ```python
 .elbow_method(
    growth_df, max_clusters, global_or_US
@@ -84,7 +84,7 @@ None, just plots the elbow method and saves it
 
 
 ### lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L112)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L113)
 ```python
 .lme()
 ```
@@ -97,7 +97,7 @@ and saves it in files appropriate for the plotting functions
 
 
 ### grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L146)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L147)
 ```python
 .grid()
 ```
