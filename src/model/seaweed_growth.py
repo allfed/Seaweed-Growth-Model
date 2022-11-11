@@ -8,10 +8,13 @@ the factor for a single value. While the second function with
 "calculate" in the name calculates the factor for a whole pandas series,
 for which it uses the first function.
 
-Based on the publication:
+The actual based is based on the publication:
 James, S.C. and Boriah, V. (2010), Modeling algae growth
 in an open-channel raceway
 Journal of Computational Biology, 17(7), 895−906.
+
+The paper shows an empirical model for the growth of algae.
+See there for detailed information about the model.
 """
 import math
 

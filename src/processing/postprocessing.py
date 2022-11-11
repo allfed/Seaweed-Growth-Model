@@ -60,8 +60,7 @@ def time_series_analysis(growth_df, n_clusters, global_or_US):
     )
     # A good rule of thumb is choosing k as the square root of the number
     # of points in the training data set in kNN
-    # define the cores
-    cores = None if global_or_US == "US" else -1
+    cores = None if global_or_US == "US" else -1  # define the cores to use
     km = TimeSeriesKMeans(n_clusters=n_clusters, metric="dtw", n_jobs=cores)
     timeseries_ds = to_time_series_dataset(growth_df_scaled)
     labels = km.fit_predict(timeseries_ds)
@@ -82,7 +81,7 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     inertias = {}
     for i in range(1, max_clusters):
         print("Trying {} clusters".format(i))
-        labels, km = time_series_analysis(growth_df, i)
+        labels, km = time_series_analysis(growth_df, i, global_or_US)
         inertias[i] = km.inertia_
     inertias_df = pd.DataFrame.from_dict(inertias, orient="index")
     inertias_df.to_csv(

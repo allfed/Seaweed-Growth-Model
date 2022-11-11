@@ -80,17 +80,25 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
     Returns:
         None, but saves the plot
     """
+    # Make the labels more clear
+    parameter_names = {
+        "salinity_factor": "Salinity Factor",
+        "nutrient_factor": "Nutrient Factor",
+        "illumination_factor": "Illumination Factor",
+        "temp_factor": "Temperature Factor",
+        "seaweed_growth_rate": "Seaweed Growth Rate",
+    }
     clusters = 5 if global_or_US == "US" else 4
     fig, axes = plt.subplots(
         nrows=5, ncols=clusters, sharey=True, sharex=True, figsize=(12, 12)
     )
     i = 0
+    # Iterate over all parameters and cluster to make all the subplots
     for parameter, parameter_df in parameters.items():
         j = 0
         for cluster, cluster_df in parameter_df.groupby("cluster"):
             del cluster_df["cluster"]
             ax = axes[i, j]
-
             for q in np.arange(0.1, 0.6, 0.1):
                 q_up = cluster_df.quantile(1 - q)
                 q_down = cluster_df.quantile(q)
@@ -99,11 +107,13 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
                     y1=q_down,
                     y2=q_up,
                     color="#3A913F",
+                    # Make the color more transparent with each quantile
                     alpha=q * 2,
                 )
             ax.plot(cluster_df.median(), color="black")
+            # Labels
             if j == 0:
-                ax.set_ylabel(parameter)
+                ax.set_ylabel(parameter_names[parameter])
             if i == 4:
                 ax.set_xlabel("Months since nuclear war")
             if i == 0:
@@ -145,6 +155,9 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
 
 
 def main():
+    """
+    Runs the other functions to read the data and make the plots
+    """
     # Either calculate for the whole world or just the US
     global_or_US = "global"
     growth_df = gpd.GeoDataFrame(
@@ -163,8 +176,11 @@ def main():
     # Make sure that each entry has a value
     num_nan = growth_df.isna().sum().sum()
     assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
+    # Fix the geometry
     growth_df = prepare_geometry(growth_df)
     cluster_spatial(growth_df, global_or_US)
+
+    # Read in the other parameters for the line plot
     parameters = {}
     parameter_names = [
         "salinity_factor",

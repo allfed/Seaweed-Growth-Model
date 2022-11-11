@@ -77,7 +77,8 @@ def prepare_gridded_data(path, folder, file_ending, global_or_US):
         concat_latlon_dfs = concat_latlon_dfs.loc[
             :, ~concat_latlon_dfs.columns.duplicated()
         ].copy()
-        # Add a column with the month since war
+        # Add a column with the month since war. This replaces the
+        # time column, which only contains arbitrary numbers and not real dates
         concat_latlon_dfs["months_since_war"] = list(
             range(-4, concat_latlon_dfs.shape[0] - 4, 1)
         )

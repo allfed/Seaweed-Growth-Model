@@ -55,6 +55,9 @@ def create_name_dict():
 
 
 def main():
+    """
+    Runs the other functions to read the data and make the plots
+    """
     parameters = {}
     parameter_names = [
         "salinity_factor", "nutrient_factor",
