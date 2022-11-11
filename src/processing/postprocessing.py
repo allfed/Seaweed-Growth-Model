@@ -255,4 +255,4 @@ def grid():
 
 if __name__ == "__main__":
     lme()
-    #grid()
+    grid()
