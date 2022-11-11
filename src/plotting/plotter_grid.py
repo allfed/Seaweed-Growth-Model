@@ -3,12 +3,13 @@ This file is meant to take the clustered and processed output of the seaweed mod
 and make the appropriate plots
 """
 import os
-import pandas as pd
+
 import geopandas as gpd
-import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from shapely.geometry import Point
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+from shapely.geometry import Point
 
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"

@@ -2,14 +2,15 @@
 This file takes the output of the seaweed model and does time series analysis with it
 """
 import os
-import numpy as np
 import random
-from src.model.seaweed_model import SeaweedModel
+
+import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from tslearn.clustering import TimeSeriesKMeans
 from tslearn.utils import to_time_series_dataset
 
+from src.model.seaweed_model import SeaweedModel
 
 # Make sure that everything is reproducible
 random.seed(42)
