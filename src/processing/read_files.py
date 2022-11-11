@@ -25,6 +25,10 @@ class DataLME:
     def read_data_lme(self):
         """
         read in the file
+        Arguments:
+            None
+        Returns:
+            None
         """
         self.lme_data = pd.read_csv(self.file)
 
@@ -33,6 +37,10 @@ class DataLME:
         Sorts as a dictionary of pandas dataframes
         The data is ocean data after nuclear war seperated by
         Large Marine Ecosystems (LME)
+        Arguments:
+            None
+        Returns:
+            None
         """
         # loop through the LMEs
         for i in range(1, 67):
@@ -87,6 +95,10 @@ class DataGrid:
     def read_data_grid(self):
         """
         Reads in the gridded data
+        Arguments:
+            None
+        Returns:
+            None
         """
         with open(self.file, "rb") as handle:
             self.grid_dict = pickle.load(handle)

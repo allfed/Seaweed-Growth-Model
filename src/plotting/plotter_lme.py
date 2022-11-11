@@ -14,6 +14,8 @@ def cluster_timeseries_all_parameters_q_lines(parameters, lme, lme_dict):
     Plots line plots for all clusters and all parameters
     Arguments:
         parameters: a dictionary of dataframes of all parameters
+        lme: an integer of the LME number
+        lme_dict: a dictionary of LME names
     Returns:
         None, but saves the plot
     """
@@ -44,6 +46,8 @@ def cluster_timeseries_all_parameters_q_lines(parameters, lme, lme_dict):
 def create_name_dict():
     """
     Creates a lookup dictionary for the LME names
+    Arguments:
+        None
     Returns:
         A dictionary with LME names
     """
@@ -57,6 +61,10 @@ def create_name_dict():
 def main():
     """
     Runs the other functions to read the data and make the plots
+    Arguments:
+        None
+    Returns:
+        None
     """
     parameters = {}
     parameter_names = [

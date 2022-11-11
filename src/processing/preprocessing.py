@@ -15,7 +15,6 @@ def prepare_gridded_data(path, folder, file_ending, global_or_US):
     different environmental paramters. Checks if they
     all have the same geometry and reorders them to fit
     the rest of the code.
-
     Arguments:
         path: the path for the pickled files
         folder: the folder where the pickled files are
@@ -110,7 +109,6 @@ def prep_nw_data(
     Reads the nuclear war data from Cheryls workspace.
     Creates a geopandas dataframe for it for a given
     environmental parameter and saves it in cwd as a pickle.
-
     Arguments:
         path: path to the file
         file: file name
@@ -123,7 +121,7 @@ def prep_nw_data(
         env_param: the environmental parameter to look at
         all_cells: if True, all cells are used, if False, only selection
     Returns:
-        None
+        None, but saves a pickle of the geodataframe
     """
     # Read in the data
     ds = xr.open_dataset(path + file)
@@ -156,6 +154,12 @@ def prep_nw_data(
 def call_prep_nw_data(global_or_US):
     """
     ### This code is only used on the NCAR cluster. ###
+    Calls the prep_nw_data function for all environmental parameters
+    and saves the results in cwd as pickles.
+    Arguments:
+        global_or_US: string, either "global" or "US"
+    Returns:
+        None, but saves pickles
     """
     env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf", "NH4"]
     for env_param in env_params:
@@ -184,12 +188,13 @@ def create_seaweed_land_buffer(
 ):
     """
     Creates a buffer around harbors and countries and saves it GeoJSON.
-
     Arguments:
         file_countries: path to the file with the countries
         file_harbors: path to the file with the harbors
         buffer_harbor: size buffer around harbors (km)
         buffer_country: size buffer around countries (km)
+    Returns:
+        None, but saves GeoJSON
     """
     # conversion https://www.usna.edu/Users/oceano/pguth/md_help/html/approx_equivalents.htm
     # 1 degree = 111 km

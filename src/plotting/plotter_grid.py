@@ -19,6 +19,11 @@ plt.style.use(
 def cluster_spatial(growth_df, global_or_US):
     """
     Creates a spatial plot of the clusters
+    Arguments:
+        growth_df: a dataframe of the growth rate
+        global_or_US: a string of either "global" or "US" that indicates the scale
+    Returns:
+        None, but saves the plot
     """
     global_map = gpd.read_file(
         "data/geospatial_information/Countries/ne_50m_admin_0_countries.shp"
@@ -57,6 +62,10 @@ def prepare_geometry(growth_df):
     Prepares the geometry for the growth_df. For some reason the spatial data has
     a longitude that is 0-360 instead of -180 to 180. This function converts it to
     the latter
+    Arguments:
+        growth_df: a dataframe of the growth rate
+    Returns:
+        None, but saves the plot
     """
     growth_df["latlon"] = growth_df.index
     growth_df["latitude"] = growth_df["latlon"].str[0]
@@ -157,6 +166,10 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
 def main():
     """
     Runs the other functions to read the data and make the plots
+    Arguments:
+        None
+    Returns:
+        None
     """
     # Either calculate for the whole world or just the US
     global_or_US = "global"

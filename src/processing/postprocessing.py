@@ -113,6 +113,10 @@ def lme():
     """
     Calculates growth rate and all the factors for the lme
     and saves it in files appropriate for the plotting functions
+    Arguments:
+        None
+    Returns:
+        None
     """
     model = SeaweedModel()
     model.add_data_by_lme(
@@ -147,6 +151,10 @@ def grid():
     """
     Calculates growth rate and all the factors for the grid
     and saves it in files appropriate for the plotting functions
+    Arguments:
+        None
+    Returns:
+        None
     """
     # Either calculate for the whole world or just the US
     global_or_US = "global"
