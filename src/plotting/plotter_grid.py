@@ -3,12 +3,13 @@ This file is meant to take the clustered and processed output of the seaweed mod
 and make the appropriate plots
 """
 import os
-import pandas as pd
+
 import geopandas as gpd
-import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from shapely.geometry import Point
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+from shapely.geometry import Point
 
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
@@ -27,10 +28,11 @@ def cluster_spatial(growth_df, global_or_US):
     growth_df["cluster"] = growth_df["cluster"].astype(str)
     ax = growth_df.plot(column="cluster", legend=True, cmap="viridis")
     fig = plt.gcf()
-    fig.set_size_inches(15, 15)
+    fig.set_size_inches(12, 12)
     global_map.plot(ax=ax, color="lightgrey", edgecolor="black", linewidth=0.2)
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
+    ax.get_legend().set_title("Cluster")
     if global_or_US == "US":
         ax.set_ylim(18, 55)
         ax.set_xlim(-130, -65)
@@ -80,7 +82,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
     """
     clusters = 5 if global_or_US == "US" else 4
     fig, axes = plt.subplots(
-        nrows=5, ncols=clusters, sharey=True, sharex=True, figsize=(20, 20)
+        nrows=5, ncols=clusters, sharey=True, sharex=True, figsize=(12, 12)
     )
     i = 0
     for parameter, parameter_df in parameters.items():
@@ -102,10 +104,8 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
             ax.plot(cluster_df.median(), color="black")
             if j == 0:
                 ax.set_ylabel(parameter)
-            if (i == 4 and global_or_US == "US") or (
-                i == 3 and global_or_US == "global"
-            ):
-                ax.set_xlabel("Months since war")
+            if i == 4:
+                ax.set_xlabel("Months since nuclear war")
             if i == 0:
                 ax.set_title(
                     "Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0])
@@ -194,4 +194,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

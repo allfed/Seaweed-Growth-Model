@@ -1,12 +1,12 @@
 """
 This files contains code to make the data ready for the model
 """
-import xarray as xr
+import os
 import pickle
 
 import geopandas as gpd
 import pandas as pd
-import os
+import xarray as xr
 
 
 def prepare_gridded_data(path, folder, file_ending, global_or_US):

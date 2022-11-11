@@ -1,6 +1,7 @@
 import os
-import pandas as pd
+
 import matplotlib.pyplot as plt
+import pandas as pd
 
 # Import the ALLFED stle
 plt.style.use(
@@ -17,7 +18,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, lme, lme_dict):
         None, but saves the plot
     """
     fig, axes = plt.subplots(
-        nrows=5, ncols=1, sharey=True, sharex=True, figsize=(10,10 )
+        nrows=5, ncols=1, sharey=True, sharex=True, figsize=(10, 10)
     )
     i = 0
     for parameter, parameter_df in parameters.items():
@@ -73,8 +74,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
