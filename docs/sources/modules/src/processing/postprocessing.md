@@ -93,11 +93,19 @@ None, just plots the elbow method and saves it
 Calculates growth rate and all the factors for the lme
 and saves it in files appropriate for the plotting functions
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ----
 
 
 ### grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L146)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L150)
 ```python
 .grid()
 ```
@@ -105,3 +113,11 @@ and saves it in files appropriate for the plotting functions
 ---
 Calculates growth rate and all the factors for the grid
 and saves it in files appropriate for the plotting functions
+
+**Arguments**
+
+None
+
+**Returns**
+
+None

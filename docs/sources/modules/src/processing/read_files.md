@@ -28,8 +28,16 @@ and provide the data for each LME as needed
 ---
 read in the file
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ### .sort_data_lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L31)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L35)
 ```python
 .sort_data_lme()
 ```
@@ -39,8 +47,16 @@ Sorts as a dictionary of pandas dataframes
 The data is ocean data after nuclear war seperated by
 Large Marine Ecosystems (LME)
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ### .provide_data_lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L60)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L68)
 ```python
 .provide_data_lme(
    lme_number
@@ -63,7 +79,7 @@ a dataframe
 
 
 ## DataGrid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L71)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L79)
 ```python 
 DataGrid(
    file
@@ -81,7 +97,7 @@ and provide the data for each grid cell as needed
 
 
 ### .read_data_grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L87)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L95)
 ```python
 .read_data_grid()
 ```
@@ -89,8 +105,16 @@ and provide the data for each grid cell as needed
 ---
 Reads in the gridded data
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ### .provide_data_grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L94)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L106)
 ```python
 .provide_data_grid(
    lat_lon
