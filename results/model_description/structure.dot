@@ -35,14 +35,14 @@ digraph ModelOverview{
 
     // add additional data for the upscaling model
     food_demands [label="Food\nDemands", style="filled", color="#55AA55"];
-    assumptions [label="Upscaling\nAssumptions", style="filled",color="#55AA55"];
+    assumptions [label="Scale-Up\nAssumptions", style="filled",color="#55AA55"];
     food_demands -> upscaling_model;
     assumptions -> upscaling_model;
 
     // link upscaling model to the output
     area_needed [label="Global Area\nNeeded", shape=hexagon, color="#D49A6A", style="filled"];
     upscaling_model -> area_needed;
-    upscaling_speed [label="Upscaling\nSpeed", shape=hexagon, color="#D49A6A", style="filled"];
+    upscaling_speed [label="Scale-Up\nSpeed", shape=hexagon, color="#D49A6A", style="filled"];
     upscaling_model -> upscaling_speed;
 
 

@@ -143,28 +143,28 @@
 <!-- area_needed -->
 <g id="node14" class="node">
 <title>area_needed</title>
-<polygon fill="#d49a6a" stroke="#d49a6a" points="370.5598,-33.9663 335.8215,-67.8988 266.3448,-67.8988 231.6064,-33.9663 266.3448,-.0337 335.8215,-.0337 370.5598,-33.9663"/>
-<text text-anchor="middle" x="301.0831" y="-38.1663" font-family="Times,serif" font-size="14.00" fill="#000000">Global Area</text>
-<text text-anchor="middle" x="301.0831" y="-21.3663" font-family="Times,serif" font-size="14.00" fill="#000000">Needed</text>
+<polygon fill="#d49a6a" stroke="#d49a6a" points="372.5598,-33.9663 337.8215,-67.8988 268.3448,-67.8988 233.6064,-33.9663 268.3448,-.0337 337.8215,-.0337 372.5598,-33.9663"/>
+<text text-anchor="middle" x="303.0831" y="-38.1663" font-family="Times,serif" font-size="14.00" fill="#000000">Global Area</text>
+<text text-anchor="middle" x="303.0831" y="-21.3663" font-family="Times,serif" font-size="14.00" fill="#000000">Needed</text>
 </g>
 <!-- upscaling_model&#45;&gt;area_needed -->
 <g id="edge13" class="edge">
 <title>upscaling_model&#45;&gt;area_needed</title>
-<path fill="none" stroke="#000000" d="M357.152,-103.6808C350.5051,-95.4162 342.6289,-85.6232 334.9127,-76.0291"/>
-<polygon fill="#000000" stroke="#000000" points="337.4939,-73.6538 328.4993,-68.0548 332.0392,-78.0408 337.4939,-73.6538"/>
+<path fill="none" stroke="#000000" d="M357.6158,-103.6808C351.151,-95.4162 343.4907,-85.6232 335.9859,-76.0291"/>
+<polygon fill="#000000" stroke="#000000" points="338.6662,-73.7749 329.7482,-68.0548 333.1527,-78.0878 338.6662,-73.7749"/>
 </g>
 <!-- upscaling_speed -->
 <g id="node15" class="node">
 <title>upscaling_speed</title>
-<polygon fill="#d49a6a" stroke="#d49a6a" points="507.4025,-33.9663 477.7428,-67.8988 418.4235,-67.8988 388.7638,-33.9663 418.4235,-.0337 477.7428,-.0337 507.4025,-33.9663"/>
-<text text-anchor="middle" x="448.0831" y="-38.1663" font-family="Times,serif" font-size="14.00" fill="#000000">Upscaling</text>
-<text text-anchor="middle" x="448.0831" y="-21.3663" font-family="Times,serif" font-size="14.00" fill="#000000">Speed</text>
+<polygon fill="#d49a6a" stroke="#d49a6a" points="501.7643,-33.9663 473.9237,-67.8988 418.2425,-67.8988 390.4019,-33.9663 418.2425,-.0337 473.9237,-.0337 501.7643,-33.9663"/>
+<text text-anchor="middle" x="446.0831" y="-38.1663" font-family="Times,serif" font-size="14.00" fill="#000000">Scale&#45;Up</text>
+<text text-anchor="middle" x="446.0831" y="-21.3663" font-family="Times,serif" font-size="14.00" fill="#000000">Speed</text>
 </g>
 <!-- upscaling_model&#45;&gt;upscaling_speed -->
 <g id="edge14" class="edge">
 <title>upscaling_model&#45;&gt;upscaling_speed</title>
-<path fill="none" stroke="#000000" d="M391.2462,-103.6808C397.9842,-95.4162 405.9682,-85.6232 413.7901,-76.0291"/>
-<polygon fill="#000000" stroke="#000000" points="416.6852,-78.017 420.2914,-68.0548 411.2597,-73.5938 416.6852,-78.017"/>
+<path fill="none" stroke="#000000" d="M390.7823,-103.6808C397.3382,-95.4162 405.1065,-85.6232 412.7169,-76.0291"/>
+<polygon fill="#000000" stroke="#000000" points="415.5699,-78.0644 419.0425,-68.0548 410.0858,-73.7141 415.5699,-78.0644"/>
 </g>
 <!-- food_demands -->
 <g id="node12" class="node">
@@ -183,7 +183,7 @@
 <g id="node13" class="node">
 <title>assumptions</title>
 <ellipse fill="#55aa55" stroke="#55aa55" cx="504.0831" cy="-215.4988" rx="63.0237" ry="29.3315"/>
-<text text-anchor="middle" x="504.0831" y="-219.6988" font-family="Times,serif" font-size="14.00" fill="#000000">Upscaling</text>
+<text text-anchor="middle" x="504.0831" y="-219.6988" font-family="Times,serif" font-size="14.00" fill="#000000">Scale&#45;Up</text>
 <text text-anchor="middle" x="504.0831" y="-202.8988" font-family="Times,serif" font-size="14.00" fill="#000000">Assumptions</text>
 </g>
 <!-- assumptions&#45;&gt;upscaling_model -->
