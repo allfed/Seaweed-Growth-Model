@@ -25,7 +25,7 @@ digraph ModelOverview{
     env_data -> model_growth;
 
     // Outputs of the model
-    growth [label="Seaweed\nGrowth Rates", shape=octagon, color="#D49A6A", style="filled"];
+    growth [label="Seaweed\nGrowth Rates", shape=hexagon, color="#D49A6A", style="filled"];
     // link growth to model
     model_growth -> growth;
 
@@ -40,9 +40,9 @@ digraph ModelOverview{
     assumptions -> upscaling_model;
 
     // link upscaling model to the output
-    area_needed [label="Global Area\nNeeded", shape=octagon, color="#D49A6A", style="filled"];
+    area_needed [label="Global Area\nNeeded", shape=hexagon, color="#D49A6A", style="filled"];
     upscaling_model -> area_needed;
-    upscaling_speed [label="Upscaling\nSpeed", shape=octagon, color="#D49A6A", style="filled"];
+    upscaling_speed [label="Upscaling\nSpeed", shape=hexagon, color="#D49A6A", style="filled"];
     upscaling_model -> upscaling_speed;
 
 
