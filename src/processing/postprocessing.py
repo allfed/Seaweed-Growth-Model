@@ -6,11 +6,17 @@ import random
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 from tslearn.clustering import TimeSeriesKMeans
 from tslearn.utils import to_time_series_dataset
 
 from src.model.seaweed_model import SeaweedModel
+
+# Import the ALLFED stle
+plt.style.use(
+    "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
+)
 
 # Make sure that everything is reproducible
 random.seed(42)
