@@ -30,7 +30,6 @@ pages:
       - prepare_gridded_data
       - prep_nw_data
       - call_prep_nw_data
-      - create_seaweed_land_buffer
 
   - page: "modules/src/plotting/plotter_grid.md"
     source: "src/plotting/plotter_grid.py"

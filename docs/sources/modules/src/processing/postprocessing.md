@@ -2,7 +2,7 @@
 
 
 ### get_parameter_dataframe
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L20)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L26)
 ```python
 .get_parameter_dataframe(
    parameter, path, file
@@ -29,7 +29,7 @@ for all the grid sections
 
 
 ### time_series_analysis
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L40)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L46)
 ```python
 .time_series_analysis(
    growth_df, n_clusters, global_or_US
@@ -59,7 +59,7 @@ https://www.kaggle.com/code/izzettunc/introduction-to-time-series-clustering/not
 
 
 ### elbow_method
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L71)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L76)
 ```python
 .elbow_method(
    growth_df, max_clusters, global_or_US
@@ -84,7 +84,7 @@ None, just plots the elbow method and saves it
 
 
 ### lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L113)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L118)
 ```python
 .lme()
 ```
@@ -93,11 +93,19 @@ None, just plots the elbow method and saves it
 Calculates growth rate and all the factors for the lme
 and saves it in files appropriate for the plotting functions
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ----
 
 
 ### grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L147)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L158)
 ```python
 .grid()
 ```
@@ -105,3 +113,11 @@ and saves it in files appropriate for the plotting functions
 ---
 Calculates growth rate and all the factors for the grid
 and saves it in files appropriate for the plotting functions
+
+**Arguments**
+
+None
+
+**Returns**
+
+None

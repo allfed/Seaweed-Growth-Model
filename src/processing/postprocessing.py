@@ -6,11 +6,17 @@ import random
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 from tslearn.clustering import TimeSeriesKMeans
 from tslearn.utils import to_time_series_dataset
 
 from src.model.seaweed_model import SeaweedModel
+
+# Import the ALLFED stle
+plt.style.use(
+    "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
+)
 
 # Make sure that everything is reproducible
 random.seed(42)
@@ -60,8 +66,7 @@ def time_series_analysis(growth_df, n_clusters, global_or_US):
     )
     # A good rule of thumb is choosing k as the square root of the number
     # of points in the training data set in kNN
-    # define the cores
-    cores = None if global_or_US == "US" else -1
+    cores = None if global_or_US == "US" else -1  # define the cores to use
     km = TimeSeriesKMeans(n_clusters=n_clusters, metric="dtw", n_jobs=cores)
     timeseries_ds = to_time_series_dataset(growth_df_scaled)
     labels = km.fit_predict(timeseries_ds)
@@ -82,7 +87,7 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     inertias = {}
     for i in range(1, max_clusters):
         print("Trying {} clusters".format(i))
-        labels, km = time_series_analysis(growth_df, i)
+        labels, km = time_series_analysis(growth_df, i, global_or_US)
         inertias[i] = km.inertia_
     inertias_df = pd.DataFrame.from_dict(inertias, orient="index")
     inertias_df.to_csv(
@@ -100,11 +105,11 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     ax.set_ylabel("Distortion")
     ax.set_title("Elbow method")
     ax.get_figure().savefig(
-        "data"
+        "results"
         + os.sep
         + "interim_results"
         + os.sep
-        + "elbow_method"
+        + "elbow_method_"
         + global_or_US
         + ".png"
     )
@@ -114,6 +119,10 @@ def lme():
     """
     Calculates growth rate and all the factors for the lme
     and saves it in files appropriate for the plotting functions
+    Arguments:
+        None
+    Returns:
+        None
     """
     model = SeaweedModel()
     model.add_data_by_lme(
@@ -125,8 +134,11 @@ def lme():
     model.create_section_dfs()
     # Define the parameters we look at
     parameters = [
-        "salinity_factor", "nutrient_factor",
-        "illumination_factor", "temp_factor", "seaweed_growth_rate"
+        "salinity_factor",
+        "nutrient_factor",
+        "illumination_factor",
+        "temp_factor",
+        "seaweed_growth_rate",
     ]
     # only run this if the file does not exist
     if not os.path.isfile(
@@ -139,8 +151,7 @@ def lme():
             print("Getting parameter {}".format(parameter))
             growth_df = model.construct_df_for_parameter(parameter).transpose()
             growth_df.to_pickle(
-                "data" + os.sep + "interim_results"
-                + os.sep + parameter + "_LME.pkl"
+                "data" + os.sep + "interim_results" + os.sep + parameter + "_LME.pkl"
             )
 
 
@@ -148,6 +159,10 @@ def grid():
     """
     Calculates growth rate and all the factors for the grid
     and saves it in files appropriate for the plotting functions
+    Arguments:
+        None
+    Returns:
+        None
     """
     # Either calculate for the whole world or just the US
     global_or_US = "global"

@@ -63,6 +63,10 @@ class SeaweedModel:
         """
         Calculates the growth factors for the model
         for all ocean sections (either grid or LME).
+        Arguments:
+            None
+        Returns:
+            None
         """
         for section in self.sections.values():
             section.calculate_factors()
@@ -71,6 +75,10 @@ class SeaweedModel:
         """
         Calculates the growth rate for the model
         for all ocean sections (either grid or LME).
+        Arguments:
+            None
+        Returns:
+            None
         """
         for section in self.sections.values():
             section.calculate_growth_rate()
@@ -78,6 +86,10 @@ class SeaweedModel:
     def create_section_dfs(self):
         """
         Creates a dataframe for each section in the model.
+        Arguments:
+            None
+        Returns:
+            None
         """
         for section in self.sections.values():
             section.create_section_df()
@@ -89,10 +101,9 @@ class SeaweedModel:
         Mininum is -3, as the data starts before the war.
         Maximum is 357, as the data ends after the war.
         Arguments:
-            min_months: the number of months since the beginning of the war (start date)
-            max_months: the number of months since the beginning of the war (end date)
+            months: the months since the beginning of the nuclear war
         Returns:
-            a dataframe
+            a dataframe for the values at the given month
         """
         date_dict = {}
         for section_name, section_object in self.sections.items():

@@ -70,6 +70,10 @@ class OceanSection:
         """
         Creates a dataframe that contains all the data for a given section
         This can only be run once the factors have been calculated
+        Arguments:
+            None
+        Returns:
+            None
         """
         # check if the factors have been calculated
         assert self.salinity_factor is not None
@@ -104,6 +108,10 @@ class OceanSection:
     def calculate_mean_growth_rate(self):
         """
         Calculates the mean growth rate and returns it
+        Arguments:
+            None
+        Returns:
+            the mean growth rate of the section
         """
         # check if the dataframe has been created
         assert self.section_df is not None

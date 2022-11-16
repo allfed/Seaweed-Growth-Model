@@ -63,8 +63,16 @@ None
 Creates a dataframe that contains all the data for a given section
 This can only be run once the factors have been calculated
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ### .calculate_mean_growth_rate
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/ocean_section.py/#L104)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/ocean_section.py/#L108)
 ```python
 .calculate_mean_growth_rate()
 ```
@@ -72,8 +80,16 @@ This can only be run once the factors have been calculated
 ---
 Calculates the mean growth rate and returns it
 
+**Arguments**
+
+None
+
+**Returns**
+
+the mean growth rate of the section
+
 ### .select_section_df_date
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/ocean_section.py/#L113)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/ocean_section.py/#L121)
 ```python
 .select_section_df_date(
    month

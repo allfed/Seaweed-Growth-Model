@@ -14,6 +14,8 @@ def cluster_timeseries_all_parameters_q_lines(parameters, lme, lme_dict):
     Plots line plots for all clusters and all parameters
     Arguments:
         parameters: a dictionary of dataframes of all parameters
+        lme: an integer of the LME number
+        lme_dict: a dictionary of LME names
     Returns:
         None, but saves the plot
     """
@@ -33,8 +35,13 @@ def cluster_timeseries_all_parameters_q_lines(parameters, lme, lme_dict):
         i += 1
 
     plt.savefig(
-        "results" + os.sep + "lme" + os.sep + "cluster_timeseries_all_param_q_lines_LME_"
-        + lme_dict[lme] + ".png",
+        "results"
+        + os.sep
+        + "lme"
+        + os.sep
+        + "cluster_timeseries_all_param_q_lines_LME_"
+        + lme_dict[lme]
+        + ".png",
         dpi=200,
         bbox_inches="tight",
     )
@@ -44,27 +51,43 @@ def cluster_timeseries_all_parameters_q_lines(parameters, lme, lme_dict):
 def create_name_dict():
     """
     Creates a lookup dictionary for the LME names
+    Arguments:
+        None
     Returns:
         A dictionary with LME names
     """
     lme_df = pd.read_csv(
-        "data" + os.sep + "geospatial_information" + os.sep + "lme_shp"
-        + os.sep + "lme_metadata.csv"
+        "data"
+        + os.sep
+        + "geospatial_information"
+        + os.sep
+        + "lme_shp"
+        + os.sep
+        + "lme_metadata.csv"
     )
     return dict(zip(lme_df.LME_NUMBER, lme_df.LME_NAME))
 
 
 def main():
+    """
+    Runs the other functions to read the data and make the plots
+    Arguments:
+        None
+    Returns:
+        None
+    """
     parameters = {}
     parameter_names = [
-        "salinity_factor", "nutrient_factor",
-        "illumination_factor", "temp_factor", "seaweed_growth_rate"
+        "salinity_factor",
+        "nutrient_factor",
+        "illumination_factor",
+        "temp_factor",
+        "seaweed_growth_rate",
     ]
     for parameter in parameter_names:
         parameters[parameter] = pd.DataFrame(
             pd.read_pickle(
-                "data" + os.sep + "interim_results" + os.sep
-                + parameter + "_LME.pkl"
+                "data" + os.sep + "interim_results" + os.sep + parameter + "_LME.pkl"
             )
         )
     lme_dict = create_name_dict()

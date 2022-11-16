@@ -69,8 +69,16 @@ None
 Calculates the growth factors for the model
 for all ocean sections (either grid or LME).
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ### .calculate_growth_rate
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L70)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L74)
 ```python
 .calculate_growth_rate()
 ```
@@ -79,8 +87,16 @@ for all ocean sections (either grid or LME).
 Calculates the growth rate for the model
 for all ocean sections (either grid or LME).
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ### .create_section_dfs
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L78)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L86)
 ```python
 .create_section_dfs()
 ```
@@ -88,8 +104,16 @@ for all ocean sections (either grid or LME).
 ---
 Creates a dataframe for each section in the model.
 
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
 ### .construct_df_from_sections_for_date
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L85)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L97)
 ```python
 .construct_df_from_sections_for_date(
    months
@@ -104,16 +128,15 @@ Maximum is 357, as the data ends after the war.
 
 **Arguments**
 
-* **min_months**  : the number of months since the beginning of the war (start date)
-* **max_months**  : the number of months since the beginning of the war (end date)
+* **months**  : the months since the beginning of the nuclear war
 
 
 **Returns**
 
-a dataframe
+a dataframe for the values at the given month
 
 ### .construct_df_for_parameter
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L102)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L113)
 ```python
 .construct_df_for_parameter(
    parameter

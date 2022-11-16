@@ -8,10 +8,13 @@ the factor for a single value. While the second function with
 "calculate" in the name calculates the factor for a whole pandas series,
 for which it uses the first function.
 
-Based on the publication:
+The actual based is based on the publication:
 James, S.C. and Boriah, V. (2010), Modeling algae growth
 in an open-channel raceway
 Journal of Computational Biology, 17(7), 895−906.
+
+The paper shows an empirical model for the growth of algae.
+See there for detailed information about the model.
 """
 import math
 
@@ -66,6 +69,13 @@ def growth_factor_combination(
     """
     Calculates the actual production rate of the seaweed for a whole dataframe
     And returns it as a pandas series
+    Arguments:
+        illumination_factor: the illumination factor
+        temperature_factor: the temperature factor
+        nutrient_factor: the nutrient factor
+        salinity_factor: the salinity factor
+    Returns:
+        fraction of the actual production rate the seaweed could
     """
     factors_combined_df = pd.concat(
         [illumination_factor, temperature_factor, nutrient_factor, salinity_factor],
@@ -92,7 +102,7 @@ def growth_factor_combination(
 
 def illumination_single_value(illumination: float):
     """
-    Calculates the illumination factor for a single value
+    Calculates the illumination factor for a single value based on an empirical model
     Arguments:
         illumination: the illumination of the algae in W/m²
     Returns:
@@ -117,13 +127,17 @@ def illumination_single_value(illumination: float):
 def calculate_illumination_factor(illumination: pd.Series):
     """
     Calculates the illumination factor for a whole series
+    Arguments:
+        illumination: the illumination of the algae in W/m²
+    Returns:
+        The illumination factor as a pandas series
     """
     return pd.Series(illumination.apply(illumination_single_value))
 
 
 def temperature_single_value(temperature: float):
     """
-    Calculates the temperature factor
+    Calculates the temperature factor for a single value based on an empirical model
     Arguments:
         temperature: the temperature of the water in °C
     Returns:
@@ -163,6 +177,7 @@ def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float):
     """
     Calculates the nutrient factor, which is the minimum of the
     three nutrients nitrate, ammonium and phosphate for a single value
+    Based on an empirical model
     Arguments:
         nitrate: the nitrate concentration in mmol/m³
         ammonium: the ammonium concentration in mmol/m³
@@ -201,6 +216,12 @@ def calculate_nutrient_factor(
     """
     Calculates the nutrient factor for a whole series
     And returns the nutrient factor as a pandas series
+    Arguments:
+        nitrate: the nitrate concentration in mmol/m³
+        ammonium: the ammonium concentration in mmol/m³
+        phosphate: the phosphate concentration in mmol/m³
+    Returns:
+        The nutrient factor as a pandas series
     """
     nutrient_df = pd.concat([nitrate, ammonium, phosphate], axis=1)
     nutrient_df.columns = ["nitrate", "ammonium", "phosphate"]
@@ -214,7 +235,11 @@ def calculate_nutrient_factor(
 
 def salinity_single_value(salinity: float):
     """
-    Calculates the salinity factor for a single salinity value
+    Calculates the salinity factor for a single salinity value based on an empirical model
+    Arguments:
+        salinity: the salinity of the water
+    Returns:
+        The salinity factor as a float
     """
     # Return nan if salinity is nan
     if np.isnan(salinity):

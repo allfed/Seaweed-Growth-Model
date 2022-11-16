@@ -4,7 +4,6 @@ This files contains code to make the data ready for the model
 import os
 import pickle
 
-import geopandas as gpd
 import pandas as pd
 import xarray as xr
 
@@ -15,7 +14,6 @@ def prepare_gridded_data(path, folder, file_ending, global_or_US):
     different environmental paramters. Checks if they
     all have the same geometry and reorders them to fit
     the rest of the code.
-
     Arguments:
         path: the path for the pickled files
         folder: the folder where the pickled files are
@@ -77,7 +75,8 @@ def prepare_gridded_data(path, folder, file_ending, global_or_US):
         concat_latlon_dfs = concat_latlon_dfs.loc[
             :, ~concat_latlon_dfs.columns.duplicated()
         ].copy()
-        # Add a column with the month since war
+        # Add a column with the month since war. This replaces the
+        # time column, which only contains arbitrary numbers and not real dates
         concat_latlon_dfs["months_since_war"] = list(
             range(-4, concat_latlon_dfs.shape[0] - 4, 1)
         )
@@ -109,7 +108,6 @@ def prep_nw_data(
     Reads the nuclear war data from Cheryls workspace.
     Creates a geopandas dataframe for it for a given
     environmental parameter and saves it in cwd as a pickle.
-
     Arguments:
         path: path to the file
         file: file name
@@ -122,7 +120,7 @@ def prep_nw_data(
         env_param: the environmental parameter to look at
         all_cells: if True, all cells are used, if False, only selection
     Returns:
-        None
+        None, but saves a pickle of the geodataframe
     """
     # Read in the data
     ds = xr.open_dataset(path + file)
@@ -155,6 +153,12 @@ def prep_nw_data(
 def call_prep_nw_data(global_or_US):
     """
     ### This code is only used on the NCAR cluster. ###
+    Calls the prep_nw_data function for all environmental parameters
+    and saves the results in cwd as pickles.
+    Arguments:
+        global_or_US: string, either "global" or "US"
+    Returns:
+        None, but saves pickles
     """
     env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf", "NH4"]
     for env_param in env_params:
@@ -178,67 +182,8 @@ def call_prep_nw_data(global_or_US):
     print("done")
 
 
-def create_seaweed_land_buffer(
-    file_countries, file_harbors, buffer_country, buffer_harbor
-):
-    """
-    Creates a buffer around harbors and countries and saves it GeoJSON.
-
-    Arguments:
-        file_countries: path to the file with the countries
-        file_harbors: path to the file with the harbors
-        buffer_harbor: size buffer around harbors (km)
-        buffer_country: size buffer around countries (km)
-    """
-    # conversion https://www.usna.edu/Users/oceano/pguth/md_help/html/approx_equivalents.htm
-    # 1 degree = 111 km
-    # 1 km = 0.009 degrees
-    buffer_country_deg = buffer_country * 0.009
-    buffer_harbor_deg = buffer_harbor * 0.009
-    # Read in the data
-    harbors = gpd.read_file(
-        "data" + os.sep + "geospatial_information" + os.sep + file_harbors
-    )
-    countries = gpd.read_file(
-        "data"
-        + os.sep
-        + "geospatial_information"
-        + os.sep
-        + "Countries"
-        + os.sep
-        + file_countries
-    )
-    # Dissolve it
-    countries_dissolved = gpd.GeoDataFrame(countries.dissolve()["geometry"])
-    harbors_dissolved = gpd.GeoDataFrame(harbors.dissolve()["geometry"])
-    # Create the buffers
-    buffered_harbors = gpd.GeoDataFrame(harbors_dissolved.buffer(buffer_harbor_deg))
-    buffered_harbors.columns = ["geometry"]
-    buffered_countries = gpd.GeoDataFrame(
-        countries_dissolved.buffer(buffer_country_deg)
-    )
-    buffered_countries.columns = ["geometry"]
-    # Combine the two bufferes
-    buffer_both = buffered_countries.union(buffered_harbors)
-    # Substract the countries from the buffer
-    buffer_diff = gpd.GeoDataFrame(buffer_both.difference(countries_dissolved))
-    buffer_diff.columns = ["geometry"]
-    buffer_diff = buffer_diff.dissolve()
-    buffer_diff.to_file(
-        "data"
-        + os.sep
-        + "interim_results"
-        + os.sep
-        + "harbor_{}km_coast_{}km_buffer.geojson".format(buffer_harbor, buffer_country),
-        driver="GeoJSON",
-    )
-
-
 if __name__ == "__main__":
     prepare_gridded_data(".", "gridded_data_global", "120_months_pickle", "global")
     prepare_gridded_data(
         ".", "gridded_data_test_dataset_US_only", "36_months_pickle", "US"
     )
-    # create_seaweed_land_buffer(
-    #     "ne_50m_admin_0_countries.shp", "global_harbors.json", 2, 50
-    # )
