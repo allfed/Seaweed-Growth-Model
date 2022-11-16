@@ -91,29 +91,3 @@ and saves the results in cwd as pickles.
 **Returns**
 
 None, but saves pickles
-
-----
-
-
-### create_seaweed_land_buffer
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L186)
-```python
-.create_seaweed_land_buffer(
-   file_countries, file_harbors, buffer_country, buffer_harbor
-)
-```
-
----
-Creates a buffer around harbors and countries and saves it GeoJSON.
-
-**Arguments**
-
-* **file_countries**  : path to the file with the countries
-* **file_harbors**  : path to the file with the harbors
-* **buffer_harbor**  : size buffer around harbors (km)
-* **buffer_country**  : size buffer around countries (km)
-
-
-**Returns**
-
-None, but saves GeoJSON
