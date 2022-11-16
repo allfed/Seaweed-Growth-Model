@@ -4,7 +4,6 @@ This files contains code to make the data ready for the model
 import os
 import pickle
 
-import geopandas as gpd
 import pandas as pd
 import xarray as xr
 

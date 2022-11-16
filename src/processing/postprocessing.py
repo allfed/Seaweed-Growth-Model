@@ -105,11 +105,11 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     ax.set_ylabel("Distortion")
     ax.set_title("Elbow method")
     ax.get_figure().savefig(
-        "data"
+        "results"
         + os.sep
         + "interim_results"
         + os.sep
-        + "elbow_method"
+        + "elbow_method_"
         + global_or_US
         + ".png"
     )
