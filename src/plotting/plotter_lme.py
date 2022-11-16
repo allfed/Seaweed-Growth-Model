@@ -35,8 +35,13 @@ def cluster_timeseries_all_parameters_q_lines(parameters, lme, lme_dict):
         i += 1
 
     plt.savefig(
-        "results" + os.sep + "lme" + os.sep + "cluster_timeseries_all_param_q_lines_LME_"
-        + lme_dict[lme] + ".png",
+        "results"
+        + os.sep
+        + "lme"
+        + os.sep
+        + "cluster_timeseries_all_param_q_lines_LME_"
+        + lme_dict[lme]
+        + ".png",
         dpi=200,
         bbox_inches="tight",
     )
@@ -52,8 +57,13 @@ def create_name_dict():
         A dictionary with LME names
     """
     lme_df = pd.read_csv(
-        "data" + os.sep + "geospatial_information" + os.sep + "lme_shp"
-        + os.sep + "lme_metadata.csv"
+        "data"
+        + os.sep
+        + "geospatial_information"
+        + os.sep
+        + "lme_shp"
+        + os.sep
+        + "lme_metadata.csv"
     )
     return dict(zip(lme_df.LME_NUMBER, lme_df.LME_NAME))
 
@@ -68,14 +78,16 @@ def main():
     """
     parameters = {}
     parameter_names = [
-        "salinity_factor", "nutrient_factor",
-        "illumination_factor", "temp_factor", "seaweed_growth_rate"
+        "salinity_factor",
+        "nutrient_factor",
+        "illumination_factor",
+        "temp_factor",
+        "seaweed_growth_rate",
     ]
     for parameter in parameter_names:
         parameters[parameter] = pd.DataFrame(
             pd.read_pickle(
-                "data" + os.sep + "interim_results" + os.sep
-                + parameter + "_LME.pkl"
+                "data" + os.sep + "interim_results" + os.sep + parameter + "_LME.pkl"
             )
         )
     lme_dict = create_name_dict()

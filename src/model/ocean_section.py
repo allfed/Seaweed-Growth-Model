@@ -14,6 +14,7 @@ class OceanSection:
     alculates for every section how quickly seaweed can grow
     and also saves the single factors for growth
     """
+
     def __init__(self, name, data):
         # Add the name
         self.name = name

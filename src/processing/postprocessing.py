@@ -134,8 +134,11 @@ def lme():
     model.create_section_dfs()
     # Define the parameters we look at
     parameters = [
-        "salinity_factor", "nutrient_factor",
-        "illumination_factor", "temp_factor", "seaweed_growth_rate"
+        "salinity_factor",
+        "nutrient_factor",
+        "illumination_factor",
+        "temp_factor",
+        "seaweed_growth_rate",
     ]
     # only run this if the file does not exist
     if not os.path.isfile(
@@ -148,8 +151,7 @@ def lme():
             print("Getting parameter {}".format(parameter))
             growth_df = model.construct_df_for_parameter(parameter).transpose()
             growth_df.to_pickle(
-                "data" + os.sep + "interim_results"
-                + os.sep + parameter + "_LME.pkl"
+                "data" + os.sep + "interim_results" + os.sep + parameter + "_LME.pkl"
             )
 
 
