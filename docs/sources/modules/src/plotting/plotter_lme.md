@@ -27,7 +27,7 @@ None, but saves the plot
 
 
 ### create_name_dict
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L46)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_lme.py/#L51)
 ```python
 .create_name_dict()
 ```
