@@ -28,9 +28,42 @@ This model here uses nuclear winter environmental data and an empirical model ba
 
 ## Getting the global data
 
+The data is available in a [Zenodo Repository](). Once you download it simply copy it to `data/gridded\_data\_global` folder. Once there, you can run the model with the global data. However, if you just want to play around with the model, there is a dataset available for testing directly in this repository. 
+
 ## Structure
 
-## How to use it
+The code in this repository is split into three parts:
+
+### The actual model
+
+The code for the actual model can be found in the model folder. It consists of three files:
+
+* `seaweed_growth.py`: The equations of the empirical seaweed model by James and Boriah (2010). It can either do this for a single value or for a complete pandas series of values. 
+
+* `ocean_section.py`: Meant to represent a section of the ocean. It is agnostic about the size of this section. So, it can be either a grid cell or a large marine ecosystem.
+
+* `seaweed_model.py`: Interface to actually run the model. It reads in the data you provide it with, calculates the seaweed growth rate and saves the calculation results to a file. 
+
+### Processing
+
+Mainly concerned with handling/prepping the data for and by the model. 
+
+#### Preprocessing
+
+Reads in the raw data and transforms it into a format that can be understood by the model. 
+
+#### Postprocessing
+
+Calls the model (this can also be seen as an example of usage), runs it, reads in the output of the model, clusters it using [tslearn](https://tslearn.readthedocs.io/en/stable/) and saves it in a format more convenient for plotting. 
+
+#### Reading/Writing
+
+Code to read and write files. 
+
+### Plotting
+
+Makes the plots for the publication. 
+
 
 
 
