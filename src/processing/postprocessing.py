@@ -107,8 +107,6 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     ax.get_figure().savefig(
         "results"
         + os.sep
-        + "interim_results"
-        + os.sep
         + "elbow_method_"
         + global_or_US
         + ".png"
@@ -165,7 +163,7 @@ def grid():
         None
     """
     # Either calculate for the whole world or just the US
-    global_or_US = "global"
+    global_or_US = "US"
     # Define the parameters we look at
     parameters = [
         "salinity_factor",
@@ -204,11 +202,11 @@ def grid():
             )
 
     # Do the time series analysis
-    # growth_df = pd.read_pickle(
-    #     "data" + os.sep + "interim_results" + os.sep
-    #     + "seaweed_growth_rate_" + global_or_US + ".pkl"
-    # )
-    # elbow_method(growth_df, 15, global_or_US)
+    growth_df = pd.read_pickle(
+        "data" + os.sep + "interim_results" + os.sep
+        + "seaweed_growth_rate_" + global_or_US + ".pkl"
+    )
+    elbow_method(growth_df, 15, global_or_US)
     # elbow method says 5 is the optimal number of clusters for US
     # and 4 for the whole world
     number_of_clusters = 4 if global_or_US == "global" else 5

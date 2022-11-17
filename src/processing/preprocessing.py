@@ -183,7 +183,7 @@ def call_prep_nw_data(global_or_US):
 
 
 if __name__ == "__main__":
-    prepare_gridded_data(".", "gridded_data_global", "120_months_pickle", "global")
+    #prepare_gridded_data(".", "gridded_data_global", "120_months_pickle", "global")
     prepare_gridded_data(
         ".", "gridded_data_test_dataset_US_only", "36_months_pickle", "US"
     )

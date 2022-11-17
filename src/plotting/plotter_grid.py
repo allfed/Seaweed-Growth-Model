@@ -172,7 +172,7 @@ def main():
         None
     """
     # Either calculate for the whole world or just the US
-    global_or_US = "global"
+    global_or_US = "US"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data"
