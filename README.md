@@ -28,7 +28,7 @@ This model here uses nuclear winter environmental data and an empirical model ba
 
 ## Getting the global data
 
-The data is available in a [Zenodo Repository](). Once you download it simply copy it to `data/gridded\_data\_global` folder. Once there, you can run the model with the global data. However, if you just want to play around with the model, there is a dataset available for testing directly in this repository. 
+The data is available in a [Zenodo Repository](). Once you download it simply copy it to `data/gridded_data_global` folder. Once there, you can run the model with the global data. However, if you just want to play around with the model, there is a dataset available for testing directly in this repository. 
 
 ## Structure
 
