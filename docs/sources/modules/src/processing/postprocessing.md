@@ -83,8 +83,38 @@ None, just plots the elbow method and saves it
 ----
 
 
-### lme
+### area_cap
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L116)
+```python
+.area_cap(
+   lat, radius = 6371.0
+)
+```
+
+---
+Area of a cap of radius r and latitude lat.
+
+
+**Arguments**
+
+* **lat**  : float
+    Latitude of the cap in degrees.
+* **radius**  : float, optional
+    Radius of the sphere in km.
+    Default is the radius of the Earth.
+
+
+**Returns**
+
+* **area**  : float
+    Area of the cap in km^2.
+
+
+----
+
+
+### lme
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L167)
 ```python
 .lme()
 ```
@@ -105,7 +135,7 @@ None
 
 
 ### grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L156)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L207)
 ```python
 .grid()
 ```

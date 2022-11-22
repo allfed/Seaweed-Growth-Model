@@ -41,6 +41,7 @@ pages:
       - get_parameter_dataframe
       - time_series_analysis
       - elbow_method
+      - area_cap
       - lme
       - grid
 
