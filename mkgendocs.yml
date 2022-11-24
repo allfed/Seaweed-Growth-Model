@@ -9,52 +9,6 @@ copyright: ALLFED
 
 #This specifies the autogeneration portion
 pages:
-  - page: "modules/src/plotting/plotter_lme.md"
-    source: "src/plotting/plotter_lme.py"
-    functions:
-      - cluster_timeseries_all_parameters_q_lines
-      - create_name_dict
-
-  - page: "modules/src/plotting/plotter_grid.md"
-    source: "src/plotting/plotter_grid.py"
-    functions:
-      - cluster_spatial
-      - prepare_geometry
-      - cluster_timeseries_all_parameters_q_lines
-
-  - page: "modules/src/processing/preprocessing.md"
-    source: "src/processing/preprocessing.py"
-    functions:
-      - prepare_gridded_data
-      - prep_nw_data
-      - call_prep_nw_data
-
-  - page: "modules/src/processing/read_files.md"
-    source: "src/processing/read_files.py"
-    classes:
-      - DataLME
-      - DataGrid
-
-  - page: "modules/src/processing/postprocessing.md"
-    source: "src/processing/postprocessing.py"
-    functions:
-      - get_parameter_dataframe
-      - time_series_analysis
-      - elbow_method
-      - area_cap
-      - lme
-      - grid
-
-  - page: "modules/src/model/ocean_section.md"
-    source: "src/model/ocean_section.py"
-    classes:
-      - OceanSection
-
-  - page: "modules/src/model/seaweed_model.md"
-    source: "src/model/seaweed_model.py"
-    classes:
-      - SeaweedModel
-
   - page: "modules/src/model/seaweed_growth.md"
     source: "src/model/seaweed_growth.py"
     functions:
@@ -68,4 +22,50 @@ pages:
       - calculate_nutrient_factor
       - salinity_single_value
       - calculate_salinity_factor
+
+  - page: "modules/src/model/ocean_section.md"
+    source: "src/model/ocean_section.py"
+    classes:
+      - OceanSection
+
+  - page: "modules/src/model/seaweed_model.md"
+    source: "src/model/seaweed_model.py"
+    classes:
+      - SeaweedModel
+
+  - page: "modules/src/plotting/plotter_grid.md"
+    source: "src/plotting/plotter_grid.py"
+    functions:
+      - cluster_spatial
+      - prepare_geometry
+      - cluster_timeseries_all_parameters_q_lines
+
+  - page: "modules/src/plotting/plotter_lme.md"
+    source: "src/plotting/plotter_lme.py"
+    functions:
+      - cluster_timeseries_all_parameters_q_lines
+      - create_name_dict
+
+  - page: "modules/src/processing/postprocessing.md"
+    source: "src/processing/postprocessing.py"
+    functions:
+      - get_parameter_dataframe
+      - time_series_analysis
+      - elbow_method
+      - area_cap
+      - lme
+      - grid
+
+  - page: "modules/src/processing/preprocessing.md"
+    source: "src/processing/preprocessing.py"
+    functions:
+      - prepare_gridded_data
+      - prep_nw_data
+      - call_prep_nw_data
+
+  - page: "modules/src/processing/read_files.md"
+    source: "src/processing/read_files.py"
+    classes:
+      - DataLME
+      - DataGrid
 
