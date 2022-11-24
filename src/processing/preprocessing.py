@@ -38,7 +38,7 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
     }
     dict_env_dfs = {}
     for science_name in env_params.keys():
-        full_path = path + os.sep + "data" + os.sep + folder + os.sep
+        full_path = path + os.sep + "data" + os.sep + folder + os.sep + scenario + os.sep
         env_df = pd.read_pickle(
             full_path + "nw_" + science_name + "_" + file_ending + ".pkl"
         )
@@ -85,7 +85,7 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
         # Convert back to geodataframe before saving
         data_dict[lat_lon] = concat_latlon_dfs
     # Make pickle out of it, so we don't have to run this every time
-    full_path = path + os.sep + "data" + os.sep + "interim_results"
+    full_path = path + os.sep + "data" + os.sep + "interim_data" + os.sep + scenario
     with open(
         full_path + os.sep + "data_gridded_all_parameters_" + global_or_US + ".pkl",
         "wb",
@@ -178,14 +178,18 @@ def call_prep_nw_data(global_or_US):
         length_time = 36
         if env_param == "PAR_surf":
             env_param = "PAR_avg"
-        prep_nw_data(path, file, length_time, env_param, scenario, min_lat, max_lat, min_lon, max_lon)
+        prep_nw_data(
+            path, file, length_time, env_param, scenario, min_lat, max_lat, min_lon, max_lon
+        )
         prep_nw_data(path, file, 120, env_param, scenario, all_cells=True)
         
     print("done")
 
 
 if __name__ == "__main__":
-    #prepare_gridded_data(".", "gridded_data_global", "150tg, "120_months_pickle_150tg", "global")
     prepare_gridded_data(
-        ".", "gridded_data_test_dataset_US_only", "150tg", "36_months_pickle_150tg", "US"
+        ".", "gridded_data_global", "150tg", "120_months_150tg", "global"
+    )
+    prepare_gridded_data(
+        ".", "gridded_data_test_dataset_US_only", "150tg", "36_months_150tg", "US"
     )
