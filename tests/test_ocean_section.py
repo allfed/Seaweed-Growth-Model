@@ -129,4 +129,4 @@ def test_calculate_mean_growth_rate():
     test_section.calculate_growth_rate()
     test_section.create_section_df()
     test_section.calculate_mean_growth_rate()
-    assert test_section.calculate_mean_growth_rate() == 0.0006159845582776335
+    assert test_section.calculate_mean_growth_rate() == 0.0006237421625766392

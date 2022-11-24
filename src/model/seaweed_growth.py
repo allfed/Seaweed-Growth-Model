@@ -117,9 +117,9 @@ def illumination_single_value(illumination: float):
         illumination
     )
     if illumination < 21.9:
-        return illumination / 21.9
-    elif illumination > 100:
-        return 100 / illumination
+        return illumination / 21.9 * math.exp(1 - illumination / 21.9)
+    elif illumination > 109.5:
+        return 109.5 / illumination
     else:
         return 1
 
@@ -151,7 +151,7 @@ def temperature_single_value(temperature: float):
     # where Kt1 = 0.017°C−2 and Kt2 = 0.06°C−2. These coefficients were determined by
     # fitting the preceding equation such that g(15°C) = 0.25 and g(36°C) = 0.1
     kt1 = 0.017
-    kt2 = 0.06
+    kt2 = 0.064
 
     if temperature < 24:
         return math.exp(-kt1 * (24 - temperature) ** 2)
