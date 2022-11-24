@@ -165,3 +165,4 @@ data/interim_results/salinity_factor_global.pkl
 data/interim_results/temp_factor_global.pkl
 data/interim_results/illumination_factor_global.pkl
 data/interim_results/seaweed_growth_rate_clustered_global.pkl
+data/gridded_data_global/nw_Fe_120_months_150tg.pkl
