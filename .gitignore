@@ -166,3 +166,10 @@ data/interim_results/temp_factor_global.pkl
 data/interim_results/illumination_factor_global.pkl
 data/interim_results/seaweed_growth_rate_clustered_global.pkl
 data/gridded_data_global/nw_Fe_120_months_150tg.pkl
+data/gridded_data_global/150tg/nw_Fe_120_months_150tg.pkl
+data/gridded_data_global/150tg/nw_NH4_120_months_150tg.pkl
+data/gridded_data_global/150tg/nw_NO3_120_months_150tg.pkl
+data/gridded_data_global/150tg/nw_PAR_avg_120_months_150tg.pkl
+data/gridded_data_global/150tg/nw_PO4_120_months_150tg.pkl
+data/gridded_data_global/150tg/nw_SALT_120_months_150tg.pkl
+data/gridded_data_global/150tg/nw_TEMP_120_months_150tg.pkl
