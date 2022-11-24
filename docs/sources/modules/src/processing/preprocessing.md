@@ -5,7 +5,7 @@
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L11)
 ```python
 .prepare_gridded_data(
-   path, folder, file_ending, global_or_US
+   path, folder, scenario, file_ending, global_or_US
 )
 ```
 
@@ -20,7 +20,8 @@ the rest of the code.
 * **path**  : the path for the pickled files
 * **folder**  : the folder where the pickled files are
 * **file_ending**  : the ending of the pickled files
-* **global_or_US**  : if "global", the global data is used,
+* **global_or_US**  : if "global", the global data is used
+* **scenario**  : the scenario to use (e.g. 150tg)
 
 
 **Returns**
@@ -34,11 +35,11 @@ and longitude.
 
 
 ### prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L94)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L96)
 ```python
 .prep_nw_data(
-   path, file, length_time, env_param, min_lat = None, max_lat = None, min_lon = None,
-   max_lon = None, all_cells = False
+   path, file, length_time, env_param, scenario, min_lat = None, max_lat = None,
+   min_lon = None, max_lon = None, all_cells = False
 )
 ```
 
@@ -48,6 +49,7 @@ and longitude.
 Reads the nuclear war data from Cheryls workspace.
 Creates a geopandas dataframe for it for a given
 environmental parameter and saves it in cwd as a pickle.
+
 
 **Arguments**
 
@@ -65,13 +67,13 @@ environmental parameter and saves it in cwd as a pickle.
 
 **Returns**
 
-None, but saves a pickle of the geodataframe
+None
 
 ----
 
 
 ### call_prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L153)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L157)
 ```python
 .call_prep_nw_data(
    global_or_US

@@ -149,11 +149,103 @@ The temperature factor as a pandas series
 ----
 
 
-### nutrient_single_value
+### nitrate_subfactor
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L176)
 ```python
+.nitrate_subfactor(
+   nitrate
+)
+```
+
+---
+Calculates the nitrate subfactor for a single value
+
+**Arguments**
+
+* **nitrate**  : the nitrate concentration in mmol/m³
+
+
+**Returns**
+
+The nitrate subfactor as a float
+
+----
+
+
+### phosphate_subfactor
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L188)
+```python
+.phosphate_subfactor(
+   phosphate
+)
+```
+
+---
+Calculates the phosphate subfactor for a single value
+
+**Arguments**
+
+* **phosphate**  : the phosphate concentration in mmol/m³
+
+
+**Returns**
+
+The phosphate subfactor as a float
+
+----
+
+
+### ammonium_subfactor
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L200)
+```python
+.ammonium_subfactor(
+   ammonium
+)
+```
+
+---
+Calculates the ammonium subfactor for a single value
+
+**Arguments**
+
+* **ammonium**  : the ammonium concentration in mmol/m³
+
+
+**Returns**
+
+The ammonium subfactor as a float
+
+----
+
+
+### iron_subfactor
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L212)
+```python
+.iron_subfactor(
+   iron
+)
+```
+
+---
+Calculates the iron subfactor for a single value
+
+**Arguments**
+
+* **iron**  : the iron concentration in mmol/m³
+
+
+**Returns**
+
+The iron subfactor as a float
+
+----
+
+
+### nutrient_single_value
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L224)
+```python
 .nutrient_single_value(
-   nitrate: float, ammonium: float, phosphate: float
+   nitrate: float, ammonium: float, phosphate: float, iron: float
 )
 ```
 
@@ -167,6 +259,7 @@ Based on an empirical model
 * **nitrate**  : the nitrate concentration in mmol/m³
 * **ammonium**  : the ammonium concentration in mmol/m³
 * **phosphate**  : the phosphate concentration in mmol/m³
+* **iron**  : the iron concentration in mmol/m³
 
 
 **Returns**
@@ -177,7 +270,7 @@ The nutrient factor as a float
 
 
 ### calculate_nutrient_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L213)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L255)
 ```python
 .calculate_nutrient_factor(
    nitrate: pd.Series, ammonium: pd.Series, phosphate: pd.Series
@@ -203,7 +296,7 @@ The nutrient factor as a pandas series
 
 
 ### salinity_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L236)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L278)
 ```python
 .salinity_single_value(
    salinity: float
@@ -226,7 +319,7 @@ The salinity factor as a float
 
 
 ### calculate_salinity_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L260)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L302)
 ```python
 .calculate_salinity_factor(
    salinity: pd.Series
