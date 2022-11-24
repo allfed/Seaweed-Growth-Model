@@ -18,6 +18,10 @@ pages:
       - calculate_illumination_factor
       - temperature_single_value
       - calculate_temperature_factor
+      - nitrate_subfactor
+      - phosphate_subfactor
+      - ammonium_subfactor
+      - iron_subfactor
       - nutrient_single_value
       - calculate_nutrient_factor
       - salinity_single_value
