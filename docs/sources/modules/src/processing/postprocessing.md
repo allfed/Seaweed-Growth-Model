@@ -62,7 +62,7 @@ https://www.kaggle.com/code/izzettunc/introduction-to-time-series-clustering/not
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L76)
 ```python
 .elbow_method(
-   growth_df, max_clusters, global_or_US
+   growth_df, max_clusters, global_or_US, scenario
 )
 ```
 
@@ -84,7 +84,7 @@ None, just plots the elbow method and saves it
 
 
 ### area_cap
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L116)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L122)
 ```python
 .area_cap(
    lat, radius = 6371.0
@@ -114,7 +114,7 @@ Area of a cap of radius r and latitude lat.
 
 
 ### lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L167)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L173)
 ```python
 .lme()
 ```
@@ -135,9 +135,11 @@ None
 
 
 ### grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L207)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L213)
 ```python
-.grid()
+.grid(
+   scenario, global_or_US
+)
 ```
 
 ---

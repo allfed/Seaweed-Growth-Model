@@ -5,7 +5,7 @@
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L19)
 ```python
 .cluster_spatial(
-   growth_df, global_or_US
+   growth_df, global_or_US, scenario
 )
 ```
 
@@ -26,7 +26,7 @@ None, but saves the plot
 
 
 ### prepare_geometry
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L60)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L62)
 ```python
 .prepare_geometry(
    growth_df
@@ -51,10 +51,10 @@ None, but saves the plot
 
 
 ### cluster_timeseries_all_parameters_q_lines
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L84)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L86)
 ```python
 .cluster_timeseries_all_parameters_q_lines(
-   parameters, global_or_US
+   parameters, global_or_US, scenario
 )
 ```
 

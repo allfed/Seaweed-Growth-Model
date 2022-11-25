@@ -270,10 +270,10 @@ The nutrient factor as a float
 
 
 ### calculate_nutrient_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L255)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L260)
 ```python
 .calculate_nutrient_factor(
-   nitrate: pd.Series, ammonium: pd.Series, phosphate: pd.Series
+   nitrate: pd.Series, ammonium: pd.Series, phosphate: pd.Series, iron: pd.Series
 )
 ```
 
@@ -296,7 +296,7 @@ The nutrient factor as a pandas series
 
 
 ### salinity_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L278)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L283)
 ```python
 .salinity_single_value(
    salinity: float
@@ -319,7 +319,7 @@ The salinity factor as a float
 
 
 ### calculate_salinity_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L302)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L307)
 ```python
 .calculate_salinity_factor(
    salinity: pd.Series
