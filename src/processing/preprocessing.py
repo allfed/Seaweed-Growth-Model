@@ -71,6 +71,10 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
                 env_param_latlon_df.loc[
                     env_param_latlon_df["phosphate"] < 0, "phosphate"
                 ] = 0
+            elif env_param == "Fe":
+                env_param_latlon_df.loc[
+                    env_param_latlon_df["iron"] < 0, "iron"
+                ] = 0
             list_env_param_latlon_df.append(pd.DataFrame(env_param_latlon_df))
         concat_latlon_dfs = pd.concat(list_env_param_latlon_df, axis=1)
         # Remove duplicate columns

@@ -174,3 +174,13 @@ data/gridded_data_global/150tg/nw_PO4_120_months_150tg.pkl
 data/gridded_data_global/150tg/nw_SALT_120_months_150tg.pkl
 data/gridded_data_global/150tg/nw_TEMP_120_months_150tg.pkl
 data/interim_data/150tg/data_gridded_all_parameters_global.pkl
+data/interim_data/150tg/illumination_factor_clustered_global.pkl
+data/interim_data/150tg/illumination_factor_global.pkl
+data/interim_data/150tg/nutrient_factor_clustered_global.pkl
+data/interim_data/150tg/nutrient_factor_global.pkl
+data/interim_data/150tg/salinity_factor_clustered_global.pkl
+data/interim_data/150tg/salinity_factor_global.pkl
+data/interim_data/150tg/seaweed_growth_rate_clustered_global.pkl
+data/interim_data/150tg/seaweed_growth_rate_global.pkl
+data/interim_data/150tg/temp_factor_clustered_global.pkl
+data/interim_data/150tg/temp_factor_global.pkl

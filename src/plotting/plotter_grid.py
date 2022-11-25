@@ -16,7 +16,7 @@ plt.style.use(
 )
 
 
-def cluster_spatial(growth_df, global_or_US):
+def cluster_spatial(growth_df, global_or_US, scenario):
     """
     Creates a spatial plot of the clusters
     Arguments:
@@ -48,6 +48,8 @@ def cluster_spatial(growth_df, global_or_US):
         "results"
         + os.sep
         + "grid"
+        + os.sep
+        + scenario
         + os.sep
         + "cluster_spatial_"
         + global_or_US
@@ -81,7 +83,7 @@ def prepare_geometry(growth_df):
     return growth_df
 
 
-def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
+def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario):
     """
     Plots line plots for all clusters and all parameters
     Arguments:
@@ -154,6 +156,8 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US):
         + os.sep
         + "grid"
         + os.sep
+        + scenario
+        + os.sep
         + "cluster_timeseries_all_param_q_lines_"
         + global_or_US
         + ".png",
@@ -172,12 +176,16 @@ def main():
         None
     """
     # Either calculate for the whole world or just the US
-    global_or_US = "US"
+    global_or_US = "global"
+    # The scenario to use
+    scenario = "150tg"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data"
             + os.sep
-            + "interim_results"
+            + "interim_data"
+            + os.sep
+            + scenario
             + os.sep
             + "seaweed_growth_rate_clustered_"
             + global_or_US
@@ -191,7 +199,7 @@ def main():
     assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
     # Fix the geometry
     growth_df = prepare_geometry(growth_df)
-    cluster_spatial(growth_df, global_or_US)
+    cluster_spatial(growth_df, global_or_US, scenario)
 
     # Read in the other parameters for the line plot
     parameters = {}
@@ -207,7 +215,9 @@ def main():
             pd.read_pickle(
                 "data"
                 + os.sep
-                + "interim_results"
+                + "interim_data"
+                + os.sep
+                + scenario
                 + os.sep
                 + parameter
                 + "_clustered_"
@@ -218,7 +228,7 @@ def main():
         # Add one to the cluster
         parameters[parameter]["cluster"] = parameters[parameter]["cluster"] + 1
 
-    cluster_timeseries_all_parameters_q_lines(parameters, global_or_US)
+    cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario)
 
 
 if __name__ == "__main__":
