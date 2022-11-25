@@ -24,7 +24,6 @@ class OceanSection:
         self.nitrate = data["nitrate"]
         self.ammonium = data["ammonium"]
         self.phosphate = data["phosphate"]
-        self.iron = data["iron"]
         self.illumination = data["illumination"]
         # Add the factors
         self.salinity_factor = None
@@ -46,7 +45,7 @@ class OceanSection:
         # Calculate the factors
         self.salinity_factor = sg.calculate_salinity_factor(self.salinity)
         self.nutrient_factor = sg.calculate_nutrient_factor(
-            self.nitrate, self.ammonium, self.phosphate, self.iron
+            self.nitrate, self.ammonium, self.phosphate
         )
         self.illumination_factor = sg.calculate_illumination_factor(self.illumination)
         self.temp_factor = sg.calculate_temperature_factor(self.temperature)

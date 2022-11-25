@@ -60,7 +60,6 @@ class DataLME:
                 "illumination",
                 "phosphate",
                 "ammonium",
-                "iron",
             ]
             # For some reason some of the nitrate values are below 0, which is impossible.
             # Set those to 0

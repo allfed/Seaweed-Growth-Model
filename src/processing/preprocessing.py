@@ -33,9 +33,8 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
         "PAR_avg": "illumination",
         "PO4": "phosphate",
         "SALT": "salinity",
-        "TEMP": "temperature",
-        "Fe": "iron"
-    }
+        "TEMP": "temperature"
+        }
     dict_env_dfs = {}
     for science_name in env_params.keys():
         full_path = path + os.sep + "data" + os.sep + folder + os.sep + scenario + os.sep
@@ -70,10 +69,6 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
             elif env_param == "PO4":
                 env_param_latlon_df.loc[
                     env_param_latlon_df["phosphate"] < 0, "phosphate"
-                ] = 0
-            elif env_param == "Fe":
-                env_param_latlon_df.loc[
-                    env_param_latlon_df["iron"] < 0, "iron"
                 ] = 0
             list_env_param_latlon_df.append(pd.DataFrame(env_param_latlon_df))
         concat_latlon_dfs = pd.concat(list_env_param_latlon_df, axis=1)
@@ -168,7 +163,7 @@ def call_prep_nw_data(global_or_US):
     Returns:
         None, but saves pickles
     """
-    env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf", "NH4", "Fe"]
+    env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf", "NH4"]
     scenario = "150tg"
     for env_param in env_params:
         print(env_param)

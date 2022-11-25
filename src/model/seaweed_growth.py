@@ -209,19 +209,7 @@ def ammonium_subfactor(ammonium):
     return ammonium / (knh4 + ammonium)
 
 
-def iron_subfactor(iron):
-    """
-    Calculates the iron subfactor for a single value
-    Arguments:
-        iron: the iron concentration in mmol/m³
-    Returns:
-        The iron subfactor as a float
-    """
-    kfe = 2.4  # empirical constant
-    return iron / (kfe + iron)
-
-
-def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float, iron: float):
+def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float):
     """
     Calculates the nutrient factor, which is the minimum of the
     three nutrients nitrate, ammonium and phosphate for a single value
@@ -230,7 +218,6 @@ def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float, iro
         nitrate: the nitrate concentration in mmol/m³
         ammonium: the ammonium concentration in mmol/m³
         phosphate: the phosphate concentration in mmol/m³
-        iron: the iron concentration in mmol/m³
     Returns:
         The nutrient factor as a float
     """
@@ -241,24 +228,21 @@ def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float, iro
     assert 0 <= nitrate <= 100, "nitrate has the value {}".format(nitrate)
     assert 0 <= ammonium <= 100, "ammonium has the value {}".format(ammonium)
     assert 0 <= phosphate <= 100, "phosphate has the value {}".format(phosphate)
-    assert 0 <= iron <= 100, "iron has the value {}".format(iron)
 
     # Calculate the single nutrient factors
     nitrate_subfactor_value = nitrate_subfactor(nitrate)
     ammonium_subfactor_value = ammonium_subfactor(ammonium)
     phosphate_subfactor_value = phosphate_subfactor(phosphate)
-    iron_subfactor_value = iron_subfactor(iron)
     # Calculate the nutrient factor as the minimum available nutrient
     return min(
         nitrate_subfactor_value,
         ammonium_subfactor_value,
-        phosphate_subfactor_value,
-        iron_subfactor_value
+        phosphate_subfactor_value
     )
 
 
 def calculate_nutrient_factor(
-    nitrate: pd.Series, ammonium: pd.Series, phosphate: pd.Series, iron: pd.Series
+    nitrate: pd.Series, ammonium: pd.Series, phosphate: pd.Series
 ):
     """
     Calculates the nutrient factor for a whole series
@@ -270,10 +254,10 @@ def calculate_nutrient_factor(
     Returns:
         The nutrient factor as a pandas series
     """
-    nutrient_df = pd.concat([nitrate, ammonium, phosphate, iron], axis=1)
-    nutrient_df.columns = ["nitrate", "ammonium", "phosphate", "iron"]
+    nutrient_df = pd.concat([nitrate, ammonium, phosphate], axis=1)
+    nutrient_df.columns = ["nitrate", "ammonium", "phosphate"]
     nutrient_df["nutrient_factor"] = nutrient_df.apply(
-        lambda x: nutrient_single_value(x["nitrate"], x["ammonium"], x["phosphate"], x["iron"]),
+        lambda x: nutrient_single_value(x["nitrate"], x["ammonium"], x["phosphate"]),
         axis=1,
     )
 
