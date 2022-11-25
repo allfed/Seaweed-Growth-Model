@@ -49,6 +49,11 @@ pages:
       - cluster_timeseries_all_parameters_q_lines
       - create_name_dict
 
+  - page: "modules/src/plotting/plotter_methods.md"
+    source: "src/plotting/plotter_methods.py"
+    functions:
+      - plot_factors
+
   - page: "modules/src/processing/postprocessing.md"
     source: "src/processing/postprocessing.py"
     functions:

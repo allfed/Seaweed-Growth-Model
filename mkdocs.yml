@@ -35,6 +35,7 @@ nav:
       - plotting:
         - plotter_grid: modules/src/plotting/plotter_grid.md
         - plotter_lme: modules/src/plotting/plotter_lme.md
+        - plotter_methods: modules/src/plotting/plotter_methods.md
       - processing:
         - postprocessing: modules/src/processing/postprocessing.md
         - preprocessing: modules/src/processing/preprocessing.md
