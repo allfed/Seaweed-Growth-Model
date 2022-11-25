@@ -31,7 +31,7 @@ def plot_factors():
     # Contains the ranges and the units
     factor_dict = {
         "Illumination": (140, "W per m²"), "Temperature": (40, "°C"),
-        "Nutrient": (100, "μmol per m³"), "Salinity": (50, "ppt")}
+        "Nutrient": (25, "μmol per m³"), "Salinity": (50, "ppt")}
     # Iterates over the factors and plot them
     for factor, (factor_range, unit) in factor_dict.items():
         # Creates the x-axis
@@ -45,19 +45,23 @@ def plot_factors():
             y = [salinity_single_value(i) for i in x]
         if factor != "Nutrient":
             # Creates the plot
-            plt.plot(x, y)
+            plt.plot(x, y, linewidth=2.5, color="black")
+            plt.plot(x, y, linewidth=2)
+            #plt.legend(False)
         else:
             for subfactor, sub_function in {"Nitrate": nitrate_subfactor,
                                             "Phosphate": phosphate_subfactor,
                                             "Ammonium": ammonium_subfactor}.items():
                 y = [sub_function(i) for i in x]
-                plt.plot(x, y, label=subfactor)
+                plt.plot(x, y, linewidth=2.5, color="black")
+                plt.plot(x, y, label=subfactor, linewidth=2)       
+                plt.legend()
         # Adds the unit to the y-axis
         plt.ylabel(f"{factor} Factor")
         # Adds the unit to the x-axis
         plt.xlabel(f"{factor} [{unit}]")
-        # Adds a legend
-        plt.legend()
+        # Change the size
+        plt.gcf().set_size_inches(8, 2)
         # Saves the plot
         plt.savefig(
             "results"
