@@ -336,6 +336,6 @@ def grid(scenario, global_or_US):
 
 
 if __name__ == "__main__":
-    lme()
-    grid("150tg", "US")
+   # lme()
+   # grid("150tg", "US")
     grid("150tg", "global")
