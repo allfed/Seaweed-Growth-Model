@@ -265,7 +265,7 @@ def grid(scenario, global_or_US):
         "data" + os.sep + "interim_data" + os.sep + scenario + os.sep
         + "seaweed_growth_rate_" + global_or_US + ".pkl"
     )
-    elbow_method(growth_df, 6, global_or_US, scenario)
+    elbow_method(growth_df, 7, global_or_US, scenario)
     # elbow method says 3 is the optimal number of clusters for US
     # and 4 for the whole world
     number_of_clusters = 4 if global_or_US == "global" else 5
@@ -336,5 +336,6 @@ def grid(scenario, global_or_US):
 
 
 if __name__ == "__main__":
- #   lme()
+    lme()
+    grid("150tg", "US")
     grid("150tg", "global")
