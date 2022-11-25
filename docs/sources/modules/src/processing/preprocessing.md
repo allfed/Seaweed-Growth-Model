@@ -35,7 +35,7 @@ and longitude.
 
 
 ### prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L100)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L95)
 ```python
 .prep_nw_data(
    path, file, length_time, env_param, scenario, min_lat = None, max_lat = None,
@@ -73,7 +73,7 @@ None
 
 
 ### call_prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L161)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L156)
 ```python
 .call_prep_nw_data(
    global_or_US
