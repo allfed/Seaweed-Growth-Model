@@ -235,9 +235,7 @@ def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float):
     phosphate_subfactor_value = phosphate_subfactor(phosphate)
     # Calculate the nutrient factor as the minimum available nutrient
     return min(
-        nitrate_subfactor_value,
-        ammonium_subfactor_value,
-        phosphate_subfactor_value
+        nitrate_subfactor_value, ammonium_subfactor_value, phosphate_subfactor_value
     )
 
 

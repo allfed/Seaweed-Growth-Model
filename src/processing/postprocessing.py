@@ -134,7 +134,7 @@ def area_cap(lat, radius=6371.0):  # Earth radius in km
             Area of the cap in km^2.
     """
     # convert to radians
-    theta = lat / 180. * np.pi
+    theta = lat / 180.0 * np.pi
 
     # area of a spherical cap (see Wikipedia)
     return 2 * np.pi * radius**2 * (1 - np.sin(theta))
@@ -160,14 +160,16 @@ def area_grid_cell(lat, radius=6371.0):  # Earth radius in km
     assert np.abs(lat) <= 90, "Latitude must be in the range [-90, 90]."
 
     # latitudes are capped at +/- 90 degrees
-    lower_lat = max(lat - 0.5, -90.)
-    upper_lat = min(lat + 0.5, 90.)
+    lower_lat = max(lat - 0.5, -90.0)
+    upper_lat = min(lat + 0.5, 90.0)
 
     # the area of the grid cell is the difference between the
     # area of the upper and lower cap divided by the number of
     # grid cells that you count if you walk around the globe
     # once along the latitude
-    return (area_cap(lower_lat, radius=radius) - area_cap(upper_lat, radius=radius)) / 360.
+    return (
+        area_cap(lower_lat, radius=radius) - area_cap(upper_lat, radius=radius)
+    ) / 360.0
 
 
 def lme(scenario):
@@ -269,8 +271,15 @@ def grid(scenario, global_or_US, with_elbow_method=False):
     if with_elbow_method:
         # Do the time series analysis
         growth_df = pd.read_pickle(
-            "data" + os.sep + "interim_data" + os.sep + scenario + os.sep
-            + "seaweed_growth_rate_" + global_or_US + ".pkl"
+            "data"
+            + os.sep
+            + "interim_data"
+            + os.sep
+            + scenario
+            + os.sep
+            + "seaweed_growth_rate_"
+            + global_or_US
+            + ".pkl"
         )
         elbow_method(growth_df, 7, global_or_US, scenario)
     # elbow method says 4 is the optimal number of clusters for US
