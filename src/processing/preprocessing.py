@@ -34,7 +34,7 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
         "PO4": "phosphate",
         "SALT": "salinity",
         "TEMP": "temperature"
-        }
+    }
     dict_env_dfs = {}
     for science_name in env_params.keys():
         full_path = path + os.sep + "data" + os.sep + folder + os.sep + scenario + os.sep
@@ -181,7 +181,6 @@ def call_prep_nw_data(global_or_US):
             path, file, length_time, env_param, scenario, min_lat, max_lat, min_lon, max_lon
         )
         prep_nw_data(path, file, 120, env_param, scenario, all_cells=True)
-        
     print("done")
 
 

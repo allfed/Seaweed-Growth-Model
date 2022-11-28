@@ -92,9 +92,13 @@ def test_area_grid_cell():
     # VECTOR UNIT TESTS
 
     # test that you can pass an array of latitudes
-    assert (area_grid_cell(np.array([0., 45., 90.])) == np.array([area_grid_cell(0.),
-                                                                area_grid_cell(45.),
-                                                                area_grid_cell(90.)])).all()
+    assert (
+        area_grid_cell(
+            np.array([0., 45., 90.])) == np.array([
+                area_grid_cell(0.), area_grid_cell(45.), area_grid_cell(90.)
+            ]
+        )
+    ).all()
 
     # test that you can pass a list of latitudes
     assert (area_grid_cell([0., 45., 90.]) == np.array([area_grid_cell(0.),
