@@ -4,9 +4,9 @@ This file takes the output of the seaweed model and does time series analysis wi
 import os
 import random
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 from tslearn.clustering import TimeSeriesKMeans
 from tslearn.utils import to_time_series_dataset
@@ -343,6 +343,6 @@ def grid(scenario, global_or_US, with_elbow_method=False):
 
 
 if __name__ == "__main__":
-   # lme("150tg")
+    lme("150tg")
     grid("150tg", "US")
-   # grid("150tg", "global")
+    grid("150tg", "global")

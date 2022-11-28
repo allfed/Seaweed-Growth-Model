@@ -129,7 +129,7 @@ def prep_nw_data(
     ds = xr.open_dataset(path + file)
     # 0 here means we are only using the uppermost layer of the ocean
     if all_cells:
-        env_time = ds[env_param][:length_time, 0, :, :]    
+        env_time = ds[env_param][:length_time, 0, :, :]
     else:
         env_time = ds[env_param][:length_time, 0, min_lat:max_lat, min_lon:max_lon]
     # Make it a dataframe

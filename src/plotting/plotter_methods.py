@@ -2,18 +2,16 @@
 Creates some additional plots, needed as an
 explanation on how the model works (mainly the factors)
 """
-import matplotlib.pyplot as plt
-import numpy as np
 import os
 
-from src.model.seaweed_growth import (
-    illumination_single_value,
-    nitrate_subfactor,
-    phosphate_subfactor,
-    ammonium_subfactor,
-    salinity_single_value,
-    temperature_single_value,
-)
+import matplotlib.pyplot as plt
+import numpy as np
+
+from src.model.seaweed_growth import (ammonium_subfactor,
+                                      illumination_single_value,
+                                      nitrate_subfactor, phosphate_subfactor,
+                                      salinity_single_value,
+                                      temperature_single_value)
 
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
@@ -47,14 +45,13 @@ def plot_factors():
             # Creates the plot
             plt.plot(x, y, linewidth=2.5, color="black")
             plt.plot(x, y, linewidth=2)
-            #plt.legend(False)
         else:
             for subfactor, sub_function in {"Nitrate": nitrate_subfactor,
                                             "Phosphate": phosphate_subfactor,
                                             "Ammonium": ammonium_subfactor}.items():
                 y = [sub_function(i) for i in x]
                 plt.plot(x, y, linewidth=2.5, color="black")
-                plt.plot(x, y, label=subfactor, linewidth=2)       
+                plt.plot(x, y, label=subfactor, linewidth=2)
                 plt.legend()
         # Adds the unit to the y-axis
         plt.ylabel(f"{factor} Factor")
