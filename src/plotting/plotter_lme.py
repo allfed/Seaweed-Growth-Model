@@ -87,7 +87,14 @@ def main():
     for parameter in parameter_names:
         parameters[parameter] = pd.DataFrame(
             pd.read_pickle(
-                "data" + os.sep + "interim_results" + os.sep + parameter + "_LME.pkl"
+                "data"
+                + os.sep
+                + "interim_data"
+                + os.sep
+                + "150tg"
+                + os.sep
+                + parameter
+                + "_LME.pkl"
             )
         )
     lme_dict = create_name_dict()
