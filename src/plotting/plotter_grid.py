@@ -99,7 +99,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
         "temp_factor": "Temperature Factor",
         "seaweed_growth_rate": "Seaweed Growth Rate",
     }
-    clusters = 5 if global_or_US == "US" else 4
+    clusters = 4 if global_or_US == "US" else 3
     fig, axes = plt.subplots(
         nrows=5, ncols=clusters, sharey=True, sharex=True, figsize=(12, 12)
     )
@@ -167,7 +167,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
     plt.close()
 
 
-def main():
+def main(scenario, global_or_US):
     """
     Runs the other functions to read the data and make the plots
     Arguments:
@@ -175,10 +175,6 @@ def main():
     Returns:
         None
     """
-    # Either calculate for the whole world or just the US
-    global_or_US = "global"
-    # The scenario to use
-    scenario = "150tg"
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data"
@@ -232,4 +228,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main("150tg", "US")
+    main("150tg", "global")

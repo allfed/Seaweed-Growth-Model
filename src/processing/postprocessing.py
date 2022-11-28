@@ -85,7 +85,7 @@ def elbow_method(growth_df, max_clusters, global_or_US, scenario):
     """
     # Find the optimal number of clusters
     inertias = {}
-    for i in range(1, max_clusters):
+    for i in range(2, max_clusters):
         print("Trying {} clusters".format(i))
         labels, km = time_series_analysis(growth_df, i, global_or_US)
         inertias[i] = km.inertia_
@@ -170,7 +170,7 @@ def area_grid_cell(lat, radius=6371.0):  # Earth radius in km
     return (area_cap(lower_lat, radius=radius) - area_cap(upper_lat, radius=radius)) / 360.
 
 
-def lme():
+def lme(scenario):
     """
     Calculates growth rate and all the factors for the lme
     and saves it in files appropriate for the plotting functions
@@ -206,11 +206,18 @@ def lme():
             print("Getting parameter {}".format(parameter))
             growth_df = model.construct_df_for_parameter(parameter).transpose()
             growth_df.to_pickle(
-                "data" + os.sep + "interim_data" + os.sep + parameter + "_LME.pkl"
+                "data"
+                + os.sep
+                + "interim_data"
+                + os.sep
+                + scenario
+                + os.sep
+                + parameter
+                + "_LME.pkl"
             )
 
 
-def grid(scenario, global_or_US):
+def grid(scenario, global_or_US, with_elbow_method=False):
     """
     Calculates growth rate and all the factors for the grid
     and saves it in files appropriate for the plotting functions
@@ -259,16 +266,16 @@ def grid(scenario, global_or_US):
                 + global_or_US
                 + ".pkl"
             )
-
-    # Do the time series analysis
-    growth_df = pd.read_pickle(
-        "data" + os.sep + "interim_data" + os.sep + scenario + os.sep
-        + "seaweed_growth_rate_" + global_or_US + ".pkl"
-    )
-    elbow_method(growth_df, 7, global_or_US, scenario)
-    # elbow method says 3 is the optimal number of clusters for US
-    # and 4 for the whole world
-    number_of_clusters = 4 if global_or_US == "global" else 5
+    if with_elbow_method:
+        # Do the time series analysis
+        growth_df = pd.read_pickle(
+            "data" + os.sep + "interim_data" + os.sep + scenario + os.sep
+            + "seaweed_growth_rate_" + global_or_US + ".pkl"
+        )
+        elbow_method(growth_df, 7, global_or_US, scenario)
+    # elbow method says 4 is the optimal number of clusters for US
+    # and 3 for the whole world
+    number_of_clusters = 3 if global_or_US == "global" else 4
     if not os.path.isfile(
         "data"
         + os.sep
@@ -336,6 +343,6 @@ def grid(scenario, global_or_US):
 
 
 if __name__ == "__main__":
-   # lme()
-   # grid("150tg", "US")
-    grid("150tg", "global")
+   # lme("150tg")
+    grid("150tg", "US")
+   # grid("150tg", "global")

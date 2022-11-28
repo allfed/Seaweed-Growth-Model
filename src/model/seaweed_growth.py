@@ -117,7 +117,7 @@ def illumination_single_value(illumination: float):
         illumination
     )
     if illumination < 21.9:
-        return illumination / 21.9 * math.exp(1 - illumination / 21.9)
+        return (illumination / 21.9) * math.exp(1 - (illumination / 21.9))
     elif illumination > 109.5:
         return 109.5 / illumination
     else:

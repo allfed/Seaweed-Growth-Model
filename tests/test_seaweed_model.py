@@ -32,7 +32,7 @@ def test_grid_data():
     # Testing the reading
     model = SeaweedModel()
     model.add_data_by_grid(
-        "data/interim_results/data_gridded_all_parameters_US.pkl",
+        "data/interim_data/150tg/data_gridded_all_parameters_US.pkl",
     )
     # Number of grid cells with water
     assert len(model.sections.keys()) == 2259

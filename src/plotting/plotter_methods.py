@@ -31,7 +31,7 @@ def plot_factors():
     # Contains the ranges and the units
     factor_dict = {
         "Illumination": (140, "W per m²"), "Temperature": (40, "°C"),
-        "Nutrient": (25, "μmol per m³"), "Salinity": (50, "ppt")}
+        "Nutrient": (20, "μmol per m³"), "Salinity": (50, "ppt")}
     # Iterates over the factors and plot them
     for factor, (factor_range, unit) in factor_dict.items():
         # Creates the x-axis
