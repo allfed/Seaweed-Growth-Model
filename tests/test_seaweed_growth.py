@@ -4,18 +4,16 @@ Tests the growth functions
 import pandas as pd
 import pytest
 
-from src.model.seaweed_growth import (
-    calculate_illumination_factor,
-    calculate_nutrient_factor,
-    calculate_salinity_factor,
-    calculate_temperature_factor,
-    growth_factor_combination,
-    growth_factor_combination_single_value,
-    illumination_single_value,
-    nutrient_single_value,
-    salinity_single_value,
-    temperature_single_value,
-)
+from src.model.seaweed_growth import (calculate_illumination_factor,
+                                      calculate_nutrient_factor,
+                                      calculate_salinity_factor,
+                                      calculate_temperature_factor,
+                                      growth_factor_combination,
+                                      growth_factor_combination_single_value,
+                                      illumination_single_value,
+                                      nutrient_single_value,
+                                      salinity_single_value,
+                                      temperature_single_value)
 
 
 def create_test_dataframe_reasonable_values():
@@ -94,9 +92,9 @@ def test_illumination_single_value():
     # Test 1
     assert illumination_single_value(25) == 1
     # Test 2
-    assert illumination_single_value(500) == 100 / 500
+    assert illumination_single_value(500) == 0.219
     # Test 3
-    assert illumination_single_value(5) == 5 / 21.9
+    assert illumination_single_value(5) == pytest.approx(0.4939, 0.001)
     # Test 4: make sure everything stays between 0 and 1
     for illumination in range(0, 500):
         assert illumination_single_value(illumination) <= 1

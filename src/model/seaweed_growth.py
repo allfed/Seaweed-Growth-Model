@@ -117,9 +117,9 @@ def illumination_single_value(illumination: float):
         illumination
     )
     if illumination < 21.9:
-        return illumination / 21.9
-    elif illumination > 100:
-        return 100 / illumination
+        return (illumination / 21.9) * math.exp(1 - (illumination / 21.9))
+    elif illumination > 109.5:
+        return 109.5 / illumination
     else:
         return 1
 
@@ -151,7 +151,7 @@ def temperature_single_value(temperature: float):
     # where Kt1 = 0.017°C−2 and Kt2 = 0.06°C−2. These coefficients were determined by
     # fitting the preceding equation such that g(15°C) = 0.25 and g(36°C) = 0.1
     kt1 = 0.017
-    kt2 = 0.06
+    kt2 = 0.064
 
     if temperature < 24:
         return math.exp(-kt1 * (24 - temperature) ** 2)
@@ -173,6 +173,42 @@ def calculate_temperature_factor(temperature: pd.Series):
     return pd.Series(temperature.apply(temperature_single_value))
 
 
+def nitrate_subfactor(nitrate):
+    """
+    Calculates the nitrate subfactor for a single value
+    Arguments:
+        nitrate: the nitrate concentration in mmol/m³
+    Returns:
+        The nitrate subfactor as a float
+    """
+    kno3 = 0.4  # empirical constant
+    return nitrate / (kno3 + nitrate)
+
+
+def phosphate_subfactor(phosphate):
+    """
+    Calculates the phosphate subfactor for a single value
+    Arguments:
+        phosphate: the phosphate concentration in mmol/m³
+    Returns:
+        The phosphate subfactor as a float
+    """
+    kpo4 = 0.1  # empirical constant
+    return phosphate / (kpo4 + phosphate)
+
+
+def ammonium_subfactor(ammonium):
+    """
+    Calculates the ammonium subfactor for a single value
+    Arguments:
+        ammonium: the ammonium concentration in mmol/m³
+    Returns:
+        The ammonium subfactor as a float
+    """
+    knh4 = 0.3  # empirical constant
+    return ammonium / (knh4 + ammonium)
+
+
 def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float):
     """
     Calculates the nutrient factor, which is the minimum of the
@@ -189,25 +225,20 @@ def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float):
     if np.isnan(nitrate) or np.isnan(ammonium) or np.isnan(phosphate):
         return np.nan
     # Make sure all three nutrients are in a reasonable range
-    assert 0 <= nitrate <= 50, "nitrate has the value {}".format(nitrate)
-    assert 0 <= ammonium <= 50, "ammonium has the value {}".format(ammonium)
-    assert 0 <= phosphate <= 50, "phosphate has the value {}".format(phosphate)
+    assert 0 <= nitrate <= 100, "nitrate has the value {}".format(nitrate)
+    assert 0 <= ammonium <= 100, "ammonium has the value {}".format(ammonium)
+    assert 0 <= phosphate <= 100, "phosphate has the value {}".format(phosphate)
 
-    # where KNO3 = 0.4 μM, KNH4 = 0.3 μM, and KPO4 = 0.1 μM.
-    # were implemented because these yield growth rates consistent with
-    # observations by Lapointe [1987]
-    # "Phosphorus- and nitrogen-limited photosynthesis and growth
-    # of Gracilaria tikvahiae (Rhodophyceae)
-    # in the Florida Keys: an experimental field study"
-    kno3 = 0.4
-    knh4 = 0.3
-    kpo4 = 0.1
     # Calculate the single nutrient factors
-    nitrate_factor = nitrate / (kno3 + nitrate)
-    ammonium_factor = ammonium / (knh4 + ammonium)
-    phosphate_factor = phosphate / (kpo4 + phosphate)
+    nitrate_subfactor_value = nitrate_subfactor(nitrate)
+    ammonium_subfactor_value = ammonium_subfactor(ammonium)
+    phosphate_subfactor_value = phosphate_subfactor(phosphate)
     # Calculate the nutrient factor as the minimum available nutrient
-    return min(nitrate_factor, ammonium_factor, phosphate_factor)
+    return min(
+        nitrate_subfactor_value,
+        ammonium_subfactor_value,
+        phosphate_subfactor_value
+    )
 
 
 def calculate_nutrient_factor(

@@ -4,9 +4,9 @@ This file takes the output of the seaweed model and does time series analysis wi
 import os
 import random
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 from tslearn.clustering import TimeSeriesKMeans
 from tslearn.utils import to_time_series_dataset
@@ -73,7 +73,7 @@ def time_series_analysis(growth_df, n_clusters, global_or_US):
     return labels, km
 
 
-def elbow_method(growth_df, max_clusters, global_or_US):
+def elbow_method(growth_df, max_clusters, global_or_US, scenario):
     """
     Finds the optimal number of clusters using the elbow method
     https://predictivehacks.com/k-means-elbow-method-code-for-python/
@@ -85,7 +85,7 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     """
     # Find the optimal number of clusters
     inertias = {}
-    for i in range(1, max_clusters):
+    for i in range(2, max_clusters):
         print("Trying {} clusters".format(i))
         labels, km = time_series_analysis(growth_df, i, global_or_US)
         inertias[i] = km.inertia_
@@ -93,27 +93,84 @@ def elbow_method(growth_df, max_clusters, global_or_US):
     inertias_df.to_csv(
         "data"
         + os.sep
-        + "interim_results"
+        + "interim_data"
         + os.sep
-        + "inertias"
+        + scenario
+        + os.sep
+        + "inertias_"
         + global_or_US
         + ".csv",
         sep=";",
     )
-    ax = inertias_df.plot()
+    ax = inertias_df.plot(legend=False)
     ax.set_xlabel("Number of clusters")
     ax.set_ylabel("Distortion")
     ax.set_title("Elbow method")
     ax.get_figure().savefig(
         "results"
         + os.sep
+        + "elbow_plots"
+        + os.sep
         + "elbow_method_"
         + global_or_US
+        + "_"
+        + scenario
         + ".png"
     )
 
 
-def lme():
+def area_cap(lat, radius=6371.0):  # Earth radius in km
+    """Area of a cap of radius r and latitude lat.
+
+    Arguments:
+        lat : float
+            Latitude of the cap in degrees.
+        radius : float, optional
+            Radius of the sphere in km.
+            Default is the radius of the Earth.
+
+    Returns:
+        area : float
+            Area of the cap in km^2.
+    """
+    # convert to radians
+    theta = lat / 180. * np.pi
+
+    # area of a spherical cap (see Wikipedia)
+    return 2 * np.pi * radius**2 * (1 - np.sin(theta))
+
+
+@np.vectorize
+def area_grid_cell(lat, radius=6371.0):  # Earth radius in km
+    """Area of a grid cell on a sphere. The grid cell is assumed
+    to 1 deg x 1 deg, aligned with the latitude and longitude.
+
+    Arguments:
+        lat : float or array_like
+            Latitude of the grid cell in degrees.
+        radius : float, optional
+            Radius of the sphere in km.
+            Default is the radius of the Earth.
+
+    Returns:
+        area : float
+            Area of the grid cell in km^2.
+    """
+    # Don't pass latitudes outside the range [-90, 90]
+    assert np.abs(lat) <= 90, "Latitude must be in the range [-90, 90]."
+
+    # latitudes are capped at +/- 90 degrees
+    lower_lat = max(lat - 0.5, -90.)
+    upper_lat = min(lat + 0.5, 90.)
+
+    # the area of the grid cell is the difference between the
+    # area of the upper and lower cap divided by the number of
+    # grid cells that you count if you walk around the globe
+    # once along the latitude
+    return (area_cap(lower_lat, radius=radius) - area_cap(upper_lat, radius=radius)) / 360.
+
+
+def lme(scenario):
     """
     Calculates growth rate and all the factors for the lme
     and saves it in files appropriate for the plotting functions
@@ -140,7 +197,7 @@ def lme():
     ]
     # only run this if the file does not exist
     if not os.path.isfile(
-        "data" + os.sep + "interim_results" + os.sep + "seaweed_growth_rate_LME.pkl"
+        "data" + os.sep + "interim_data" + os.sep + "seaweed_growth_rate_LME.pkl"
     ):
         print("Creating the dataframe")
         # Transpose the dataframe so that the time serieses are the columns
@@ -149,11 +206,18 @@ def lme():
             print("Getting parameter {}".format(parameter))
             growth_df = model.construct_df_for_parameter(parameter).transpose()
             growth_df.to_pickle(
-                "data" + os.sep + "interim_results" + os.sep + parameter + "_LME.pkl"
+                "data"
+                + os.sep
+                + "interim_data"
+                + os.sep
+                + scenario
+                + os.sep
+                + parameter
+                + "_LME.pkl"
             )
 
 
-def grid():
+def grid(scenario, global_or_US, with_elbow_method=False):
     """
     Calculates growth rate and all the factors for the grid
     and saves it in files appropriate for the plotting functions
@@ -162,8 +226,6 @@ def grid():
     Returns:
         None
     """
-    # Either calculate for the whole world or just the US
-    global_or_US = "US"
     # Define the parameters we look at
     parameters = [
         "salinity_factor",
@@ -176,14 +238,16 @@ def grid():
     if not os.path.isfile(
         "data"
         + os.sep
-        + "interim_results"
+        + "interim_data"
+        + os.sep
+        + scenario
         + os.sep
         + "seaweed_growth_rate_"
         + global_or_US
         + ".pkl"
     ):
         print("Creating the dataframe")
-        path = "data" + os.sep + "interim_results"
+        path = "data" + os.sep + "interim_data" + os.sep + scenario
         file = "data_gridded_all_parameters_" + global_or_US + ".pkl"
         # Transpose the dataframe so that the time serieses are the columns
         # Get all the parameters
@@ -193,27 +257,31 @@ def grid():
             growth_df.to_pickle(
                 "data"
                 + os.sep
-                + "interim_results"
+                + "interim_data"
+                + os.sep
+                + scenario
                 + os.sep
                 + parameter
                 + "_"
                 + global_or_US
                 + ".pkl"
             )
-
-    # Do the time series analysis
-    growth_df = pd.read_pickle(
-        "data" + os.sep + "interim_results" + os.sep
-        + "seaweed_growth_rate_" + global_or_US + ".pkl"
-    )
-    elbow_method(growth_df, 15, global_or_US)
-    # elbow method says 5 is the optimal number of clusters for US
-    # and 4 for the whole world
-    number_of_clusters = 4 if global_or_US == "global" else 5
+    if with_elbow_method:
+        # Do the time series analysis
+        growth_df = pd.read_pickle(
+            "data" + os.sep + "interim_data" + os.sep + scenario + os.sep
+            + "seaweed_growth_rate_" + global_or_US + ".pkl"
+        )
+        elbow_method(growth_df, 7, global_or_US, scenario)
+    # elbow method says 4 is the optimal number of clusters for US
+    # and 3 for the whole world
+    number_of_clusters = 3 if global_or_US == "global" else 4
     if not os.path.isfile(
         "data"
         + os.sep
-        + "interim_results"
+        + "interim_data"
+        + os.sep
+        + scenario
         + os.sep
         + "seaweed_growth_rate_clustered_"
         + global_or_US
@@ -223,7 +291,9 @@ def grid():
         growth_df = pd.read_pickle(
             "data"
             + os.sep
-            + "interim_results"
+            + "interim_data"
+            + os.sep
+            + scenario
             + os.sep
             + "seaweed_growth_rate_"
             + global_or_US
@@ -236,7 +306,9 @@ def grid():
             param_df = pd.read_pickle(
                 "data"
                 + os.sep
-                + "interim_results"
+                + "interim_data"
+                + os.sep
+                + scenario
                 + os.sep
                 + parameter
                 + "_"
@@ -247,7 +319,9 @@ def grid():
             param_df.to_pickle(
                 "data"
                 + os.sep
-                + "interim_results"
+                + "interim_data"
+                + os.sep
+                + scenario
                 + os.sep
                 + parameter
                 + "_clustered_"
@@ -258,7 +332,9 @@ def grid():
         growth_df = pd.read_pickle(
             "data"
             + os.sep
-            + "interim_results"
+            + "interim_data"
+            + os.sep
+            + scenario
             + os.sep
             + "seaweed_growth_rate_clustered_"
             + global_or_US
@@ -267,5 +343,6 @@ def grid():
 
 
 if __name__ == "__main__":
-    lme()
-    grid()
+    lme("150tg")
+    grid("150tg", "US")
+    grid("150tg", "global")
