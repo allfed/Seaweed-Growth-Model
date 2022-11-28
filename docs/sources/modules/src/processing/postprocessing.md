@@ -116,7 +116,9 @@ Area of a cap of radius r and latitude lat.
 ### lme
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L173)
 ```python
-.lme()
+.lme(
+   scenario
+)
 ```
 
 ---
@@ -135,10 +137,10 @@ None
 
 
 ### grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L213)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L220)
 ```python
 .grid(
-   scenario, global_or_US
+   scenario, global_or_US, with_elbow_method = False
 )
 ```
 
