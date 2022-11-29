@@ -102,7 +102,8 @@ def elbow_method(growth_df, max_clusters, global_or_US, scenario):
         + ".csv",
         sep=";",
     )
-    ax = inertias_df.plot(legend=False)
+    ax = inertias_df.plot(legend=False, linewidth=2.5, color="black")
+    ax = inertias_df.plot(legend=False, linewidth=2)
     ax.set_xlabel("Number of clusters")
     ax.set_ylabel("Distortion")
     ax.set_title("Elbow method")
