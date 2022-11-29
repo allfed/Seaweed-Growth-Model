@@ -7,11 +7,14 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.model.seaweed_growth import (ammonium_subfactor,
-                                      illumination_single_value,
-                                      nitrate_subfactor, phosphate_subfactor,
-                                      salinity_single_value,
-                                      temperature_single_value)
+from src.model.seaweed_growth import (
+    ammonium_subfactor,
+    illumination_single_value,
+    nitrate_subfactor,
+    phosphate_subfactor,
+    salinity_single_value,
+    temperature_single_value,
+)
 
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
@@ -28,8 +31,11 @@ def plot_factors():
     """
     # Contains the ranges and the units
     factor_dict = {
-        "Illumination": (140, "W per m²"), "Temperature": (40, "°C"),
-        "Nutrient": (20, "μmol per m³"), "Salinity": (50, "ppt")}
+        "Illumination": (140, "W per m²"),
+        "Temperature": (40, "°C"),
+        "Nutrient": (20, "μmol per m³"),
+        "Salinity": (50, "ppt"),
+    }
     # Iterates over the factors and plot them
     for factor, (factor_range, unit) in factor_dict.items():
         # Creates the x-axis
@@ -46,9 +52,11 @@ def plot_factors():
             plt.plot(x, y, linewidth=2.5, color="black")
             plt.plot(x, y, linewidth=2)
         else:
-            for subfactor, sub_function in {"Nitrate": nitrate_subfactor,
-                                            "Phosphate": phosphate_subfactor,
-                                            "Ammonium": ammonium_subfactor}.items():
+            for subfactor, sub_function in {
+                "Nitrate": nitrate_subfactor,
+                "Phosphate": phosphate_subfactor,
+                "Ammonium": ammonium_subfactor,
+            }.items():
                 y = [sub_function(i) for i in x]
                 plt.plot(x, y, linewidth=2.5, color="black")
                 plt.plot(x, y, label=subfactor, linewidth=2)
@@ -61,12 +69,7 @@ def plot_factors():
         plt.gcf().set_size_inches(8, 2)
         # Saves the plot
         plt.savefig(
-            "results"
-            + os.sep
-            + "factors"
-            + os.sep
-            + f"{factor}_factor.png"
-            + ".png",
+            "results" + os.sep + "factors" + os.sep + f"{factor}_factor.png" + ".png",
             dpi=250,
             bbox_inches="tight",
         )

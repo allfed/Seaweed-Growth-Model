@@ -33,11 +33,13 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
         "PAR_avg": "illumination",
         "PO4": "phosphate",
         "SALT": "salinity",
-        "TEMP": "temperature"
+        "TEMP": "temperature",
     }
     dict_env_dfs = {}
     for science_name in env_params.keys():
-        full_path = path + os.sep + "data" + os.sep + folder + os.sep + scenario + os.sep
+        full_path = (
+            path + os.sep + "data" + os.sep + folder + os.sep + scenario + os.sep
+        )
         env_df = pd.read_pickle(
             full_path + "nw_" + science_name + "_" + file_ending + ".pkl"
         )
@@ -102,7 +104,7 @@ def prep_nw_data(
     max_lat=None,
     min_lon=None,
     max_lon=None,
-    all_cells=False
+    all_cells=False,
 ):
     """
     ### This code is only used on the NCAR cluster. ###
@@ -167,8 +169,8 @@ def call_prep_nw_data(global_or_US):
     scenario = "150tg"
     for env_param in env_params:
         print(env_param)
-        path = '/glade/u/home/chsharri/Work/NW/'
-        file = 'nw_ur_150_07.pop.h.' + env_param + '.nc'
+        path = "/glade/u/home/chsharri/Work/NW/"
+        file = "nw_ur_150_07.pop.h." + env_param + ".nc"
         # Index positions of the US in the dataset
         min_lat = 250
         max_lat = 320
@@ -178,7 +180,15 @@ def call_prep_nw_data(global_or_US):
         if env_param == "PAR_surf":
             env_param = "PAR_avg"
         prep_nw_data(
-            path, file, length_time, env_param, scenario, min_lat, max_lat, min_lon, max_lon
+            path,
+            file,
+            length_time,
+            env_param,
+            scenario,
+            min_lat,
+            max_lat,
+            min_lon,
+            max_lon,
         )
         prep_nw_data(path, file, 120, env_param, scenario, all_cells=True)
     print("done")

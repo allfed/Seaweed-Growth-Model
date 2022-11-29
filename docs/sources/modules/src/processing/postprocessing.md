@@ -84,7 +84,7 @@ None, just plots the elbow method and saves it
 
 
 ### area_cap
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L122)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L123)
 ```python
 .area_cap(
    lat, radius = 6371.0
@@ -114,7 +114,7 @@ Area of a cap of radius r and latitude lat.
 
 
 ### lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L173)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L176)
 ```python
 .lme(
    scenario
@@ -137,7 +137,7 @@ None
 
 
 ### grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L220)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L223)
 ```python
 .grid(
    scenario, global_or_US, with_elbow_method = False

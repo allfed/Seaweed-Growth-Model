@@ -25,6 +25,7 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     Returns:
         None, but saves the plot
     """
+    growth_df = growth_df[["cluster", "geometry"]]
     global_map = gpd.read_file(
         "data/geospatial_information/Countries/ne_50m_admin_0_countries.shp"
     )
@@ -78,9 +79,68 @@ def prepare_geometry(growth_df):
     growth_df["geometry"] = (
         growth_df[["longitude", "latitude"]].apply(tuple, axis=1).apply(Point)
     )
-    growth_df = growth_df[["cluster", "geometry"]]
     growth_df = gpd.GeoDataFrame(growth_df)
     return growth_df
+
+
+def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
+    """
+    Plots the growth rate by year. This includes the first
+    three months without nuclear war, in the case of the first year
+    Arguments:
+        growth_df: a dataframe of the growth rate
+    Returns:
+        None, but saves the plot
+    """
+    global_map = gpd.read_file(
+        "data/geospatial_information/Countries/ne_50m_admin_0_countries.shp"
+    )
+    for year, i in enumerate(np.arange(-4, len(growth_df.columns) - 10, 12)):
+        # Calculate the mean growth rate per year
+        growth_df_year = growth_df.loc[:, i + 1 : i + 12]
+        growth_df_year = growth_df_year.mean(axis=1)
+        growth_df_year = growth_df_year.to_frame()
+        growth_df_year.columns = ["growth_rate"]
+        # Make it a geodataframe
+        growth_df_year["geometry"] = growth_df["geometry"]
+        growth_df_year = gpd.GeoDataFrame(growth_df_year)
+        growth_df_year.set_crs(epsg=4326, inplace=True)
+        growth_df_year.to_crs(global_map.crs, inplace=True)
+        # Plot it
+        ax = growth_df_year.plot(
+            column="growth_rate",
+            legend=True,
+            cmap="viridis",
+            vmin=0,
+            vmax=1,
+            legend_kwds={
+                "label": "Fraction of Optimal Seaweed Growth Rate",
+                "orientation": "vertical",
+            },
+        )
+        global_map.plot(ax=ax, color="lightgrey", edgecolor="black", linewidth=0.2)
+        ax.set_xlabel("Longitude")
+        ax.set_ylabel("Latitude")
+        ax.set_title("Year " + str(year + 1))
+        if global_or_US == "US":
+            ax.set_ylim(18, 55)
+            ax.set_xlim(-130, -65)
+        else:
+            ax.set_ylim(-75, 85)
+            ax.set_xlim(-180, 180)
+        plt.savefig(
+            "results"
+            + os.sep
+            + "grid"
+            + os.sep
+            + scenario
+            + os.sep
+            + "growth_rate_spatial_year_"
+            + str(year + 1)
+            + ".png",
+            dpi=350,
+            bbox_inches="tight",
+        )
 
 
 def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario):
@@ -195,6 +255,8 @@ def main(scenario, global_or_US):
     assert num_nan == 0, "The dataframe has {} nan".format(num_nan)
     # Fix the geometry
     growth_df = prepare_geometry(growth_df)
+    # Make the spatial plots
+    growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
     cluster_spatial(growth_df, global_or_US, scenario)
 
     # Read in the other parameters for the line plot
