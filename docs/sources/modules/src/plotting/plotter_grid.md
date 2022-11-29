@@ -2,7 +2,7 @@
 
 
 ### cluster_spatial
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L19)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L20)
 ```python
 .cluster_spatial(
    growth_df, global_or_US, scenario
@@ -26,7 +26,7 @@ None, but saves the plot
 
 
 ### prepare_geometry
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L62)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L64)
 ```python
 .prepare_geometry(
    growth_df
@@ -50,8 +50,32 @@ None, but saves the plot
 ----
 
 
+### growth_rate_spatial_by_year
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L87)
+```python
+.growth_rate_spatial_by_year(
+   growth_df, global_or_US, scenario
+)
+```
+
+---
+Plots the growth rate by year. This includes the first
+three months without nuclear war, in the case of the first year
+
+**Arguments**
+
+* **growth_df**  : a dataframe of the growth rate
+
+
+**Returns**
+
+None, but saves the plot
+
+----
+
+
 ### cluster_timeseries_all_parameters_q_lines
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L86)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L147)
 ```python
 .cluster_timeseries_all_parameters_q_lines(
    parameters, global_or_US, scenario
