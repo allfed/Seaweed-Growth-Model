@@ -6,7 +6,6 @@ import os
 
 import geopandas as gpd
 import matplotlib.patches as mpatches
-from matplotlib import animation
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -291,5 +290,5 @@ def main(scenario, global_or_US):
 
 
 if __name__ == "__main__":
-    #main("150tg", "US")
+    main("150tg", "US")
     main("150tg", "global")
