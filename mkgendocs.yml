@@ -41,6 +41,7 @@ pages:
     functions:
       - cluster_spatial
       - prepare_geometry
+      - growth_rate_spatial_by_year
       - cluster_timeseries_all_parameters_q_lines
 
   - page: "modules/src/plotting/plotter_lme.md"
