@@ -114,9 +114,9 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
             vmin=0,
             vmax=1,
             legend_kwds={
-                'label': 'Fraction of Optimal Seaweed Growth Rate',
-                "orientation": "vertical"
-            }
+                "label": "Fraction of Optimal Seaweed Growth Rate",
+                "orientation": "vertical",
+            },
         )
         global_map.plot(ax=ax, color="lightgrey", edgecolor="black", linewidth=0.2)
         ax.set_xlabel("Longitude")
