@@ -32,7 +32,7 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     growth_df.set_crs(epsg=4326, inplace=True)
     growth_df.to_crs(global_map.crs, inplace=True)
     growth_df["cluster"] = growth_df["cluster"].astype(str)
-    ax = growth_df.plot(column="cluster", legend=True, cmap="viridis")
+    ax = growth_df.plot(column="cluster", legend=True, cmap="summer_r")
     fig = plt.gcf()
     fig.set_size_inches(12, 12)
     global_map.plot(ax=ax, color="lightgrey", edgecolor="black", linewidth=0.2)
@@ -98,9 +98,12 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
     for year, i in enumerate(np.arange(-4, len(growth_df.columns) - 10, 12)):
         # Calculate the mean growth rate per year
         growth_df_year = growth_df.loc[:, i + 1 : i + 12]
+        # Remove the area so it isn't used in the calculations
         growth_df_year = growth_df_year.mean(axis=1)
         growth_df_year = growth_df_year.to_frame()
         growth_df_year.columns = ["growth_rate"]
+        # Multiply it by 60 to get the actual growth rate
+        growth_df_year["growth_rate"] = growth_df_year["growth_rate"] * 60
         # Make it a geodataframe
         growth_df_year["geometry"] = growth_df["geometry"]
         growth_df_year = gpd.GeoDataFrame(growth_df_year)
@@ -110,11 +113,11 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
         ax = growth_df_year.plot(
             column="growth_rate",
             legend=True,
-            cmap="viridis",
+            cmap="Greens",
             vmin=0,
-            vmax=1,
+            vmax=40,
             legend_kwds={
-                "label": "Fraction of Optimal Seaweed Growth Rate",
+                "label": "Mean Daily Growth Rate [%]",
                 "orientation": "vertical",
             },
         )
@@ -137,6 +140,8 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
             + os.sep
             + "growth_rate_spatial_year_"
             + str(year + 1)
+            + "_"
+            + global_or_US
             + ".png",
             dpi=350,
             bbox_inches="tight",
@@ -168,6 +173,9 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
     for parameter, parameter_df in parameters.items():
         j = 0
         for cluster, cluster_df in parameter_df.groupby("cluster"):
+            # Calculate the area and remove the column
+            cluster_area = cluster_df["area"].sum()
+            del cluster_df["area"]
             del cluster_df["cluster"]
             ax = axes[i, j]
             for q in np.arange(0.1, 0.6, 0.1):
@@ -189,7 +197,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
                 ax.set_xlabel("Months since nuclear war")
             if i == 0:
                 ax.set_title(
-                    "Cluster: " + str(cluster) + ", n: " + str(cluster_df.shape[0])
+                    "Cluster: " + str(cluster) + ", Area: " + str(round(cluster_area, 2)) + " km²"
                 )
             # Add a legend
             if j == 0 and i == 0:
