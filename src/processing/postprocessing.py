@@ -182,6 +182,7 @@ def lme(scenario):
     Returns:
         None
     """
+    print("Working on LME data")
     model = SeaweedModel()
     model.add_data_by_lme(
         [i for i in range(1, 67)],
@@ -229,6 +230,7 @@ def grid(scenario, global_or_US, with_elbow_method=False):
     Returns:
         None
     """
+    print("Working with the gridded data")
     # Define the parameters we look at
     parameters = [
         "salinity_factor",
@@ -286,6 +288,7 @@ def grid(scenario, global_or_US, with_elbow_method=False):
     # elbow method says 4 is the optimal number of clusters for US
     # and 3 for the whole world
     number_of_clusters = 3 if global_or_US == "global" else 4
+    # Check if the files already exist
     if not os.path.isfile(
         "data"
         + os.sep
@@ -297,6 +300,7 @@ def grid(scenario, global_or_US, with_elbow_method=False):
         + global_or_US
         + ".pkl"
     ):
+        # Cluster the data
         print("Clustering the data")
         growth_df = pd.read_pickle(
             "data"
@@ -309,6 +313,10 @@ def grid(scenario, global_or_US, with_elbow_method=False):
             + global_or_US
             + ".pkl"
         )
+        # Calculate the area of each grid cell and save it with the rest. This only needs to be
+        # done once because the area of the grid cells is the same for all the parameters
+        areas = growth_df.index.get_level_values(0).map(area_grid_cell)
+        # Cluster only the growth data, as the other parameters all have the same shape
         labels, km = time_series_analysis(growth_df, number_of_clusters, global_or_US)
         growth_df["cluster"] = labels
         for parameter in parameters:
@@ -325,7 +333,10 @@ def grid(scenario, global_or_US, with_elbow_method=False):
                 + global_or_US
                 + ".pkl"
             )
+            # Add the cluster labels to the dataframe
             param_df["cluster"] = labels
+            # Add the area of the grid cell to the dataframe
+            param_df["area"] = areas
             param_df.to_pickle(
                 "data"
                 + os.sep
