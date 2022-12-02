@@ -113,9 +113,9 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
         ax = growth_df_year.plot(
             column="growth_rate",
             legend=True,
-            cmap="Greens",
+            cmap="viridis",
             vmin=0,
-            vmax=40,
+            vmax=45,
             legend_kwds={
                 "label": "Mean Daily Growth Rate [%]",
                 "orientation": "vertical",
