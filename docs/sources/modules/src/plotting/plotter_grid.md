@@ -75,7 +75,7 @@ None, but saves the plot
 
 
 ### cluster_timeseries_all_parameters_q_lines
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L146)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L151)
 ```python
 .cluster_timeseries_all_parameters_q_lines(
    parameters, global_or_US, scenario
