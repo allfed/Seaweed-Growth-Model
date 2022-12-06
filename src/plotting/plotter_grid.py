@@ -197,7 +197,11 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
                 ax.set_xlabel("Months since nuclear war")
             if i == 0:
                 ax.set_title(
-                    "Cluster: " + str(cluster) + ", Area: " + str(round(cluster_area, 2)) + " km²"
+                    "Cluster: "
+                    + str(cluster)
+                    + ", Area: "
+                    + str(round(cluster_area, 2))
+                    + " km²"
                 )
             # Add a legend
             if j == 0 and i == 0:
