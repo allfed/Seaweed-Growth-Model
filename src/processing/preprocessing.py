@@ -8,6 +8,26 @@ import pandas as pd
 import xarray as xr
 
 
+def get_area(path, file):
+    """
+    Gets the file with all the areas for grid_cells and saves it as a csv
+    Arguments:
+        path: path to the file
+        file: filename
+    Returns:
+        None
+    """
+    data_set = xr.open_mfdataset(path + file)
+    area = data_set["TAREA"][0, :, :]
+    area = area.to_dataframe()
+    # convert from cm² to km²
+    area["TAREA"] = area["TAREA"] / 1e+10
+    area = area.reset_index()
+    area = area.set_index(["TLONG", "TLAT"])
+    area = area["TAREA"].to_frame()
+    area.to_csv("area_grid.csv", sep=";")
+
+
 def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
     """
     Reads in the pickles of the geodataframes of the
@@ -34,6 +54,7 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
         "PO4": "phosphate",
         "SALT": "salinity",
         "TEMP": "temperature",
+        "Fe": "iron"
     }
     dict_env_dfs = {}
     for science_name in env_params.keys():
