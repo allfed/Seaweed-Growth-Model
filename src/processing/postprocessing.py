@@ -120,59 +120,6 @@ def elbow_method(growth_df, max_clusters, global_or_US, scenario):
     )
 
 
-def area_cap(lat, radius=6371.0):  # Earth radius in km
-    """Area of a cap of radius r and latitude lat.
-
-    Arguments:
-        lat : float
-            Latitude of the cap in degrees.
-        radius : float, optional
-            Radius of the sphere in km.
-            Default is the radius of the Earth.
-
-    Returns:
-        area : float
-            Area of the cap in km^2.
-    """
-    # convert to radians
-    theta = lat / 180.0 * np.pi
-
-    # area of a spherical cap (see Wikipedia)
-    return 2 * np.pi * radius**2 * (1 - np.sin(theta))
-
-
-@np.vectorize
-def area_grid_cell(lat, radius=6371.0):  # Earth radius in km
-    """Area of a grid cell on a sphere. The grid cell is assumed
-    to 1 deg x 1 deg, aligned with the latitude and longitude.
-
-    Arguments:
-        lat : float or array_like
-            Latitude of the grid cell in degrees.
-        radius : float, optional
-            Radius of the sphere in km.
-            Default is the radius of the Earth.
-
-    Returns:
-        area : float
-            Area of the grid cell in km^2.
-    """
-    # Don't pass latitudes outside the range [-90, 90]
-    assert np.abs(lat) <= 90, "Latitude must be in the range [-90, 90]."
-
-    # latitudes are capped at +/- 90 degrees
-    lower_lat = max(lat - 0.5, -90.0)
-    upper_lat = min(lat + 0.5, 90.0)
-
-    # the area of the grid cell is the difference between the
-    # area of the upper and lower cap divided by the number of
-    # grid cells that you count if you walk around the globe
-    # once along the latitude
-    return (
-        area_cap(lower_lat, radius=radius) - area_cap(upper_lat, radius=radius)
-    ) / 360.0
-
-
 def lme(scenario):
     """
     Calculates growth rate and all the factors for the lme
