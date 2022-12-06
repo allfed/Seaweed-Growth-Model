@@ -113,3 +113,16 @@ class DataGrid:
             for this grid cell
         """
         return self.grid_dict[lat_lon]
+
+
+def read_area_file(file):
+    """
+    Reads in the area file
+    Arguments:
+        file: the file to read in
+    Returns:
+        a dataframe with the area of each LME
+    """
+    assert file is not None
+    area_data = pd.read_csv(file, sep=";", index_col=[0, 1])
+    return area_data
