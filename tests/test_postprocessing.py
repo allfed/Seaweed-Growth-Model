@@ -3,6 +3,7 @@ import pytest
 
 from src.processing.postprocessing import weighted_quantile
 
+
 def test_weighted_quantile():
     """
     Tests the weighted quantile function

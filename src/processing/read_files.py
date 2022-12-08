@@ -2,7 +2,7 @@
 Reads in the ocean data after nuclear war provided by Cherryl Harrison
 """
 import pickle
-
+import os
 import pandas as pd
 
 
@@ -115,7 +115,7 @@ class DataGrid:
         return self.grid_dict[lat_lon]
 
 
-def read_area_file(file):
+def read_area_file(path, file):
     """
     Reads in the area file
     Arguments:
@@ -124,5 +124,6 @@ def read_area_file(file):
         a dataframe with the area of each LME
     """
     assert file is not None
-    area_data = pd.read_csv(file, sep=";", index_col=[0, 1])
+    assert path is not None
+    area_data = pd.DataFrame(pd.read_csv(path + os.sep + file, sep=";", index_col=[0, 1]))
     return area_data

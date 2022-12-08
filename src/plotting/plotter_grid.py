@@ -12,6 +12,7 @@ import pandas as pd
 from shapely.geometry import Point
 
 from src.processing import read_files as rf
+from src.processing import postprocessing as pp
 
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
@@ -150,7 +151,7 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
         )
 
 
-def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario):
+def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario, areas):
     """
     Plots line plots for all clusters and all parameters
     Arguments:
@@ -158,6 +159,9 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
     Returns:
         None, but saves the plot
     """
+    # This is slightly larger than the actual area of the ocean due to the way the grid 
+    # is structured
+    total_ocean_area = 361140210.2
     # Make the labels more clear
     parameter_names = {
         "salinity_factor": "Salinity Factor",
@@ -175,14 +179,40 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
     for parameter, parameter_df in parameters.items():
         j = 0
         for cluster, cluster_df in parameter_df.groupby("cluster"):
-            # Calculate the area and remove the column
-            cluster_area = cluster_df["area"].sum()
-            del cluster_df["area"]
-            del cluster_df["cluster"]
+            # Combine area and cluster into one dataframe, merge by index
+            # Reset the index, so we can join on column instead of index
+            areas_reset = areas.reset_index()
+            cluster_df = cluster_df.reset_index()
+            # ROund the level and lat lon values to 4 decimals to make sure they match
+            # level just refers to the level of the multi index, but contains the same
+            # information as the lat lon
+            cluster_df["level_0"] = cluster_df["level_0"].round(4)
+            cluster_df["level_1"] = cluster_df["level_1"].round(4)
+            areas_reset["TLAT"] = areas_reset["TLAT"].round(4)
+            areas_reset["TLONG"] = areas_reset["TLONG"].round(4)
+            cluster_df = pd.merge(
+                cluster_df, areas_reset, left_on=["level_0", "level_1"], right_on=["TLAT", "TLONG"]
+            )
+            # Calculate the area
+            cluster_area = cluster_df["TAREA"].sum()
+            # Remove the columsn we don't need anymore
+            area_weights = cluster_df["TAREA"] 
+            cluster_df = cluster_df.drop(
+                columns=["cluster", "TLAT", "TLONG", "area", "level_0", "level_1", "TAREA"]
+            )
             ax = axes[i, j]
             for q in np.arange(0.1, 0.6, 0.1):
-                q_up = cluster_df.quantile(1 - q)
-                q_down = cluster_df.quantile(q)
+                # Calculate the quantiles for each months, weighted by area
+                q_up = cluster_df.apply(pp.weighted_quantile, args=(area_weights, 1 - q))
+                q_down = cluster_df.apply(pp.weighted_quantile, args=(area_weights, q))
+                # Transpose the dataframes so that the index is the month
+                q_up = q_up.transpose()
+                q_down = q_down.transpose()
+                # Make the quantiles into a series, so that we can plot them       
+                q_up = pd.Series(q_up.iloc[:, 0])
+                q_down = pd.Series(q_down.iloc[:, 0])
+                #q_up = cluster_df.quantile(1 - q)
+                #q_down = cluster_df.quantile(q)
                 ax.fill_between(
                     x=q_up.index.astype(float),
                     y1=q_down,
@@ -201,9 +231,9 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
                 ax.set_title(
                     "Cluster: "
                     + str(cluster)
-                    + ", Area: "
-                    + str(round(cluster_area, 2))
-                    + " km²"
+                    + ", "
+                    + str(int(round(cluster_area / total_ocean_area * 100, 0)))
+                    + "% of Ocean Area"
                 )
             # Add a legend
             if j == 0 and i == 0:
@@ -249,6 +279,8 @@ def main(scenario, global_or_US):
     Returns:
         None
     """
+    # Read the data
+    areas = rf.read_area_file("data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv")
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data"
@@ -270,7 +302,7 @@ def main(scenario, global_or_US):
     # Fix the geometry
     growth_df = prepare_geometry(growth_df)
     # Make the spatial plots
-    growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
+    #growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
     cluster_spatial(growth_df, global_or_US, scenario)
 
     # Read in the other parameters for the line plot
@@ -300,7 +332,7 @@ def main(scenario, global_or_US):
         # Add one to the cluster
         parameters[parameter]["cluster"] = parameters[parameter]["cluster"] + 1
 
-    cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario)
+    cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario, areas)
 
 
 if __name__ == "__main__":

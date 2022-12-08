@@ -74,24 +74,24 @@ def time_series_analysis(growth_df, n_clusters, global_or_US):
     return labels, km
 
 
-def weighted_quantile(s1: pd.Series, s2: pd.Series, quantile: float) -> float:
+def weighted_quantile(data: pd.Series, weights: pd.Series, quantile: float) -> float:
     """
     Calculates the weighted quantile of s1 based on s2
     Arguments:
-        s1: pandas.Series - the series to calculate the quantile for
-        s2: pandas.Series - the series to use as weights
+        data: pandas.Series - the series to calculate the quantile for
+        weights: pandas.Series - the series to use as weights
         quantile: float - the quantile to calculate
     Returns:
         float - the weighted quantile
     """
     # Ensure that s1 and s2 have the same length
-    assert len(s1) == len(s2), 'The input series must have the same length'
+    assert len(data) == len(weights), 'The input series must have the same length'
 
     # Ensure that the quantile is between 0 and 1
     assert isinstance(quantile, float), 'The quantile must be a float'
     assert 0 <= quantile <= 1, 'The quantile must be between 0 and 1'
     # Calculate the weighted quantile
-    wq = DescrStatsW(data=s1, weights=s2)
+    wq = DescrStatsW(data=data, weights=weights)
     quantile = wq.quantile(probs=quantile, return_pandas=False)
     return quantile
 
@@ -283,9 +283,6 @@ def grid(scenario, global_or_US, with_elbow_method=False):
             + global_or_US
             + ".pkl"
         )
-        # Calculate the area of each grid cell and save it with the rest. This only needs to be
-        # done once because the area of the grid cells is the same for all the parameters
-        areas = growth_df.index.get_level_values(0).map(area_grid_cell)
         # Cluster only the growth data, as the other parameters all have the same shape
         labels, km = time_series_analysis(growth_df, number_of_clusters, global_or_US)
         growth_df["cluster"] = labels
@@ -305,8 +302,6 @@ def grid(scenario, global_or_US, with_elbow_method=False):
             )
             # Add the cluster labels to the dataframe
             param_df["cluster"] = labels
-            # Add the area of the grid cell to the dataframe
-            param_df["area"] = areas
             param_df.to_pickle(
                 "data"
                 + os.sep
