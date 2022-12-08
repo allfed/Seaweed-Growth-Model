@@ -133,3 +133,26 @@ Provides the data for a given grid cell
 
 a geodataframe with all the environmental data
 for this grid cell
+
+----
+
+
+### read_area_file
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/read_files.py/#L118)
+```python
+.read_area_file(
+   path, file
+)
+```
+
+---
+Reads in the area file
+
+**Arguments**
+
+* **file**  : the file to read in
+
+
+**Returns**
+
+a dataframe with the area of each LME
