@@ -167,6 +167,9 @@ def lme(scenario):
         "nutrient_factor",
         "illumination_factor",
         "temp_factor",
+        "nitrate_subfactor",
+        "ammonium_subfactor",
+        "phosphate_subfactor",
         "seaweed_growth_rate",
     ]
     # only run this if the file does not exist
@@ -207,9 +210,12 @@ def grid(scenario, global_or_US, with_elbow_method=False):
         "nutrient_factor",
         "illumination_factor",
         "temp_factor",
+        "nitrate_subfactor",
+        "ammonium_subfactor",
+        "phosphate_subfactor",
         "seaweed_growth_rate",
     ]
-    # only run this if the file does not exist
+    # only run this if the file does not exist as creating it takes a long time
     if not os.path.isfile(
         "data"
         + os.sep
@@ -224,10 +230,10 @@ def grid(scenario, global_or_US, with_elbow_method=False):
         print("Creating the dataframe")
         path = "data" + os.sep + "interim_data" + os.sep + scenario
         file = "data_gridded_all_parameters_" + global_or_US + ".pkl"
-        # Transpose the dataframe so that the time serieses are the columns
         # Get all the parameters
         for parameter in parameters:
             print("Getting parameter {}".format(parameter))
+            # Transpose the dataframe so that the time serieses are the columns
             growth_df = get_parameter_dataframe(parameter, path, file).transpose()
             growth_df.to_pickle(
                 "data"
@@ -331,4 +337,7 @@ def grid(scenario, global_or_US, with_elbow_method=False):
 if __name__ == "__main__":
     lme("150tg")
     grid("150tg", "US")
-    grid("150tg", "global")
+    # Iterate over all scenarios
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+        print("Preparing scenario: " + scenario)
+        grid("scenario", "global")

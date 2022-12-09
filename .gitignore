@@ -219,3 +219,8 @@ data/gridded_data_global/5tg/nw_PAR_avg_120_months_5tg.pkl
 data/gridded_data_global/5tg/nw_PO4_120_months_5tg.pkl
 data/gridded_data_global/5tg/nw_SALT_120_months_5tg.pkl
 data/gridded_data_global/5tg/nw_TEMP_120_months_5tg.pkl
+data/interim_data/16tg/data_gridded_all_parameters_global.pkl
+data/interim_data/27tg/data_gridded_all_parameters_global.pkl
+data/interim_data/37tg/data_gridded_all_parameters_global.pkl
+data/interim_data/47tg/data_gridded_all_parameters_global.pkl
+data/interim_data/5tg/data_gridded_all_parameters_global.pkl

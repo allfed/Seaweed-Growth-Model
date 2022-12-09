@@ -31,6 +31,9 @@ class OceanSection:
         self.illumination_factor = None
         self.temp_factor = None
         self.seaweed_growth_rate = None
+        self.nitrate_subfactor = None
+        self.ammonium_subfactor = None
+        self.phosphate_subfactor = None
         # Add the dataframe
         self.section_df = None
 
@@ -44,9 +47,13 @@ class OceanSection:
         """
         # Calculate the factors
         self.salinity_factor = sg.calculate_salinity_factor(self.salinity)
-        self.nutrient_factor = sg.calculate_nutrient_factor(
+        nutrients = sg.calculate_nutrient_factor(
             self.nitrate, self.ammonium, self.phosphate
         )
+        self.nutrient_factor = nutrients[0]
+        self.nitrate_subfactor = nutrients[1]
+        self.ammonium_subfactor = nutrients[2]
+        self.phosphate_subfactor = nutrients[3]
         self.illumination_factor = sg.calculate_illumination_factor(self.illumination)
         self.temp_factor = sg.calculate_temperature_factor(self.temperature)
 
@@ -93,6 +100,9 @@ class OceanSection:
                 "illumination": self.illumination,
                 "salinity_factor": self.salinity_factor,
                 "nutrient_factor": self.nutrient_factor,
+                "nitrate_subfactor": self.nitrate_subfactor,
+                "ammonium_subfactor": self.ammonium_subfactor,
+                "phosphate_subfactor": self.phosphate_subfactor,
                 "illumination_factor": self.illumination_factor,
                 "temp_factor": self.temp_factor,
                 "seaweed_growth_rate": self.seaweed_growth_rate,

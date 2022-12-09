@@ -216,9 +216,13 @@ def call_prep_nw_data(global_or_US):
 
 
 if __name__ == "__main__":
-    prepare_gridded_data(
-        ".", "gridded_data_global", "150tg", "120_months_150tg", "global"
-    )
+    # Iterate over all scenarios
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+        print("Preparing scenario: " + scenario)
+        prepare_gridded_data(
+            ".", "gridded_data_global", scenario, "120_months_" + scenario, "global"
+        )
+    # Also prepare the test dataset with only the US
     prepare_gridded_data(
         ".", "gridded_data_test_dataset_US_only", "150tg", "36_months_150tg", "US"
     )

@@ -101,7 +101,6 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
     for year, i in enumerate(np.arange(-4, len(growth_df.columns) - 10, 12)):
         # Calculate the mean growth rate per year
         growth_df_year = growth_df.loc[:, i + 1 : i + 12]
-        # Remove the area so it isn't used in the calculations
         growth_df_year = growth_df_year.mean(axis=1)
         growth_df_year = growth_df_year.to_frame()
         growth_df_year.columns = ["growth_rate"]
@@ -269,6 +268,32 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
         bbox_inches="tight",
     )
     plt.close()
+
+
+def compare_nw_scenarios():
+    """
+    Compares the results of the nuclear war scenarios as weigthed median
+    Arguments:
+        None
+    Returns:
+        None
+    """
+    ax = plt.subplot(111)
+    # Iterate over all scenarios and plot them in the same plot
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+        # Read the data
+        growth_df = gpd.GeoDataFrame(
+            pd.read_pickle(
+                "data"
+                + os.sep
+                + "interim_data"
+                + os.sep
+                + scenario
+                + os.sep
+                + "seaweed_growth_rate.pkl"
+            )
+        )
+    pass
 
 
 def main(scenario, global_or_US):
