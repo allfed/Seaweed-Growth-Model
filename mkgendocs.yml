@@ -36,14 +36,6 @@ pages:
     classes:
       - SeaweedModel
 
-  - page: "modules/src/plotting/plotter_grid.md"
-    source: "src/plotting/plotter_grid.py"
-    functions:
-      - cluster_spatial
-      - prepare_geometry
-      - growth_rate_spatial_by_year
-      - cluster_timeseries_all_parameters_q_lines
-
   - page: "modules/src/plotting/plotter_lme.md"
     source: "src/plotting/plotter_lme.py"
     functions:
@@ -55,19 +47,10 @@ pages:
     functions:
       - plot_factors
 
-  - page: "modules/src/processing/postprocessing.md"
-    source: "src/processing/postprocessing.py"
-    functions:
-      - get_parameter_dataframe
-      - time_series_analysis
-      - elbow_method
-      - area_cap
-      - lme
-      - grid
-
   - page: "modules/src/processing/preprocessing.md"
     source: "src/processing/preprocessing.py"
     functions:
+      - get_area
       - prepare_gridded_data
       - prep_nw_data
       - call_prep_nw_data
@@ -77,4 +60,6 @@ pages:
     classes:
       - DataLME
       - DataGrid
+    functions:
+      - read_area_file
 
