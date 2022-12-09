@@ -21,7 +21,6 @@ pages:
       - nitrate_subfactor
       - phosphate_subfactor
       - ammonium_subfactor
-      - nutrient_single_value
       - calculate_nutrient_factor
       - salinity_single_value
       - calculate_salinity_factor
