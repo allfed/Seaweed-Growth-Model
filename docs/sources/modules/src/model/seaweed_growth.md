@@ -218,35 +218,8 @@ The ammonium subfactor as a float
 ----
 
 
-### nutrient_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L212)
-```python
-.nutrient_single_value(
-   nitrate: float, ammonium: float, phosphate: float
-)
-```
-
----
-Calculates the nutrient factor, which is the minimum of the
-three nutrients nitrate, ammonium and phosphate for a single value
-Based on an empirical model
-
-**Arguments**
-
-* **nitrate**  : the nitrate concentration in mmol/m³
-* **ammonium**  : the ammonium concentration in mmol/m³
-* **phosphate**  : the phosphate concentration in mmol/m³
-
-
-**Returns**
-
-The nutrient factor as a float
-
-----
-
-
 ### calculate_nutrient_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L242)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L212)
 ```python
 .calculate_nutrient_factor(
    nitrate: pd.Series, ammonium: pd.Series, phosphate: pd.Series
@@ -266,13 +239,17 @@ And returns the nutrient factor as a pandas series
 
 **Returns**
 
-The nutrient factor as a pandas series
+* **nutrient_factor**  : The nutrient factor as a pd.Series
+    nitrate_subfactor: The nitrate subfactor as a pd.Series
+    ammonium_subfactor: The ammonium subfactor as a pd.Series
+    phosphate_subfactor: The phosphate subfactor as a pd.Series
+List of:
 
 ----
 
 
 ### salinity_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L265)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L249)
 ```python
 .salinity_single_value(
    salinity: float
@@ -295,7 +272,7 @@ The salinity factor as a float
 
 
 ### calculate_salinity_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L289)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L273)
 ```python
 .calculate_salinity_factor(
    salinity: pd.Series
