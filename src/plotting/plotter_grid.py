@@ -158,7 +158,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
     Returns:
         None, but saves the plot
     """
-    # This is slightly larger than the actual area of the ocean due to the way the grid 
+    # This is slightly larger than the actual area of the ocean due to the way the grid
     # is structured
     total_ocean_area = 361140210.2
     # Make the labels more clear
@@ -195,9 +195,9 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
             # Calculate the area
             cluster_area = cluster_df["TAREA"].sum()
             # Remove the columsn we don't need anymore
-            area_weights = cluster_df["TAREA"] 
+            area_weights = cluster_df["TAREA"]
             cluster_df = cluster_df.drop(
-                columns=["cluster", "TLAT", "TLONG", "area", "level_0", "level_1", "TAREA"]
+                columns=["cluster", "TLAT", "TLONG", "level_0", "level_1", "TAREA"]
             )
             ax = axes[i, j]
             for q in np.arange(0.1, 0.6, 0.1):
@@ -207,11 +207,9 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
                 # Transpose the dataframes so that the index is the month
                 q_up = q_up.transpose()
                 q_down = q_down.transpose()
-                # Make the quantiles into a series, so that we can plot them       
+                # Make the quantiles into a series, so that we can plot them
                 q_up = pd.Series(q_up.iloc[:, 0])
                 q_down = pd.Series(q_down.iloc[:, 0])
-                #q_up = cluster_df.quantile(1 - q)
-                #q_down = cluster_df.quantile(q)
                 ax.fill_between(
                     x=q_up.index.astype(float),
                     y1=q_down,
@@ -270,7 +268,7 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
     plt.close()
 
 
-def compare_nw_scenarios():
+def compare_nw_scenarios(areas):
     """
     Compares the results of the nuclear war scenarios as weigthed median
     Arguments:
@@ -280,20 +278,33 @@ def compare_nw_scenarios():
     """
     ax = plt.subplot(111)
     # Iterate over all scenarios and plot them in the same plot
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+    i = 1
+    for scenario in [str(i) + "tg" for i in [150, 47, 37, 27, 16, 5]]:
         # Read the data
-        growth_df = gpd.GeoDataFrame(
-            pd.read_pickle(
-                "data"
-                + os.sep
-                + "interim_data"
-                + os.sep
-                + scenario
-                + os.sep
-                + "seaweed_growth_rate.pkl"
-            )
+        growth_df_scenario = pd.read_pickle(
+            "data"
+            + os.sep
+            + "interim_data"
+            + os.sep
+            + scenario
+            + os.sep
+            + "seaweed_growth_rate_global.pkl"
         )
-    pass
+        # Calculate the weighted median
+        median = growth_df_scenario.apply(pp.weighted_quantile, args=(areas, 0.5))
+        # Plot the median
+        ax.plot(median, label=scenario, color="#3A913F", alpha=i)
+        i -= 0.15
+    plt.legend()
+    plt.savefig(
+        "results"
+        + os.sep
+        + "grid"
+        + os.sep
+        + "comparing_nw_scenarios.png",
+        dpi=350,
+        bbox_inches="tight",
+    )
 
 
 def main(scenario, global_or_US):
@@ -319,7 +330,7 @@ def main(scenario, global_or_US):
             + ".pkl"
         )
     )
-    # Add one to the cluster
+    # Add one to the cluster to make it start at 1
     growth_df["cluster"] = growth_df["cluster"] + 1
     # Make sure that each entry has a value
     num_nan = growth_df.isna().sum().sum()
@@ -361,5 +372,12 @@ def main(scenario, global_or_US):
 
 
 if __name__ == "__main__":
-    main("150tg", "US")
-    main("150tg", "global")
+    # main("150tg", "US")
+    # Compare the nuclear war scenarios
+    # Call this seperately, as it needs to access all scenarios
+    areas = rf.read_area_file("data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv")
+    compare_nw_scenarios(areas)
+    # Iterate over all scenarios
+    # for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+    #     print("Preparing scenario: " + scenario)
+    #     main(scenario, "global")
