@@ -117,7 +117,7 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
             legend=True,
             cmap="viridis",
             vmin=0,
-            vmax=45,
+            vmax=50,
             legend_kwds={
                 "label": "Mean Daily Growth Rate [%]",
                 "orientation": "vertical",
@@ -276,9 +276,12 @@ def compare_nw_scenarios(areas):
     Returns:
         None
     """
-    ax = plt.subplot(111)
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    # a list of 6 very distinct colors
+    colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]
     # Iterate over all scenarios and plot them in the same plot
-    i = 1
+    i = 0
     for scenario in [str(i) + "tg" for i in [150, 47, 37, 27, 16, 5]]:
         # Read the data
         growth_df_scenario = pd.read_pickle(
@@ -290,11 +293,41 @@ def compare_nw_scenarios(areas):
             + os.sep
             + "seaweed_growth_rate_global.pkl"
         )
+        areas = rf.read_area_file("data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv")
+        # Combine area and cluster into one dataframe, merge by index
+        # Reset the index, so we can join on column instead of 
+        areas_reset = areas.reset_index()
+        growth_df_scenario = growth_df_scenario.reset_index()
+        # ROund the level and lat lon values to 4 decimals to make sure they match
+        # level just refers to the level of the multi index, but contains the same
+        # information as the lat lon
+        growth_df_scenario["level_0"] = growth_df_scenario["level_0"].round(4)
+        growth_df_scenario["level_1"] = growth_df_scenario["level_1"].round(4)
+        areas_reset["TLAT"] = areas_reset["TLAT"].round(4)
+        areas_reset["TLONG"] = areas_reset["TLONG"].round(4)
+        # Merge the dataframes, so that we have the area for each grid cell
+        # And remove the grid cells without data.
+        growth_df_scenario = pd.merge(
+            growth_df_scenario,
+            areas_reset,
+            left_on=["level_0", "level_1"],
+            right_on=["TLAT", "TLONG"]
+        )
+        # Only use those grid cells that are between -45 and 45 degrees latitude
+        # This is because the areas above and below have 0 growth either way
+        growth_df_scenario = growth_df_scenario[growth_df_scenario["TLAT"] > -45]
+        growth_df_scenario = growth_df_scenario[growth_df_scenario["TLAT"] < 45]
+
+        # Remove the columsn we don't need anymore
+        areas_reset = growth_df_scenario["TAREA"]
+        growth_df_scenario = growth_df_scenario.drop(
+            columns=["TLAT", "TLONG", "level_0", "level_1", "TAREA"]
+        )
         # Calculate the weighted median
-        median = growth_df_scenario.apply(pp.weighted_quantile, args=(areas, 0.5))
+        median_weighted = growth_df_scenario.apply(pp.weighted_quantile, args=(areas_reset, 0.5)).transpose()
         # Plot the median
-        ax.plot(median, label=scenario, color="#3A913F", alpha=i)
-        i -= 0.15
+        ax.plot(median_weighted, label=scenario, color=colors[i], alpha=1)
+        i += 1
     plt.legend()
     plt.savefig(
         "results"
@@ -338,7 +371,7 @@ def main(scenario, global_or_US):
     # Fix the geometry
     growth_df = prepare_geometry(growth_df)
     # Make the spatial plots
-    #growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
+    growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
     cluster_spatial(growth_df, global_or_US, scenario)
 
     # Read in the other parameters for the line plot
@@ -372,12 +405,15 @@ def main(scenario, global_or_US):
 
 
 if __name__ == "__main__":
-    # main("150tg", "US")
+    # Create the US plots
+    main("150tg", "US")
+    # Create the global control plots
+    main("control", "global")
     # Compare the nuclear war scenarios
     # Call this seperately, as it needs to access all scenarios
     areas = rf.read_area_file("data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv")
     compare_nw_scenarios(areas)
     # Iterate over all scenarios
-    # for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
-    #     print("Preparing scenario: " + scenario)
-    #     main(scenario, "global")
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+        print("Preparing scenario: " + scenario)
+        main(scenario, "global")
