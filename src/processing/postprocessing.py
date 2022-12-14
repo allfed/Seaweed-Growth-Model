@@ -10,6 +10,7 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from tslearn.clustering import TimeSeriesKMeans
 from tslearn.utils import to_time_series_dataset
+from statsmodels.stats.weightstats import DescrStatsW
 
 from src.model.seaweed_model import SeaweedModel
 
@@ -73,6 +74,28 @@ def time_series_analysis(growth_df, n_clusters, global_or_US):
     return labels, km
 
 
+def weighted_quantile(data: pd.Series, weights: pd.Series, quantile: float) -> float:
+    """
+    Calculates the weighted quantile of s1 based on s2
+    Arguments:
+        data: pandas.Series - the series to calculate the quantile for
+        weights: pandas.Series - the series to use as weights
+        quantile: float - the quantile to calculate
+    Returns:
+        float - the weighted quantile
+    """
+    # Ensure that s1 and s2 have the same length
+    assert len(data) == len(weights), "The input series must have the same length"
+
+    # Ensure that the quantile is between 0 and 1
+    assert isinstance(quantile, float), "The quantile must be a float"
+    assert 0 <= quantile <= 1, "The quantile must be between 0 and 1"
+    # Calculate the weighted quantile
+    wq = DescrStatsW(data=data, weights=weights)
+    quantile = wq.quantile(probs=quantile, return_pandas=False)
+    return quantile
+
+
 def elbow_method(growth_df, max_clusters, global_or_US, scenario):
     """
     Finds the optimal number of clusters using the elbow method
@@ -120,59 +143,6 @@ def elbow_method(growth_df, max_clusters, global_or_US, scenario):
     )
 
 
-def area_cap(lat, radius=6371.0):  # Earth radius in km
-    """Area of a cap of radius r and latitude lat.
-
-    Arguments:
-        lat : float
-            Latitude of the cap in degrees.
-        radius : float, optional
-            Radius of the sphere in km.
-            Default is the radius of the Earth.
-
-    Returns:
-        area : float
-            Area of the cap in km^2.
-    """
-    # convert to radians
-    theta = lat / 180.0 * np.pi
-
-    # area of a spherical cap (see Wikipedia)
-    return 2 * np.pi * radius**2 * (1 - np.sin(theta))
-
-
-@np.vectorize
-def area_grid_cell(lat, radius=6371.0):  # Earth radius in km
-    """Area of a grid cell on a sphere. The grid cell is assumed
-    to 1 deg x 1 deg, aligned with the latitude and longitude.
-
-    Arguments:
-        lat : float or array_like
-            Latitude of the grid cell in degrees.
-        radius : float, optional
-            Radius of the sphere in km.
-            Default is the radius of the Earth.
-
-    Returns:
-        area : float
-            Area of the grid cell in km^2.
-    """
-    # Don't pass latitudes outside the range [-90, 90]
-    assert np.abs(lat) <= 90, "Latitude must be in the range [-90, 90]."
-
-    # latitudes are capped at +/- 90 degrees
-    lower_lat = max(lat - 0.5, -90.0)
-    upper_lat = min(lat + 0.5, 90.0)
-
-    # the area of the grid cell is the difference between the
-    # area of the upper and lower cap divided by the number of
-    # grid cells that you count if you walk around the globe
-    # once along the latitude
-    return (
-        area_cap(lower_lat, radius=radius) - area_cap(upper_lat, radius=radius)
-    ) / 360.0
-
-
 def lme(scenario):
     """
     Calculates growth rate and all the factors for the lme
@@ -197,6 +167,9 @@ def lme(scenario):
         "nutrient_factor",
         "illumination_factor",
         "temp_factor",
+        "nitrate_subfactor",
+        "ammonium_subfactor",
+        "phosphate_subfactor",
         "seaweed_growth_rate",
     ]
     # only run this if the file does not exist
@@ -237,9 +210,12 @@ def grid(scenario, global_or_US, with_elbow_method=False):
         "nutrient_factor",
         "illumination_factor",
         "temp_factor",
+        "nitrate_subfactor",
+        "ammonium_subfactor",
+        "phosphate_subfactor",
         "seaweed_growth_rate",
     ]
-    # only run this if the file does not exist
+    # only run this if the file does not exist as creating it takes a long time
     if not os.path.isfile(
         "data"
         + os.sep
@@ -254,10 +230,10 @@ def grid(scenario, global_or_US, with_elbow_method=False):
         print("Creating the dataframe")
         path = "data" + os.sep + "interim_data" + os.sep + scenario
         file = "data_gridded_all_parameters_" + global_or_US + ".pkl"
-        # Transpose the dataframe so that the time serieses are the columns
         # Get all the parameters
         for parameter in parameters:
             print("Getting parameter {}".format(parameter))
+            # Transpose the dataframe so that the time serieses are the columns
             growth_df = get_parameter_dataframe(parameter, path, file).transpose()
             growth_df.to_pickle(
                 "data"
@@ -313,9 +289,6 @@ def grid(scenario, global_or_US, with_elbow_method=False):
             + global_or_US
             + ".pkl"
         )
-        # Calculate the area of each grid cell and save it with the rest. This only needs to be
-        # done once because the area of the grid cells is the same for all the parameters
-        areas = growth_df.index.get_level_values(0).map(area_grid_cell)
         # Cluster only the growth data, as the other parameters all have the same shape
         labels, km = time_series_analysis(growth_df, number_of_clusters, global_or_US)
         growth_df["cluster"] = labels
@@ -335,8 +308,6 @@ def grid(scenario, global_or_US, with_elbow_method=False):
             )
             # Add the cluster labels to the dataframe
             param_df["cluster"] = labels
-            # Add the area of the grid cell to the dataframe
-            param_df["area"] = areas
             param_df.to_pickle(
                 "data"
                 + os.sep
@@ -364,6 +335,12 @@ def grid(scenario, global_or_US, with_elbow_method=False):
 
 
 if __name__ == "__main__":
-    lme("150tg")
-    grid("150tg", "US")
-    grid("150tg", "global")
+    grid("47tg", "global")
+    # lme("150tg")
+    # grid("150tg", "US")
+    # # Iterate over all scenarios
+    # for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+    #     print("Preparing scenario: " + scenario)
+    #     grid(scenario, "global")
+    # # also run the control scenario
+    # grid("control", "global")

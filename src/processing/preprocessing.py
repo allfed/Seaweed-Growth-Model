@@ -8,6 +8,26 @@ import pandas as pd
 import xarray as xr
 
 
+def get_area(path, file):
+    """
+    Gets the file with all the areas for grid_cells and saves it as a csv
+    Arguments:
+        path: path to the file
+        file: filename
+    Returns:
+        None
+    """
+    data_set = xr.open_mfdataset(path + file)
+    area = data_set["TAREA"][0, :, :]
+    area = area.to_dataframe()
+    # convert from cm² to km²
+    area["TAREA"] = area["TAREA"] / 1e10
+    area = area.reset_index()
+    area = area.set_index(["TLONG", "TLAT"])
+    area = area["TAREA"].to_frame()
+    area.to_csv("area_grid.csv", sep=";")
+
+
 def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
     """
     Reads in the pickles of the geodataframes of the
@@ -34,6 +54,7 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
         "PO4": "phosphate",
         "SALT": "salinity",
         "TEMP": "temperature",
+        "Fe": "iron",
     }
     dict_env_dfs = {}
     for science_name in env_params.keys():
@@ -195,9 +216,17 @@ def call_prep_nw_data(global_or_US):
 
 
 if __name__ == "__main__":
+    # # Iterate over all scenarios
+    # for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+    #     print("Preparing scenario: " + scenario)
+    #     prepare_gridded_data(
+    #         ".", "gridded_data_global", scenario, "120_months_" + scenario, "global"
+    #     )
+    # # Also prepare the test dataset with only the US
+    # prepare_gridded_data(
+    #     ".", "gridded_data_test_dataset_US_only", "150tg", "36_months_150tg", "US"
+    # )
+    # Prepare the control run
     prepare_gridded_data(
-        ".", "gridded_data_global", "150tg", "120_months_150tg", "global"
-    )
-    prepare_gridded_data(
-        ".", "gridded_data_test_dataset_US_only", "150tg", "36_months_150tg", "US"
+        ".", "gridded_data_global", "control", "120_months_control", "global"
     )

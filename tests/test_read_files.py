@@ -38,4 +38,4 @@ def test_read_file_by_grid():
     for df in data_grid.grid_dict.values():
         assert isinstance(df, pd.DataFrame)
         # 6 parameters + lat + lon
-        assert df.shape[1] == 9
+        assert df.shape[1] == 10

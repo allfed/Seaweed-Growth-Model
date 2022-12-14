@@ -209,36 +209,6 @@ def ammonium_subfactor(ammonium):
     return ammonium / (knh4 + ammonium)
 
 
-def nutrient_single_value(nitrate: float, ammonium: float, phosphate: float):
-    """
-    Calculates the nutrient factor, which is the minimum of the
-    three nutrients nitrate, ammonium and phosphate for a single value
-    Based on an empirical model
-    Arguments:
-        nitrate: the nitrate concentration in mmol/m³
-        ammonium: the ammonium concentration in mmol/m³
-        phosphate: the phosphate concentration in mmol/m³
-    Returns:
-        The nutrient factor as a float
-    """
-    # Return nan if any of the nutrients ia nan
-    if np.isnan(nitrate) or np.isnan(ammonium) or np.isnan(phosphate):
-        return np.nan
-    # Make sure all three nutrients are in a reasonable range
-    assert 0 <= nitrate <= 100, "nitrate has the value {}".format(nitrate)
-    assert 0 <= ammonium <= 100, "ammonium has the value {}".format(ammonium)
-    assert 0 <= phosphate <= 100, "phosphate has the value {}".format(phosphate)
-
-    # Calculate the single nutrient factors
-    nitrate_subfactor_value = nitrate_subfactor(nitrate)
-    ammonium_subfactor_value = ammonium_subfactor(ammonium)
-    phosphate_subfactor_value = phosphate_subfactor(phosphate)
-    # Calculate the nutrient factor as the minimum available nutrient
-    return min(
-        nitrate_subfactor_value, ammonium_subfactor_value, phosphate_subfactor_value
-    )
-
-
 def calculate_nutrient_factor(
     nitrate: pd.Series, ammonium: pd.Series, phosphate: pd.Series
 ):
@@ -250,16 +220,34 @@ def calculate_nutrient_factor(
         ammonium: the ammonium concentration in mmol/m³
         phosphate: the phosphate concentration in mmol/m³
     Returns:
-        The nutrient factor as a pandas series
+        List of:
+            nutrient_factor: The nutrient factor as a pd.Series
+            nitrate_subfactor: The nitrate subfactor as a pd.Series
+            ammonium_subfactor: The ammonium subfactor as a pd.Series
+            phosphate_subfactor: The phosphate subfactor as a pd.Series
     """
     nutrient_df = pd.concat([nitrate, ammonium, phosphate], axis=1)
     nutrient_df.columns = ["nitrate", "ammonium", "phosphate"]
+    nutrient_df["nitrate_subfactor"] = nutrient_df["nitrate"].apply(nitrate_subfactor)
+    nutrient_df["ammonium_subfactor"] = nutrient_df["ammonium"].apply(
+        ammonium_subfactor
+    )
+    nutrient_df["phosphate_subfactor"] = nutrient_df["phosphate"].apply(
+        phosphate_subfactor
+    )
+    # Calculate the nutrient factor as the minimum available nutrient
     nutrient_df["nutrient_factor"] = nutrient_df.apply(
-        lambda x: nutrient_single_value(x["nitrate"], x["ammonium"], x["phosphate"]),
+        lambda x: min(
+            x["nitrate_subfactor"], x["ammonium_subfactor"], x["phosphate_subfactor"]
+        ),
         axis=1,
     )
-
-    return pd.Series(nutrient_df["nutrient_factor"])
+    return [
+        pd.Series(nutrient_df["nutrient_factor"]),
+        pd.Series(nutrient_df["nitrate_subfactor"]),
+        pd.Series(nutrient_df["ammonium_subfactor"]),
+        pd.Series(nutrient_df["phosphate_subfactor"]),
+    ]
 
 
 def salinity_single_value(salinity: float):

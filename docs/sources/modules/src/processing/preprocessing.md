@@ -1,8 +1,32 @@
 #
 
 
-### prepare_gridded_data
+### get_area
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L11)
+```python
+.get_area(
+   path, file
+)
+```
+
+---
+Gets the file with all the areas for grid_cells and saves it as a csv
+
+**Arguments**
+
+* **path**  : path to the file
+* **file**  : filename
+
+
+**Returns**
+
+None
+
+----
+
+
+### prepare_gridded_data
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L31)
 ```python
 .prepare_gridded_data(
    path, folder, scenario, file_ending, global_or_US
@@ -35,7 +59,7 @@ and longitude.
 
 
 ### prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L97)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L118)
 ```python
 .prep_nw_data(
    path, file, length_time, env_param, scenario, min_lat = None, max_lat = None,
@@ -73,7 +97,7 @@ None
 
 
 ### call_prep_nw_data
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L158)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/preprocessing.py/#L179)
 ```python
 .call_prep_nw_data(
    global_or_US

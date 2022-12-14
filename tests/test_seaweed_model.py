@@ -95,7 +95,7 @@ def test_construct_dataframe_from_section_data():
     model.create_section_dfs()
     sections_df = model.construct_df_from_sections_for_date(0)
     assert len(sections_df.index) == number_sections
-    assert len(sections_df.columns) == 11
+    assert len(sections_df.columns) == 14
 
 
 def test_construct_df_for_parameter():
