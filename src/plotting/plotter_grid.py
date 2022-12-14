@@ -276,13 +276,21 @@ def compare_nw_scenarios(areas):
     Returns:
         None
     """
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    # a list of 6 very distinct colors
-    colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"]
-    # Iterate over all scenarios and plot them in the same plot
-    i = 0
-    for scenario in [str(i) + "tg" for i in [150, 47, 37, 27, 16, 5]]:
+    # A dictionary of seven colors, starting with #3A913F for the scenarios
+    # All following colors are 12% lighter than the previous one
+    colors = {
+        "150 Tg": "#3A913F",
+        "47 Tg": "#3F9C4A",
+        "37 Tg": "#45A755",
+        "27 Tg": "#4BB260",
+        "16 Tg": "#50BD6B",
+        "5 Tg": "#56C877",
+        "Control": "#5BD282",
+    }
+
+    # have a list that is used to save the scenario results
+    median_weighted_list = []
+    for scenario in [str(i) + "tg" for i in [150, 47, 37, 27, 16, 5]] + ["control"]:
         # Read the data
         growth_df_scenario = pd.read_pickle(
             "data"
@@ -293,7 +301,6 @@ def compare_nw_scenarios(areas):
             + os.sep
             + "seaweed_growth_rate_global.pkl"
         )
-        areas = rf.read_area_file("data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv")
         # Combine area and cluster into one dataframe, merge by index
         # Reset the index, so we can join on column instead of 
         areas_reset = areas.reset_index()
@@ -325,9 +332,37 @@ def compare_nw_scenarios(areas):
         )
         # Calculate the weighted median
         median_weighted = growth_df_scenario.apply(pp.weighted_quantile, args=(areas_reset, 0.5)).transpose()
-        # Plot the median
-        ax.plot(median_weighted, label=scenario, color=colors[i], alpha=1)
-        i += 1
+        # Save it in a list
+        median_weighted_list.append(median_weighted.values)
+    all_medians = pd.DataFrame(
+        np.concatenate(median_weighted_list, axis=1),
+        columns=[
+            "150 Tg",
+            "47 Tg",
+            "37 Tg",
+            "27 Tg",
+            "16 Tg",
+            "5 Tg",
+            "Control",
+        ],
+    )
+    # Remove the first three months, because they are before the nuclear war
+    all_medians = all_medians.iloc[3:]
+    # Multiply the values in the columns by 60, which is the maximum growth rate
+    all_medians = all_medians * 60
+    # Calculate the median for each year
+    all_medians = all_medians.groupby(all_medians.index // 12).median()
+    # Add one to the years, so that the first year is 1
+    all_medians.index = all_medians.index + 1
+    # plot them all in the same subplot as bar plots
+    ax = all_medians.plot.bar(color=colors, edgecolor="black", linewidth=0.1)
+    # Make it nicer
+    ax.set_xlabel("Year after Nuclear War")
+    ax.set_ylabel("Median Daily Growth Rate [%]")
+    # Rotate the xtick labels so they are parallel to the x axis
+    plt.xticks(rotation=0)
+    # Remove the x grid
+    ax.xaxis.grid(False)
     plt.legend()
     plt.savefig(
         "results"
@@ -335,6 +370,70 @@ def compare_nw_scenarios(areas):
         + "grid"
         + os.sep
         + "comparing_nw_scenarios.png",
+        dpi=350,
+        bbox_inches="tight",
+    )
+
+
+def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
+    """
+    Takes the weighted average of the nutrient subfactors globally and plots them
+    in the same plot to be able to compare them.
+    Arguments:
+        nitrate: The nitrate subfactor
+        ammonium: The ammonium subfactor
+        phosphate: The phosphate subfactor
+        scenario: The scenario to plot
+        areas: The areas of the grid cells
+    Returns:
+        None
+    """
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    # a list of 3 very distinct colors
+    colors = ["#e6194b", "#3cb44b", "#ffe119"]
+    labels = ["Nitrate Subfactor", "Ammonium Subfactor", "Phosphate Subfactor"]
+    i = 0
+    for nutrient in [nitrate, ammonium, phosphate]:
+        # Reset the index, so we can join on column
+        nutrient_reset = nutrient.reset_index()
+        areas_reset = areas.reset_index()
+        # Round the level and lat lon values to 4 decimals to make sure they match
+        nutrient_reset["level_0"] = nutrient_reset["level_0"].round(4)
+        nutrient_reset["level_1"] = nutrient_reset["level_1"].round(4)
+        areas_reset["TLAT"] = areas_reset["TLAT"].round(4)
+        areas_reset["TLONG"] = areas_reset["TLONG"].round(4)
+        # Merge the dataframes, so that we have the area for each grid cell
+        nutrient_merged = pd.merge(
+            nutrient_reset,
+            areas_reset,
+            left_on=["level_0", "level_1"],
+            right_on=["TLAT", "TLONG"]
+        )
+        # Only use the remaining cells
+        areas_reset = nutrient_merged["TAREA"]
+        # Remove the columsn we don't need anymore
+        nutrient_merged = nutrient_merged.drop(
+            columns=["TLAT", "TLONG", "level_0", "level_1", "TAREA", "cluster"]
+        )
+        # Calculate the weighted median
+        median_weighted = nutrient_merged.apply(
+            pp.weighted_quantile,
+            args=(areas_reset, 0.5)
+        ).transpose()
+        # Plot the median
+        ax.plot(median_weighted, label=labels[i], color=colors[i], alpha=1)
+        i += 1
+    # save
+    plt.legend()
+    plt.savefig(
+        "results"
+        + os.sep
+        + "grid"
+        + os.sep
+        + scenario
+        + os.sep
+        + "comparing_nutrient_subfactors.png",
         dpi=350,
         bbox_inches="tight",
     )
@@ -382,6 +481,9 @@ def main(scenario, global_or_US):
         "illumination_factor",
         "temp_factor",
         "seaweed_growth_rate",
+        "nitrate_subfactor",
+        "phosphate_subfactor",
+        "ammonium_subfactor"
     ]
     for parameter in parameter_names:
         parameters[parameter] = pd.DataFrame(
@@ -400,20 +502,35 @@ def main(scenario, global_or_US):
         )
         # Add one to the cluster
         parameters[parameter]["cluster"] = parameters[parameter]["cluster"] + 1
+    compare_nutrient_subfactors(
+        parameters["nitrate_subfactor"],
+        parameters["ammonium_subfactor"],
+        parameters["phosphate_subfactor"],
+        scenario,
+        areas
+    )
+    # Remove the subfactors from the parameters, as they aren't the main parameters
+    del parameters["nitrate_subfactor"]
+    del parameters["ammonium_subfactor"]
+    del parameters["phosphate_subfactor"]
+    cluster_timeseries_all_parameters_q_lines(
+        parameters,
+        global_or_US,
+        scenario,
+        areas
+    )
 
-    cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario, areas)
 
 
 if __name__ == "__main__":
     # Create the US plots
     main("150tg", "US")
-    # Create the global control plots
-    main("control", "global")
-    # Compare the nuclear war scenarios
     # Call this seperately, as it needs to access all scenarios
     areas = rf.read_area_file("data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv")
+    # Compare the nuclear war scenarios
     compare_nw_scenarios(areas)
     # Iterate over all scenarios
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
         print("Preparing scenario: " + scenario)
         main(scenario, "global")
+

@@ -335,11 +335,12 @@ def grid(scenario, global_or_US, with_elbow_method=False):
 
 
 if __name__ == "__main__":
-    lme("150tg")
-    grid("150tg", "US")
-    # Iterate over all scenarios
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
-        print("Preparing scenario: " + scenario)
-        grid(scenario, "global")
-    # also run the control scenario
-    grid("control", "global")
+    grid("47tg", "global")
+    # lme("150tg")
+    # grid("150tg", "US")
+    # # Iterate over all scenarios
+    # for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+    #     print("Preparing scenario: " + scenario)
+    #     grid(scenario, "global")
+    # # also run the control scenario
+    # grid("control", "global")

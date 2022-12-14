@@ -205,13 +205,7 @@ data/gridded_data_global/37tg/nw_PAR_avg_120_months_37tg.pkl
 data/gridded_data_global/37tg/nw_PO4_120_months_37tg.pkl
 data/gridded_data_global/37tg/nw_SALT_120_months_37tg.pkl
 data/gridded_data_global/37tg/nw_TEMP_120_months_37tg.pkl
-data/gridded_data_global/47tg/nw_NH4_120_months_47tg.pkl
-data/gridded_data_global/47tg/nw_Fe_120_months_47tg.pkl
-data/gridded_data_global/47tg/nw_NO3_120_months_47tg.pkl
-data/gridded_data_global/47tg/nw_PAR_avg_120_months_47tg.pkl
-data/gridded_data_global/47tg/nw_PO4_120_months_47tg.pkl
-data/gridded_data_global/47tg/nw_SALT_120_months_47tg.pkl
-data/gridded_data_global/47tg/nw_TEMP_120_months_47tg.pkl
+
 data/gridded_data_global/5tg/nw_Fe_120_months_5tg.pkl
 data/gridded_data_global/5tg/nw_NH4_120_months_5tg.pkl
 data/gridded_data_global/5tg/nw_NO3_120_months_5tg.pkl
@@ -333,3 +327,10 @@ data/interim_data/control/seaweed_growth_rate_clustered_global.pkl
 data/interim_data/control/seaweed_growth_rate_global.pkl
 data/interim_data/control/temp_factor_clustered_global.pkl
 data/interim_data/control/temp_factor_global.pkl
+data/gridded_data_global/47tg/nw_Fe_120_months_47tg.pkl
+data/gridded_data_global/47tg/nw_NH4_120_months_47tg.pkl
+data/gridded_data_global/47tg/nw_NO3_120_months_47tg.pkl
+data/gridded_data_global/47tg/nw_PAR_avg_120_months_47tg.pkl
+data/gridded_data_global/47tg/nw_PO4_120_months_47tg.pkl
+data/gridded_data_global/47tg/nw_SALT_120_months_47tg.pkl
+data/gridded_data_global/47tg/nw_TEMP_120_months_47tg.pkl
