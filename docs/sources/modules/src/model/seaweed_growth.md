@@ -249,7 +249,7 @@ List of:
 
 
 ### salinity_single_value
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L249)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L253)
 ```python
 .salinity_single_value(
    salinity: float
@@ -272,7 +272,7 @@ The salinity factor as a float
 
 
 ### calculate_salinity_factor
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L273)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L277)
 ```python
 .calculate_salinity_factor(
    salinity: pd.Series
