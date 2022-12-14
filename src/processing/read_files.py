@@ -125,5 +125,7 @@ def read_area_file(path, file):
     """
     assert file is not None
     assert path is not None
-    area_data = pd.DataFrame(pd.read_csv(path + os.sep + file, sep=";", index_col=[0, 1]))
+    area_data = pd.DataFrame(
+        pd.read_csv(path + os.sep + file, sep=";", index_col=[0, 1])
+    )
     return area_data

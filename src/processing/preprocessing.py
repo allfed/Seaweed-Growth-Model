@@ -21,7 +21,7 @@ def get_area(path, file):
     area = data_set["TAREA"][0, :, :]
     area = area.to_dataframe()
     # convert from cm² to km²
-    area["TAREA"] = area["TAREA"] / 1e+10
+    area["TAREA"] = area["TAREA"] / 1e10
     area = area.reset_index()
     area = area.set_index(["TLONG", "TLAT"])
     area = area["TAREA"].to_frame()
@@ -54,7 +54,7 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
         "PO4": "phosphate",
         "SALT": "salinity",
         "TEMP": "temperature",
-        "Fe": "iron"
+        "Fe": "iron",
     }
     dict_env_dfs = {}
     for science_name in env_params.keys():
@@ -226,7 +226,7 @@ if __name__ == "__main__":
     # prepare_gridded_data(
     #     ".", "gridded_data_test_dataset_US_only", "150tg", "36_months_150tg", "US"
     # )
-      # Prepare the control run
+    # Prepare the control run
     prepare_gridded_data(
         ".", "gridded_data_global", "control", "120_months_control", "global"
     )

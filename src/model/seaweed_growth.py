@@ -229,8 +229,12 @@ def calculate_nutrient_factor(
     nutrient_df = pd.concat([nitrate, ammonium, phosphate], axis=1)
     nutrient_df.columns = ["nitrate", "ammonium", "phosphate"]
     nutrient_df["nitrate_subfactor"] = nutrient_df["nitrate"].apply(nitrate_subfactor)
-    nutrient_df["ammonium_subfactor"] = nutrient_df["ammonium"].apply(ammonium_subfactor)
-    nutrient_df["phosphate_subfactor"] = nutrient_df["phosphate"].apply(phosphate_subfactor)
+    nutrient_df["ammonium_subfactor"] = nutrient_df["ammonium"].apply(
+        ammonium_subfactor
+    )
+    nutrient_df["phosphate_subfactor"] = nutrient_df["phosphate"].apply(
+        phosphate_subfactor
+    )
     # Calculate the nutrient factor as the minimum available nutrient
     nutrient_df["nutrient_factor"] = nutrient_df.apply(
         lambda x: min(
@@ -242,7 +246,7 @@ def calculate_nutrient_factor(
         pd.Series(nutrient_df["nutrient_factor"]),
         pd.Series(nutrient_df["nitrate_subfactor"]),
         pd.Series(nutrient_df["ammonium_subfactor"]),
-        pd.Series(nutrient_df["phosphate_subfactor"])
+        pd.Series(nutrient_df["phosphate_subfactor"]),
     ]
 
 

@@ -85,11 +85,11 @@ def weighted_quantile(data: pd.Series, weights: pd.Series, quantile: float) -> f
         float - the weighted quantile
     """
     # Ensure that s1 and s2 have the same length
-    assert len(data) == len(weights), 'The input series must have the same length'
+    assert len(data) == len(weights), "The input series must have the same length"
 
     # Ensure that the quantile is between 0 and 1
-    assert isinstance(quantile, float), 'The quantile must be a float'
-    assert 0 <= quantile <= 1, 'The quantile must be between 0 and 1'
+    assert isinstance(quantile, float), "The quantile must be a float"
+    assert 0 <= quantile <= 1, "The quantile must be between 0 and 1"
     # Calculate the weighted quantile
     wq = DescrStatsW(data=data, weights=weights)
     quantile = wq.quantile(probs=quantile, return_pandas=False)

@@ -150,7 +150,9 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
         )
 
 
-def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario, areas):
+def cluster_timeseries_all_parameters_q_lines(
+    parameters, global_or_US, scenario, areas
+):
     """
     Plots line plots for all clusters and all parameters
     Arguments:
@@ -190,7 +192,10 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
             areas_reset["TLAT"] = areas_reset["TLAT"].round(4)
             areas_reset["TLONG"] = areas_reset["TLONG"].round(4)
             cluster_df = pd.merge(
-                cluster_df, areas_reset, left_on=["level_0", "level_1"], right_on=["TLAT", "TLONG"]
+                cluster_df,
+                areas_reset,
+                left_on=["level_0", "level_1"],
+                right_on=["TLAT", "TLONG"],
             )
             # Calculate the area
             cluster_area = cluster_df["TAREA"].sum()
@@ -202,7 +207,9 @@ def cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario
             ax = axes[i, j]
             for q in np.arange(0.1, 0.6, 0.1):
                 # Calculate the quantiles for each months, weighted by area
-                q_up = cluster_df.apply(pp.weighted_quantile, args=(area_weights, 1 - q))
+                q_up = cluster_df.apply(
+                    pp.weighted_quantile, args=(area_weights, 1 - q)
+                )
                 q_down = cluster_df.apply(pp.weighted_quantile, args=(area_weights, q))
                 # Transpose the dataframes so that the index is the month
                 q_up = q_up.transpose()
@@ -302,7 +309,7 @@ def compare_nw_scenarios(areas):
             + "seaweed_growth_rate_global.pkl"
         )
         # Combine area and cluster into one dataframe, merge by index
-        # Reset the index, so we can join on column instead of 
+        # Reset the index, so we can join on column instead of
         areas_reset = areas.reset_index()
         growth_df_scenario = growth_df_scenario.reset_index()
         # ROund the level and lat lon values to 4 decimals to make sure they match
@@ -318,7 +325,7 @@ def compare_nw_scenarios(areas):
             growth_df_scenario,
             areas_reset,
             left_on=["level_0", "level_1"],
-            right_on=["TLAT", "TLONG"]
+            right_on=["TLAT", "TLONG"],
         )
         # Only use those grid cells that are between -45 and 45 degrees latitude
         # This is because the areas above and below have 0 growth either way
@@ -331,7 +338,9 @@ def compare_nw_scenarios(areas):
             columns=["TLAT", "TLONG", "level_0", "level_1", "TAREA"]
         )
         # Calculate the weighted median
-        median_weighted = growth_df_scenario.apply(pp.weighted_quantile, args=(areas_reset, 0.5)).transpose()
+        median_weighted = growth_df_scenario.apply(
+            pp.weighted_quantile, args=(areas_reset, 0.5)
+        ).transpose()
         # Save it in a list
         median_weighted_list.append(median_weighted.values)
     all_medians = pd.DataFrame(
@@ -365,11 +374,7 @@ def compare_nw_scenarios(areas):
     ax.xaxis.grid(False)
     plt.legend()
     plt.savefig(
-        "results"
-        + os.sep
-        + "grid"
-        + os.sep
-        + "comparing_nw_scenarios.png",
+        "results" + os.sep + "grid" + os.sep + "comparing_nw_scenarios.png",
         dpi=350,
         bbox_inches="tight",
     )
@@ -408,7 +413,7 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
             nutrient_reset,
             areas_reset,
             left_on=["level_0", "level_1"],
-            right_on=["TLAT", "TLONG"]
+            right_on=["TLAT", "TLONG"],
         )
         # Only use the remaining cells
         areas_reset = nutrient_merged["TAREA"]
@@ -418,8 +423,7 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
         )
         # Calculate the weighted median
         median_weighted = nutrient_merged.apply(
-            pp.weighted_quantile,
-            args=(areas_reset, 0.5)
+            pp.weighted_quantile, args=(areas_reset, 0.5)
         ).transpose()
         # Plot the median
         ax.plot(median_weighted, label=labels[i], color=colors[i], alpha=1)
@@ -448,7 +452,9 @@ def main(scenario, global_or_US):
         None
     """
     # Read the data
-    areas = rf.read_area_file("data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv")
+    areas = rf.read_area_file(
+        "data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv"
+    )
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data"
@@ -483,7 +489,7 @@ def main(scenario, global_or_US):
         "seaweed_growth_rate",
         "nitrate_subfactor",
         "phosphate_subfactor",
-        "ammonium_subfactor"
+        "ammonium_subfactor",
     ]
     for parameter in parameter_names:
         parameters[parameter] = pd.DataFrame(
@@ -507,30 +513,25 @@ def main(scenario, global_or_US):
         parameters["ammonium_subfactor"],
         parameters["phosphate_subfactor"],
         scenario,
-        areas
+        areas,
     )
     # Remove the subfactors from the parameters, as they aren't the main parameters
     del parameters["nitrate_subfactor"]
     del parameters["ammonium_subfactor"]
     del parameters["phosphate_subfactor"]
-    cluster_timeseries_all_parameters_q_lines(
-        parameters,
-        global_or_US,
-        scenario,
-        areas
-    )
-
+    cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario, areas)
 
 
 if __name__ == "__main__":
     # Create the US plots
     main("150tg", "US")
     # Call this seperately, as it needs to access all scenarios
-    areas = rf.read_area_file("data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv")
+    areas = rf.read_area_file(
+        "data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv"
+    )
     # Compare the nuclear war scenarios
     compare_nw_scenarios(areas)
     # Iterate over all scenarios
     for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
         print("Preparing scenario: " + scenario)
         main(scenario, "global")
-

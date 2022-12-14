@@ -33,9 +33,3 @@ def test_weighted_quantile():
         weighted_quantile([0, 1], s4, 0)
     with pytest.raises(AssertionError):
         weighted_quantile(s1, s2.iloc[2:], 0)
-
-
-
-
-
-
