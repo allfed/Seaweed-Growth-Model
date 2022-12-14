@@ -103,7 +103,7 @@ def test_select_section_df_date():
     test_section.calculate_growth_rate()
     test_section.create_section_df()
     date_df = test_section.select_section_df_date(0)
-    assert date_df.shape == (11,)
+    assert date_df.shape == (14,)
 
 
 def test_select_section_df_date_fail():

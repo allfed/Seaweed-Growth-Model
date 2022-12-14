@@ -12,7 +12,6 @@ from src.model.seaweed_growth import (
     growth_factor_combination,
     growth_factor_combination_single_value,
     illumination_single_value,
-    nutrient_single_value,
     salinity_single_value,
     temperature_single_value,
 )
@@ -75,8 +74,13 @@ def test_growth_factor_combination_reasonable_values():
     temperature_factor = calculate_temperature_factor(test_df["temperature"])
     nutrient_factor = calculate_nutrient_factor(
         test_df["nitrate"], test_df["phosphate"], test_df["ammonium"]
-    )
+    )[0]
     salinity_factor = calculate_salinity_factor(test_df["salinity"])
+    # Make sure that all the factors are pandas series
+    assert isinstance(illumination_factor, pd.Series)
+    assert isinstance(temperature_factor, pd.Series)
+    assert isinstance(nutrient_factor, pd.Series)
+    assert isinstance(salinity_factor, pd.Series)
     factors_combined = growth_factor_combination(
         illumination_factor, temperature_factor, nutrient_factor, salinity_factor
     )
@@ -136,30 +140,6 @@ def test_calculate_temperature_factor_unreasonable_values():
     with pytest.raises(AssertionError):
         calculate_temperature_factor(
             create_test_dataframe_non_reasonable_values()["temperature"]
-        )
-
-
-def test_nutrient_single_value():
-    """
-    Tests the nutrient_single_value function
-    Just makes sure that it stays between 0 and 1
-    """
-    # Test 1: make sure everything stays between 0 and 1
-    for nutrient in range(0, 50):
-        assert nutrient_single_value(nutrient, nutrient, nutrient) <= 1
-        assert nutrient_single_value(nutrient, nutrient, nutrient) >= 0
-
-
-def test_calculate_nutrient_factor_unreasonable_values():
-    """
-    Tests the calculate_nutrient_factor function
-    This should fail
-    """
-    with pytest.raises(AssertionError):
-        calculate_nutrient_factor(
-            create_test_dataframe_non_reasonable_values()["nitrate"],
-            create_test_dataframe_non_reasonable_values()["phosphate"],
-            create_test_dataframe_non_reasonable_values()["ammonium"],
         )
 
 
