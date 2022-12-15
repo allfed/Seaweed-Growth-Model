@@ -1,0 +1,1 @@
+This file exists to force Github to synchronize this folder, even though it is empty. The main dataset is too big to be on Github, but the folder structure is needed to be able to run the code if the repository is forked. 
