@@ -1,0 +1,40 @@
+digraph ModelOverview{
+    // Data prepration
+    original_source[label="Original Data Source\nHarrison et al. (2022)", color="#3A913F", style="filled", shape="box"]
+    download_script[label="Download Script", color="#3A913F", style="filled"]
+    original_source -> download_script
+    raw_data[label="Raw Data", color="#3A913F", style="filled", shape="box"]
+    download_script -> raw_data
+    preprocessing[label="Preprocessing", color="#3A913F", style="filled"]
+    raw_data -> preprocessing
+    processed_data[label="Processed Data\nin Format\nfor Model", color="#3A913F", style="filled", shape="box"]
+    preprocessing -> processed_data
+
+    // Model
+    model[label="Seaweed\n Growth Model", color="#3A913F", style="filled"]
+    processed_data -> model
+    ocean_section[label="Ocean Section", color="#3A913F", style="filled"]
+    model -> ocean_section[label="builds an ocean\nsection for each\nocean grid cell"]
+    seaweed_growth[label="Seaweed Growth\nFunctions", color="#3A913F", style="filled"]
+    ocean_section -> seaweed_growth[label="calculates seaweed\n growth for each\nocean grid cell"]
+    seaweed_growth -> ocean_section[label="Returns\nGrowth Data"]
+    ocean_section -> model[label="Returns\nGrowth Data"]
+
+    // Data postprocessing
+    scenarios[label="Run for each\nNuclear War\nScenarios", color="white"]
+    postprocessing[label="Postprocessing", color="#3A913F", style="filled"]
+    scenarios -> postprocessing
+    scenarios -> download_script
+    scenarios -> preprocessing
+    scenarios -> plotting
+    postprocessing -> model[label="Calls"]
+    model -> postprocessing[label="Returns\nGrowth Data"]
+    result_data[label="Result Data", color="#3A913F", style="filled", shape="box"]
+    postprocessing -> result_data[label="Saves in Format\nfor Visualization"]
+
+    // Visualization
+    plotting[label="Plotting", color="#3A913F", style="filled"]
+    result_data -> plotting
+    results[label="Final Visualized Results", color="#3A913F", style="filled", shape="box"]    
+    plotting -> results
+}
