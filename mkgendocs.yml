@@ -9,38 +9,6 @@ copyright: ALLFED
 
 #This specifies the autogeneration portion
 pages:
-  - page: "modules/src/processing/read_files.md"
-    source: "src/processing/read_files.py"
-    classes:
-      - DataLME
-      - DataGrid
-    functions:
-      - read_area_file
-
-  - page: "modules/src/processing/preprocessing.md"
-    source: "src/processing/preprocessing.py"
-    functions:
-      - get_area
-      - prepare_gridded_data
-      - prep_nw_data
-      - call_prep_nw_data
-
-  - page: "modules/src/plotting/plotter_lme.md"
-    source: "src/plotting/plotter_lme.py"
-    functions:
-      - cluster_timeseries_all_parameters_q_lines
-      - create_name_dict
-
-  - page: "modules/src/plotting/plotter_methods.md"
-    source: "src/plotting/plotter_methods.py"
-    functions:
-      - plot_factors
-
-  - page: "modules/src/model/ocean_section.md"
-    source: "src/model/ocean_section.py"
-    classes:
-      - OceanSection
-
   - page: "modules/src/model/seaweed_growth.md"
     source: "src/model/seaweed_growth.py"
     functions:
@@ -57,8 +25,60 @@ pages:
       - salinity_single_value
       - calculate_salinity_factor
 
+  - page: "modules/src/model/ocean_section.md"
+    source: "src/model/ocean_section.py"
+    classes:
+      - OceanSection
+
   - page: "modules/src/model/seaweed_model.md"
     source: "src/model/seaweed_model.py"
     classes:
       - SeaweedModel
+
+  - page: "modules/src/plotting/plotter_grid.md"
+    source: "src/plotting/plotter_grid.py"
+    functions:
+      - cluster_spatial
+      - prepare_geometry
+      - growth_rate_spatial_by_year
+      - cluster_timeseries_all_parameters_q_lines
+      - compare_nw_scenarios
+      - compare_nutrient_subfactors
+
+  - page: "modules/src/plotting/plotter_lme.md"
+    source: "src/plotting/plotter_lme.py"
+    functions:
+      - cluster_timeseries_all_parameters_q_lines
+      - create_name_dict
+
+  - page: "modules/src/plotting/plotter_methods.md"
+    source: "src/plotting/plotter_methods.py"
+    functions:
+      - plot_factors
+
+  - page: "modules/src/processing/postprocessing.md"
+    source: "src/processing/postprocessing.py"
+    functions:
+      - get_parameter_dataframe
+      - time_series_analysis
+      - weighted_quantile
+      - elbow_method
+      - lme
+      - grid
+
+  - page: "modules/src/processing/preprocessing.md"
+    source: "src/processing/preprocessing.py"
+    functions:
+      - get_area
+      - prepare_gridded_data
+      - prep_nw_data
+      - call_prep_nw_data
+
+  - page: "modules/src/processing/read_files.md"
+    source: "src/processing/read_files.py"
+    classes:
+      - DataLME
+      - DataGrid
+    functions:
+      - read_area_file
 
