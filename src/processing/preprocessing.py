@@ -115,117 +115,17 @@ def prepare_gridded_data(path, folder, scenario, file_ending, global_or_US):
         pickle.dump(data_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-def prep_nw_data(
-    path,
-    file,
-    length_time,
-    env_param,
-    scenario,
-    min_lat=None,
-    max_lat=None,
-    min_lon=None,
-    max_lon=None,
-    all_cells=False,
-):
-    """
-    ### This code is only used on the NCAR cluster. ###
-
-    Reads the nuclear war data from Cheryls workspace.
-    Creates a geopandas dataframe for it for a given
-    environmental parameter and saves it in cwd as a pickle.
-
-    Arguments:
-        path: path to the file
-        file: file name
-        min_lon: index of the minimal longitude to sample from
-        max_lon: index of the maximal longitude to sample from
-        min_lat: index of the minimal latitude to sample from
-        max_lat: index of the maximal latitude to sample from
-        length_time: how much of the original dataset should
-                     be used. Measured in month, max = 300
-        env_param: the environmental parameter to look at
-        all_cells: if True, all cells are used, if False, only selection
-    Returns:
-        None
-    """
-    # Read in the data
-    ds = xr.open_dataset(path + file)
-    # 0 here means we are only using the uppermost layer of the ocean
-    if all_cells:
-        env_time = ds[env_param][:length_time, 0, :, :]
-    else:
-        env_time = ds[env_param][:length_time, 0, min_lat:max_lat, min_lon:max_lon]
-    # Make it a dataframe
-    env_time_df = env_time.to_dataframe()
-    # Delete the depth column, as it is not needed
-    if env_param == "PAR_avg":
-        del env_time_df["z_t_150m"]
-    else:
-        del env_time_df["z_t"]
-    # Create a new index to remove redundant information
-    env_time_df.reset_index(inplace=True)
-    env_time_df.set_index(["time", "TLONG", "TLAT"], inplace=True)
-    # delte the nlat and nlon columns, as thy are not needed anymore
-    del env_time_df["nlat"]
-    del env_time_df["nlon"]
-    # remove all columns that are only nan
-    env_time_df.dropna(axis=0, how="all", inplace=True)
-    # Save to pickle
-    env_time_df.to_pickle(
-        "nw_" + env_param + "_" + str(length_time) + "_months_" + scenario + ".pkl"
-    )
-
-
-def call_prep_nw_data(global_or_US):
-    """
-    ### This code is only used on the NCAR cluster. ###
-    Calls the prep_nw_data function for all environmental parameters
-    and saves the results in cwd as pickles.
-    Arguments:
-        global_or_US: string, either "global" or "US"
-    Returns:
-        None, but saves pickles
-    """
-    env_params = ["TEMP", "SALT", "PO4", "NO3", "PAR_surf", "NH4"]
-    scenario = "150tg"
-    for env_param in env_params:
-        print(env_param)
-        path = "/glade/u/home/chsharri/Work/NW/"
-        file = "nw_ur_150_07.pop.h." + env_param + ".nc"
-        # Index positions of the US in the dataset
-        min_lat = 250
-        max_lat = 320
-        min_lon = 235
-        max_lon = 300
-        length_time = 36
-        if env_param == "PAR_surf":
-            env_param = "PAR_avg"
-        prep_nw_data(
-            path,
-            file,
-            length_time,
-            env_param,
-            scenario,
-            min_lat,
-            max_lat,
-            min_lon,
-            max_lon,
-        )
-        prep_nw_data(path, file, 120, env_param, scenario, all_cells=True)
-    print("done")
-
-
 if __name__ == "__main__":
     # # Iterate over all scenarios
-    # for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
-    #     print("Preparing scenario: " + scenario)
-    #     prepare_gridded_data(
-    #         ".", "gridded_data_global", scenario, "120_months_" + scenario, "global"
-    #     )
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+        print("Preparing scenario: " + scenario)
+        prepare_gridded_data(
+            ".", "gridded_data_global", scenario, "120_months_" + scenario, "global"
+        )
     # # Also prepare the test dataset with only the US
-    # prepare_gridded_data(
-    #     ".", "gridded_data_test_dataset_US_only", "150tg", "36_months_150tg", "US"
-    # )
+    prepare_gridded_data(
+        ".", "gridded_data_test_dataset_US_only", "150tg", "36_months_150tg", "US"
+    )
     # Prepare the control run
     prepare_gridded_data(
         ".", "gridded_data_global", "control", "120_months_control", "global"
