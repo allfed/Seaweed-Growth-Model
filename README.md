@@ -72,6 +72,9 @@ Code to read and write files.
 
 Makes the plots for the publication. 
 
+## Flow Chart for Structure
+
+![Model](https://raw.githubusercontent.com/allfed/Seaweed-Growth-Model/main/results/model_description/flow_chart.png)
 
 
 
