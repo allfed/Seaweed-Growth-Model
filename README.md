@@ -74,6 +74,8 @@ Makes the plots for the publication.
 
 ## Flow Chart for Structure
 
+The following flow chart describes how different parts of this repository interact with each other and how data is transferred between them. 
+
 ![Model](https://raw.githubusercontent.com/allfed/Seaweed-Growth-Model/main/results/model_description/flow_chart.png)
 
 
