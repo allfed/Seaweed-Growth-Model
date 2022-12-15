@@ -32,8 +32,6 @@ pages:
     functions:
       - get_area
       - prepare_gridded_data
-      - prep_nw_data
-      - call_prep_nw_data
 
   - page: "modules/src/plotting/plotter_lme.md"
     source: "src/plotting/plotter_lme.py"
