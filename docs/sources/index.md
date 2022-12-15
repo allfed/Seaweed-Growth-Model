@@ -30,6 +30,10 @@ This model here uses nuclear winter environmental data and an empirical model ba
 
 The data is available in a [Zenodo Repository](). Once you download it simply copy it to `data/gridded_data_global` folder. Once there, you can run the model with the global data. However, if you just want to play around with the model, there is a dataset available for testing directly in this repository. 
 
+### Pickle Format
+
+The data is stored in the pickle format to ensure a quick read time, as the overall dataset is several gigabytes large. Learn more about pickle [here](https://www.youtube.com/watch?v=Pl4Hp8qwwes).
+
 ## Structure
 
 The code in this repository is split into three parts:
