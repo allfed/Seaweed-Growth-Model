@@ -34,6 +34,10 @@ The data is available in a [Zenodo Repository](). Once you download it simply co
 
 The data is stored in the pickle format to ensure a quick read time, as the overall dataset is several gigabytes large. Learn more about pickle [here](https://www.youtube.com/watch?v=Pl4Hp8qwwes).
 
+### Original data download
+
+The original data source is from [Harrison et al. (2022)](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2021AV000610). The files provided here are a subset of the total dataset. The script on how the data was downloaded from the original source can be found [here](https://github.com/florianjehn/Seaweed-Growth-Model/blob/main/scripts/Data_Download.ipynb). 
+
 ## Structure
 
 The code in this repository is split into three parts:
