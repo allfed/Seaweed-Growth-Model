@@ -18,7 +18,9 @@ This will create a virtual environment called "seaweed-growth-model". Once you a
 
 `pip install -e .`
 
-When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. If you run into any problems feel free to open an issue in this repository or contact IT-support@allfed.info. 
+When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. If you also want to run the example jupyter notebook, you have to [create a kernel from the environment](https://medium.com/@nrk25693/how-to-add-your-conda-environment-to-your-jupyter-notebook-in-just-4-steps-abeab8b8d084).
+
+If you run into any problems feel free to open an issue in this repository or contact IT-support@allfed.info. 
 
 ## How this model works in general
 
