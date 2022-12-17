@@ -28,6 +28,9 @@ If you run into any problems feel free to open an issue in this repository or co
 
 This model here uses nuclear winter environmental data and an empirical model based on [James and Boriah (2010)](https://www.researchgate.net/publication/44797785_Modeling_Algae_Growth_in_an_Open-Channel_Raceway). It calculates the growth rate of *Gracilaria tikvahiae* on a global scale. The growth rate results are then used to simulate the [scale-up](https://github.com/allfed/Seaweed-Scaleup-Model) of seaweed production. 
 
+## Example of usage
+An example notebook on how this model can be used can be found in the [script folder](https://github.com/allfed/Seaweed-Growth-Model/blob/main/scripts/Example.ipynb). This example runs out of the box with the test data delivered with this repository. If you want to reproduce the results, you have to download the complete dataset. 
+
 ## Getting the global data
 
 The data is available in a [Zenodo Repository](). Once you download it simply copy it to `data/gridded_data_global` folder. Once there, you can run the model with the global data. However, if you just want to play around with the model, there is a dataset available for testing directly in this repository. 
