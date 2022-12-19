@@ -18,13 +18,18 @@ This will create a virtual environment called "seaweed-growth-model". Once you a
 
 `pip install -e .`
 
-When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. If you run into any problems feel free to open an issue in this repository or contact IT-support@allfed.info. 
+When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. If you also want to run the example jupyter notebook, you have to [create a kernel from the environment](https://medium.com/@nrk25693/how-to-add-your-conda-environment-to-your-jupyter-notebook-in-just-4-steps-abeab8b8d084).
+
+If you run into any problems feel free to open an issue in this repository or contact IT-support@allfed.info. 
 
 ## How this model works in general
 
 ![Model](https://raw.githubusercontent.com/allfed/Seaweed-Growth-Model/main/results/model_description/structure.png)
 
 This model here uses nuclear winter environmental data and an empirical model based on [James and Boriah (2010)](https://www.researchgate.net/publication/44797785_Modeling_Algae_Growth_in_an_Open-Channel_Raceway). It calculates the growth rate of *Gracilaria tikvahiae* on a global scale. The growth rate results are then used to simulate the [scale-up](https://github.com/allfed/Seaweed-Scaleup-Model) of seaweed production. 
+
+## Example of usage
+An example notebook on how this model can be used can be found in the [script folder](https://github.com/allfed/Seaweed-Growth-Model/blob/main/scripts/Example.ipynb). This example runs out of the box with the test data delivered with this repository. If you want to reproduce the results, you have to download the complete dataset. 
 
 ## Getting the global data
 
