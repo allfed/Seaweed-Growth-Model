@@ -9,6 +9,11 @@ copyright: ALLFED
 
 #This specifies the autogeneration portion
 pages:
+  - page: "modules/src/utilities.md"
+    source: "src/utilities.py"
+    functions:
+      - prepare_geometry
+
   - page: "modules/src/processing/postprocessing.md"
     source: "src/processing/postprocessing.py"
     functions:
@@ -43,11 +48,11 @@ pages:
     source: "src/plotting/plotter_grid.py"
     functions:
       - cluster_spatial
-      - prepare_geometry
       - growth_rate_spatial_by_year
       - cluster_timeseries_all_parameters_q_lines
       - compare_nw_scenarios
       - compare_nutrient_subfactors
+      - comparison_plots
 
   - page: "modules/src/plotting/plotter_methods.md"
     source: "src/plotting/plotter_methods.py"

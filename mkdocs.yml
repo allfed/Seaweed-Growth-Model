@@ -40,3 +40,4 @@ nav:
         - postprocessing: modules/src/processing/postprocessing.md
         - preprocessing: modules/src/processing/preprocessing.md
         - read_files: modules/src/processing/read_files.md
+      - utilities: modules/src/utilities.md
