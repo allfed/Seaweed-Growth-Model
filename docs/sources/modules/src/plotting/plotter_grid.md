@@ -2,7 +2,7 @@
 
 
 ### cluster_spatial
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L22)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L21)
 ```python
 .cluster_spatial(
    growth_df, global_or_US, scenario
@@ -26,7 +26,7 @@ None, but saves the plot
 
 
 ### growth_rate_spatial_by_year
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L67)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L66)
 ```python
 .growth_rate_spatial_by_year(
    growth_df, global_or_US, scenario
@@ -50,7 +50,7 @@ None, but saves the plot
 
 
 ### cluster_timeseries_all_parameters_q_lines
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L132)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L131)
 ```python
 .cluster_timeseries_all_parameters_q_lines(
    parameters, global_or_US, scenario, areas
@@ -73,10 +73,10 @@ None, but saves the plot
 
 
 ### compare_nw_scenarios
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L258)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L257)
 ```python
 .compare_nw_scenarios(
-   areas, buffer = None
+   areas
 )
 ```
 
@@ -86,7 +86,7 @@ Compares the results of the nuclear war scenarios as weigthed median
 **Arguments**
 
 * **areas**  : A dataframe containing the area of each grid cell
-* **buffer**  : A buffer around coastlines to only use those areas
+* **eez**  : A eez around coastlines to only use those areas
 
 
 **Returns**
@@ -97,7 +97,7 @@ None
 
 
 ### compare_nutrient_subfactors
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L387)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L364)
 ```python
 .compare_nutrient_subfactors(
    nitrate, ammonium, phosphate, scenario, areas
@@ -116,26 +116,6 @@ in the same plot to be able to compare them.
 * **scenario**  : The scenario to plot
 * **areas**  : The areas of the grid cells
 
-
-**Returns**
-
-None
-
-----
-
-
-### comparison_plots
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L534)
-```python
-.comparison_plots()
-```
-
----
-Runs the plots the compare all scenarios
-
-**Arguments**
-
-None
 
 **Returns**
 

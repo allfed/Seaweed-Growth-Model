@@ -2,7 +2,7 @@
 
 
 ### plot_factors
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_methods.py/#L24)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_methods.py/#L21)
 ```python
 .plot_factors()
 ```

@@ -13,13 +13,13 @@ pages:
     source: "src/utilities.py"
     functions:
       - prepare_geometry
+      - weighted_quantile
 
   - page: "modules/src/processing/postprocessing.md"
     source: "src/processing/postprocessing.py"
     functions:
       - get_parameter_dataframe
       - time_series_analysis
-      - weighted_quantile
       - elbow_method
       - lme
       - grid
@@ -52,7 +52,6 @@ pages:
       - cluster_timeseries_all_parameters_q_lines
       - compare_nw_scenarios
       - compare_nutrient_subfactors
-      - comparison_plots
 
   - page: "modules/src/plotting/plotter_methods.md"
     source: "src/plotting/plotter_methods.py"
