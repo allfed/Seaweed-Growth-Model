@@ -7,14 +7,11 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.model.seaweed_growth import (
-    ammonium_subfactor,
-    illumination_single_value,
-    nitrate_subfactor,
-    phosphate_subfactor,
-    salinity_single_value,
-    temperature_single_value,
-)
+from src.model.seaweed_growth import (ammonium_subfactor,
+                                      illumination_single_value,
+                                      nitrate_subfactor, phosphate_subfactor,
+                                      salinity_single_value,
+                                      temperature_single_value)
 
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"

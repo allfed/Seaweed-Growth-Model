@@ -10,7 +10,6 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from tslearn.clustering import TimeSeriesKMeans
 from tslearn.utils import to_time_series_dataset
-from statsmodels.stats.weightstats import DescrStatsW
 
 from src.model.seaweed_model import SeaweedModel
 
@@ -72,28 +71,6 @@ def time_series_analysis(growth_df, n_clusters, global_or_US):
     timeseries_ds = to_time_series_dataset(growth_df_scaled)
     labels = km.fit_predict(timeseries_ds)
     return labels, km
-
-
-def weighted_quantile(data: pd.Series, weights: pd.Series, quantile: float) -> float:
-    """
-    Calculates the weighted quantile of s1 based on s2
-    Arguments:
-        data: pandas.Series - the series to calculate the quantile for
-        weights: pandas.Series - the series to use as weights
-        quantile: float - the quantile to calculate
-    Returns:
-        float - the weighted quantile
-    """
-    # Ensure that s1 and s2 have the same length
-    assert len(data) == len(weights), "The input series must have the same length"
-
-    # Ensure that the quantile is between 0 and 1
-    assert isinstance(quantile, float), "The quantile must be a float"
-    assert 0 <= quantile <= 1, "The quantile must be between 0 and 1"
-    # Calculate the weighted quantile
-    wq = DescrStatsW(data=data, weights=weights)
-    quantile = wq.quantile(probs=quantile, return_pandas=False)
-    return quantile
 
 
 def elbow_method(growth_df, max_clusters, global_or_US, scenario):
@@ -335,7 +312,6 @@ def grid(scenario, global_or_US, with_elbow_method=False):
 
 
 if __name__ == "__main__":
-    grid("47tg", "global")
     lme("150tg")
     grid("150tg", "US")
     # # Iterate over all scenarios

@@ -10,9 +10,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from src.utilities import prepare_geometry
 from src.processing import read_files as rf
-from src.processing import postprocessing as pp
+from src.utilities import prepare_geometry, weighted_quantile
 
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
@@ -188,9 +187,9 @@ def cluster_timeseries_all_parameters_q_lines(
             for q in np.arange(0.1, 0.6, 0.1):
                 # Calculate the quantiles for each months, weighted by area
                 q_up = cluster_df.apply(
-                    pp.weighted_quantile, args=(area_weights, 1 - q)
+                    weighted_quantile, args=(area_weights, 1 - q)
                 )
-                q_down = cluster_df.apply(pp.weighted_quantile, args=(area_weights, q))
+                q_down = cluster_df.apply(weighted_quantile, args=(area_weights, q))
                 # Transpose the dataframes so that the index is the month
                 q_up = q_up.transpose()
                 q_down = q_down.transpose()
@@ -255,12 +254,12 @@ def cluster_timeseries_all_parameters_q_lines(
     plt.close()
 
 
-def compare_nw_scenarios(areas, buffer=None):
+def compare_nw_scenarios(areas):
     """
     Compares the results of the nuclear war scenarios as weigthed median
     Arguments:
         areas: A dataframe containing the area of each grid cell
-        buffer: A buffer around coastlines to only use those areas
+        eez: A eez around coastlines to only use those areas
     Returns:
         None
     """
@@ -276,9 +275,6 @@ def compare_nw_scenarios(areas, buffer=None):
         "5 Tg": "#56C877",
         "Control": "#5BD282",
     }
-    # also reset the index of the buffer, so that the countries are not used as index
-    if buffer is not None:
-        buffer = buffer.reset_index()
     # have a list that is used to save the scenario results
     median_weighted_list = []
     for scenario in [str(i) + "tg" for i in [150, 47, 37, 27, 16, 5]] + ["control"]:
@@ -293,9 +289,6 @@ def compare_nw_scenarios(areas, buffer=None):
             + os.sep
             + "seaweed_growth_rate_global.pkl"
         )
-        # If we want to use a buffer around the coastlines
-        if buffer is not None:
-            growth_df_scenario = prepare_geometry(growth_df_scenario)
         # Reset the index, so we can join on column instead of
         areas_reset = areas.reset_index()
         growth_df_scenario = growth_df_scenario.reset_index()
@@ -303,10 +296,6 @@ def compare_nw_scenarios(areas, buffer=None):
         # This is because the areas above and below have 0 growth either way
         growth_df_scenario = growth_df_scenario[growth_df_scenario["level_0"] > -45]
         growth_df_scenario = growth_df_scenario[growth_df_scenario["level_0"] < 45]
-        if buffer is not None:
-            # Use a spatial join to find the grid cells that are within the buffer
-            # of the coastlines
-            growth_df_scenario = buffer.sjoin(growth_df_scenario, how="inner", predicate="contains")
         # Combine area and cluster into one dataframe, merge by index
         # Round the level and lat lon values to 4 decimals to make sure they match
         # level just refers to the level of the multi index, but contains the same
@@ -325,18 +314,13 @@ def compare_nw_scenarios(areas, buffer=None):
         )
         # Remove the columsn we don't need anymore
         areas_reset = growth_df_scenario["TAREA"]
-        # Drop additional geospacial columns if we used a buffer
-        if buffer is not None:
-            growth_df_scenario = growth_df_scenario.drop(
-                columns=["TLAT", "TLONG", "level_0", "level_1", "TAREA", "geometry", "index_right", "latlon", "latitude", "longitude"]
-            )
-        else:
-            growth_df_scenario = growth_df_scenario.drop(
-                columns=["TLAT", "TLONG", "level_0", "level_1", "TAREA"]
-            )
+        # Drop additional geospacial columns if we used a eez
+        growth_df_scenario = growth_df_scenario.drop(
+            columns=["TLAT", "TLONG", "level_0", "level_1", "TAREA"]
+        )
         # Calculate the weighted median
         median_weighted = growth_df_scenario.apply(
-            pp.weighted_quantile, args=(areas_reset, 0.5)
+            weighted_quantile, args=(areas_reset, 0.5)
         ).transpose()
         # Save it in a list
         median_weighted_list.append(median_weighted.values)
@@ -370,18 +354,11 @@ def compare_nw_scenarios(areas, buffer=None):
     # Remove the x grid
     ax.xaxis.grid(False)
     plt.legend()
-    if buffer is None:
-        plt.savefig(
-            "results" + os.sep + "grid" + os.sep + "comparing_nw_scenarios.png",
-            dpi=350,
-            bbox_inches="tight",
-        )
-    else:
-        plt.savefig(
-            "results" + os.sep + "grid" + os.sep + "comparing_nw_scenarios_buffer.png",
-            dpi=350,
-            bbox_inches="tight",
-        )
+    plt.savefig(
+        "results" + os.sep + "grid" + os.sep + "comparing_nw_scenarios_eez.png",
+        dpi=350,
+        bbox_inches="tight",
+    )
 
 
 def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
@@ -427,7 +404,7 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
         )
         # Calculate the weighted median
         median_weighted = nutrient_merged.apply(
-            pp.weighted_quantile, args=(areas_reset, 0.5)
+            weighted_quantile, args=(areas_reset, 0.5)
         ).transpose()
         # Plot the median
         ax.plot(median_weighted, label=labels[i], color=colors[i], alpha=1)
@@ -531,39 +508,15 @@ def main(scenario, global_or_US):
     cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario, areas)
 
 
-def comparison_plots():
-    """
-    Runs the plots the compare all scenarios
-    Arguments:
-        None
-    Returns:
-        None
-    """
-    # File with the buffer around the coastlines
-    # This file is not part of the GitHub repository, because it is too large
-    # It can be generated with this script:
-    # https://github.com/allfed/create_land_buffer
-    buffer = gpd.read_file(
-        "data"
-        + os.sep
-        + "geospatial_information"
-        + os.sep
-        + "grid"
-        + os.sep
-        + "harbor_50km_coast_2.5km_buffer.gpkg"
-    )
+if __name__ == "__main__":
+
+    # Call this seperately, as it needs to access all scenarios
+    # Compare the nuclear war 
     areas = rf.read_area_file(
         "data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv"
     )
     # This is done seperately, as it needs to access all scenarios
-    compare_nw_scenarios(areas, buffer)
     compare_nw_scenarios(areas)
-
-
-if __name__ == "__main__":
-    # Call this seperately, as it needs to access all scenarios
-    # Compare the nuclear war scenarios
-    comparison_plots()
     # Create the US plots
     main("150tg", "US")
     # Iterate over all scenarios
