@@ -2,7 +2,7 @@
 
 
 ### cluster_spatial
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L21)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L22)
 ```python
 .cluster_spatial(
    growth_df, global_or_US, scenario
@@ -26,7 +26,7 @@ None, but saves the plot
 
 
 ### growth_rate_spatial_by_year
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L66)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L77)
 ```python
 .growth_rate_spatial_by_year(
    growth_df, global_or_US, scenario
@@ -50,7 +50,7 @@ None, but saves the plot
 
 
 ### cluster_timeseries_all_parameters_q_lines
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L131)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L142)
 ```python
 .cluster_timeseries_all_parameters_q_lines(
    parameters, global_or_US, scenario, areas
@@ -73,7 +73,7 @@ None, but saves the plot
 
 
 ### compare_nw_scenarios
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L257)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L268)
 ```python
 .compare_nw_scenarios(
    areas
@@ -97,7 +97,7 @@ None
 
 
 ### compare_nutrient_subfactors
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L364)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L375)
 ```python
 .compare_nutrient_subfactors(
    nitrate, ammonium, phosphate, scenario, areas
