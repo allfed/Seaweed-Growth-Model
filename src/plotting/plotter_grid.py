@@ -6,10 +6,10 @@ import os
 
 import geopandas as gpd
 import matplotlib.patches as mpatches
-from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.colors import LinearSegmentedColormap
 
 from src.processing import read_files as rf
 from src.utilities import prepare_geometry, weighted_quantile
