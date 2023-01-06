@@ -6,6 +6,7 @@ import os
 
 import geopandas as gpd
 import matplotlib.patches as mpatches
+from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -27,6 +28,16 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     Returns:
         None, but saves the plot
     """
+    # Define the colors you want to use
+    # Define a list of three colors that starts with #3A913F and gets 30 % lighter with each step
+    colors = [
+        "#95c091",
+        "#dbf2ff",
+        "#3A913F"
+    ]
+    # Create the colormap using the colors and the position values
+    custom_map = LinearSegmentedColormap.from_list('custom', colors, N=len(colors))
+
     print("Plotting cluster spatial")
     growth_df = growth_df[["cluster", "geometry"]]
     global_map = gpd.read_file(
@@ -35,7 +46,7 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     growth_df.set_crs(epsg=4326, inplace=True)
     growth_df.to_crs(global_map.crs, inplace=True)
     growth_df["cluster"] = growth_df["cluster"].astype(str)
-    ax = growth_df.plot(column="cluster", legend=True, cmap="summer_r")
+    ax = growth_df.plot(column="cluster", legend=True, cmap=custom_map)
     fig = plt.gcf()
     fig.set_size_inches(12, 12)
     global_map.plot(ax=ax, color="lightgrey", edgecolor="black", linewidth=0.2)
@@ -355,7 +366,7 @@ def compare_nw_scenarios(areas):
     ax.xaxis.grid(False)
     plt.legend()
     plt.savefig(
-        "results" + os.sep + "grid" + os.sep + "comparing_nw_scenarios_eez.png",
+        "results" + os.sep + "grid" + os.sep + "comparing_nw_scenarios.png",
         dpi=350,
         bbox_inches="tight",
     )
@@ -377,7 +388,7 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     # a list of 3 very distinct colors
-    colors = ["#e6194b", "#3cb44b", "#ffe119"]
+    colors = ["#929084", "#FFC857", "#A997DF"]
     labels = ["Nitrate Subfactor", "Ammonium Subfactor", "Phosphate Subfactor"]
     i = 0
     for nutrient in [nitrate, ammonium, phosphate]:
@@ -407,8 +418,12 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
             weighted_quantile, args=(areas_reset, 0.5)
         ).transpose()
         # Plot the median
-        ax.plot(median_weighted, label=labels[i], color=colors[i], alpha=1)
+        ax.plot(median_weighted, color="black", linewidth=2)
+        ax.plot(median_weighted, label=labels[i], color=colors[i], linewidth=1.5)
         i += 1
+    # Make it nicer
+    ax.set_xlabel("Months since nuclear war")
+    ax.set_ylabel("Nutrient Subfactor")
     # save
     plt.legend()
     plt.savefig(
@@ -459,8 +474,8 @@ def main(scenario, global_or_US):
     # Fix the geometry
     growth_df = prepare_geometry(growth_df)
     # Make the spatial plots
-    growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
     cluster_spatial(growth_df, global_or_US, scenario)
+    growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
     # Read in the other parameters for the line plots
     parameters = {}
     parameter_names = [
@@ -520,6 +535,6 @@ if __name__ == "__main__":
     # Create the US plots
     main("150tg", "US")
     # Iterate over all scenarios
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
+    for scenario in [str(i) + "tg" for i in [150, 5, 16, 27, 37, 47]] + ["control"]:
         print("\nPreparing scenario: " + scenario)
         main(scenario, "global")
