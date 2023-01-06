@@ -12,13 +12,13 @@
 <!-- salinity -->
 <g id="node1" class="node">
 <title>salinity</title>
-<ellipse fill="#88cc88" stroke="#88cc88" cx="41.0831" cy="-487.312" rx="41.1664" ry="18"/>
+<ellipse fill="#d2d1be" stroke="#d2d1be" cx="41.0831" cy="-487.312" rx="41.1664" ry="18"/>
 <text text-anchor="middle" x="41.0831" y="-483.112" font-family="Times,serif" font-size="14.00" fill="#000000">Salinity</text>
 </g>
 <!-- env_data -->
 <g id="node8" class="node">
 <title>env_data</title>
-<ellipse fill="#55aa55" stroke="#55aa55" cx="231.0831" cy="-392.4807" rx="91.1195" ry="29.3315"/>
+<ellipse fill="#3a913f" stroke="#3a913f" cx="231.0831" cy="-392.4807" rx="91.1195" ry="29.3315"/>
 <text text-anchor="middle" x="231.0831" y="-396.6807" font-family="Times,serif" font-size="14.00" fill="#000000">Environmental Data</text>
 <text text-anchor="middle" x="231.0831" y="-379.8807" font-family="Times,serif" font-size="14.00" fill="#000000">in Nuclear Winter</text>
 </g>
@@ -31,7 +31,7 @@
 <!-- temperature -->
 <g id="node2" class="node">
 <title>temperature</title>
-<ellipse fill="#88cc88" stroke="#88cc88" cx="162.0831" cy="-487.312" rx="61.7629" ry="29.3315"/>
+<ellipse fill="#d2d1be" stroke="#d2d1be" cx="162.0831" cy="-487.312" rx="61.7629" ry="29.3315"/>
 <text text-anchor="middle" x="162.0831" y="-491.512" font-family="Times,serif" font-size="14.00" fill="#000000">Water</text>
 <text text-anchor="middle" x="162.0831" y="-474.712" font-family="Times,serif" font-size="14.00" fill="#000000">Temperature</text>
 </g>
@@ -44,7 +44,7 @@
 <!-- illumination -->
 <g id="node3" class="node">
 <title>illumination</title>
-<ellipse fill="#88cc88" stroke="#88cc88" cx="301.0831" cy="-487.312" rx="58.5655" ry="18"/>
+<ellipse fill="#d2d1be" stroke="#d2d1be" cx="301.0831" cy="-487.312" rx="58.5655" ry="18"/>
 <text text-anchor="middle" x="301.0831" y="-483.112" font-family="Times,serif" font-size="14.00" fill="#000000">Illumination</text>
 </g>
 <!-- illumination&#45;&gt;env_data -->
@@ -56,7 +56,7 @@
 <!-- nutrients -->
 <g id="node4" class="node">
 <title>nutrients</title>
-<ellipse fill="#88cc88" stroke="#88cc88" cx="425.0831" cy="-487.312" rx="46.9458" ry="18"/>
+<ellipse fill="#d2d1be" stroke="#d2d1be" cx="425.0831" cy="-487.312" rx="46.9458" ry="18"/>
 <text text-anchor="middle" x="425.0831" y="-483.112" font-family="Times,serif" font-size="14.00" fill="#000000">Nutrients</text>
 </g>
 <!-- nutrients&#45;&gt;env_data -->
@@ -104,7 +104,7 @@
 <!-- model_growth -->
 <g id="node9" class="node">
 <title>model_growth</title>
-<polygon fill="#669999" stroke="#000000" points="280.3975,-326.8669 181.7688,-326.8669 181.7688,-285.6631 280.3975,-285.6631 280.3975,-326.8669"/>
+<polygon fill="#779974" stroke="#000000" points="280.3975,-326.8669 181.7688,-326.8669 181.7688,-285.6631 280.3975,-285.6631 280.3975,-326.8669"/>
 <text text-anchor="middle" x="231.0831" y="-310.465" font-family="Times,serif" font-size="14.00" fill="#000000">Seaweed</text>
 <text text-anchor="middle" x="231.0831" y="-293.665" font-family="Times,serif" font-size="14.00" fill="#000000">Growth Model</text>
 </g>
@@ -117,7 +117,7 @@
 <!-- growth -->
 <g id="node10" class="node">
 <title>growth</title>
-<polygon fill="#d49a6a" stroke="#d49a6a" points="307.5489,-215.4988 269.316,-249.4313 192.8502,-249.4313 154.6174,-215.4988 192.8502,-181.5662 269.316,-181.5662 307.5489,-215.4988"/>
+<polygon fill="#9b9d67" stroke="#9b9d67" points="307.5489,-215.4988 269.316,-249.4313 192.8502,-249.4313 154.6174,-215.4988 192.8502,-181.5662 269.316,-181.5662 307.5489,-215.4988"/>
 <text text-anchor="middle" x="231.0831" y="-219.6988" font-family="Times,serif" font-size="14.00" fill="#000000">Seaweed</text>
 <text text-anchor="middle" x="231.0831" y="-202.8988" font-family="Times,serif" font-size="14.00" fill="#000000">Growth Rates</text>
 </g>
@@ -130,7 +130,7 @@
 <!-- upscaling_model -->
 <g id="node11" class="node">
 <title>upscaling_model</title>
-<polygon fill="#669999" stroke="#000000" points="408.1674,-145.3344 339.9989,-145.3344 339.9989,-104.1306 408.1674,-104.1306 408.1674,-145.3344"/>
+<polygon fill="#779974" stroke="#000000" points="408.1674,-145.3344 339.9989,-145.3344 339.9989,-104.1306 408.1674,-104.1306 408.1674,-145.3344"/>
 <text text-anchor="middle" x="374.0831" y="-128.9325" font-family="Times,serif" font-size="14.00" fill="#000000">Scale&#45;Up</text>
 <text text-anchor="middle" x="374.0831" y="-112.1325" font-family="Times,serif" font-size="14.00" fill="#000000">Model</text>
 </g>
@@ -143,7 +143,7 @@
 <!-- area_needed -->
 <g id="node14" class="node">
 <title>area_needed</title>
-<polygon fill="#d49a6a" stroke="#d49a6a" points="372.5598,-33.9663 337.8215,-67.8988 268.3448,-67.8988 233.6064,-33.9663 268.3448,-.0337 337.8215,-.0337 372.5598,-33.9663"/>
+<polygon fill="#9b9d67" stroke="#9b9d67" points="372.5598,-33.9663 337.8215,-67.8988 268.3448,-67.8988 233.6064,-33.9663 268.3448,-.0337 337.8215,-.0337 372.5598,-33.9663"/>
 <text text-anchor="middle" x="303.0831" y="-38.1663" font-family="Times,serif" font-size="14.00" fill="#000000">Global Area</text>
 <text text-anchor="middle" x="303.0831" y="-21.3663" font-family="Times,serif" font-size="14.00" fill="#000000">Needed</text>
 </g>
@@ -156,7 +156,7 @@
 <!-- upscaling_speed -->
 <g id="node15" class="node">
 <title>upscaling_speed</title>
-<polygon fill="#d49a6a" stroke="#d49a6a" points="501.7643,-33.9663 473.9237,-67.8988 418.2425,-67.8988 390.4019,-33.9663 418.2425,-.0337 473.9237,-.0337 501.7643,-33.9663"/>
+<polygon fill="#9b9d67" stroke="#9b9d67" points="501.7643,-33.9663 473.9237,-67.8988 418.2425,-67.8988 390.4019,-33.9663 418.2425,-.0337 473.9237,-.0337 501.7643,-33.9663"/>
 <text text-anchor="middle" x="446.0831" y="-38.1663" font-family="Times,serif" font-size="14.00" fill="#000000">Scale&#45;Up</text>
 <text text-anchor="middle" x="446.0831" y="-21.3663" font-family="Times,serif" font-size="14.00" fill="#000000">Speed</text>
 </g>
@@ -169,7 +169,7 @@
 <!-- food_demands -->
 <g id="node12" class="node">
 <title>food_demands</title>
-<ellipse fill="#55aa55" stroke="#55aa55" cx="374.0831" cy="-215.4988" rx="48.8991" ry="29.3315"/>
+<ellipse fill="#3a913f" stroke="#3a913f" cx="374.0831" cy="-215.4988" rx="48.8991" ry="29.3315"/>
 <text text-anchor="middle" x="374.0831" y="-219.6988" font-family="Times,serif" font-size="14.00" fill="#000000">Food</text>
 <text text-anchor="middle" x="374.0831" y="-202.8988" font-family="Times,serif" font-size="14.00" fill="#000000">Demands</text>
 </g>
@@ -182,7 +182,7 @@
 <!-- assumptions -->
 <g id="node13" class="node">
 <title>assumptions</title>
-<ellipse fill="#55aa55" stroke="#55aa55" cx="504.0831" cy="-215.4988" rx="63.0237" ry="29.3315"/>
+<ellipse fill="#3a913f" stroke="#3a913f" cx="504.0831" cy="-215.4988" rx="63.0237" ry="29.3315"/>
 <text text-anchor="middle" x="504.0831" y="-219.6988" font-family="Times,serif" font-size="14.00" fill="#000000">Scale&#45;Up</text>
 <text text-anchor="middle" x="504.0831" y="-202.8988" font-family="Times,serif" font-size="14.00" fill="#000000">Assumptions</text>
 </g>
