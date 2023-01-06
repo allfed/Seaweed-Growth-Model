@@ -388,7 +388,7 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     # a list of 3 very distinct colors
-    colors = ["#929084", "#FFC857", "#A997DF"]
+    colors = ["#3a913f", "#dc582a", "#75787b"]
     labels = ["Nitrate Subfactor", "Ammonium Subfactor", "Phosphate Subfactor"]
     i = 0
     for nutrient in [nitrate, ammonium, phosphate]:
@@ -420,9 +420,10 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
         # Plot the median
         ax.plot(median_weighted, color="black", linewidth=2)
         ax.plot(median_weighted, label=labels[i], color=colors[i], linewidth=1.5)
+        ax.set_ylim(0, 1)
         i += 1
     # Make it nicer
-    ax.set_xlabel("Months since nuclear war")
+    ax.set_xlabel("Months since Nuclear War")
     ax.set_ylabel("Nutrient Subfactor")
     # save
     plt.legend()
