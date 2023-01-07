@@ -2,7 +2,7 @@
 
 
 ### prepare_geometry
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/utilities.py/#L13)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/utilities.py/#L11)
 ```python
 .prepare_geometry(
    growth_df
@@ -27,7 +27,7 @@ None, but saves the plot
 
 
 ### weighted_quantile
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/utilities.py/#L37)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/utilities.py/#L35)
 ```python
 .weighted_quantile(
    data: pd.Series, weights: pd.Series, quantile: float
