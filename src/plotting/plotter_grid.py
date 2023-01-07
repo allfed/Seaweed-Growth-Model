@@ -527,7 +527,7 @@ def main(scenario, global_or_US):
 if __name__ == "__main__":
 
     # Call this seperately, as it needs to access all scenarios
-    # Compare the nuclear war 
+    # Compare the nuclear war scenarios
     areas = rf.read_area_file(
         "data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv"
     )

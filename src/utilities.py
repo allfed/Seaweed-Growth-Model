@@ -2,8 +2,6 @@
 This files contains a collection of functions that are used in the main file,
 but are not directly related to the main functionality of the program.
 """
-import os
-
 import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Point
@@ -54,4 +52,3 @@ def weighted_quantile(data: pd.Series, weights: pd.Series, quantile: float) -> f
     wq = DescrStatsW(data=data, weights=weights)
     quantile = wq.quantile(probs=quantile, return_pandas=False)
     return quantile
-
