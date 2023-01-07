@@ -30,13 +30,9 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     """
     # Define the colors you want to use
     # Define a list of three colors that starts with #3A913F and gets 30 % lighter with each step
-    colors = [
-        "#95c091",
-        "#dbf2ff",
-        "#3A913F"
-    ]
+    colors = ["#95c091", "#dbf2ff", "#3A913F"]
     # Create the colormap using the colors and the position values
-    custom_map = LinearSegmentedColormap.from_list('custom', colors, N=len(colors))
+    custom_map = LinearSegmentedColormap.from_list("custom", colors, N=len(colors))
 
     print("Plotting cluster spatial")
     growth_df = growth_df[["cluster", "geometry"]]
@@ -197,9 +193,7 @@ def cluster_timeseries_all_parameters_q_lines(
             ax = axes[i, j]
             for q in np.arange(0.1, 0.6, 0.1):
                 # Calculate the quantiles for each months, weighted by area
-                q_up = cluster_df.apply(
-                    weighted_quantile, args=(area_weights, 1 - q)
-                )
+                q_up = cluster_df.apply(weighted_quantile, args=(area_weights, 1 - q))
                 q_down = cluster_df.apply(weighted_quantile, args=(area_weights, q))
                 # Transpose the dataframes so that the index is the month
                 q_up = q_up.transpose()
@@ -527,7 +521,7 @@ def main(scenario, global_or_US):
 if __name__ == "__main__":
 
     # Call this seperately, as it needs to access all scenarios
-    # Compare the nuclear war 
+    # Compare the nuclear war
     areas = rf.read_area_file(
         "data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv"
     )
