@@ -2,7 +2,7 @@
 
 
 ### get_parameter_dataframe
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L27)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L26)
 ```python
 .get_parameter_dataframe(
    parameter, path, file
@@ -29,7 +29,7 @@ for all the grid sections
 
 
 ### time_series_analysis
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L47)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L46)
 ```python
 .time_series_analysis(
    growth_df, n_clusters, global_or_US
@@ -58,33 +58,8 @@ https://www.kaggle.com/code/izzettunc/introduction-to-time-series-clustering/not
 ----
 
 
-### weighted_quantile
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L77)
-```python
-.weighted_quantile(
-   data: pd.Series, weights: pd.Series, quantile: float
-)
-```
-
----
-Calculates the weighted quantile of s1 based on s2
-
-**Arguments**
-
-* **data**  : pandas.Series - the series to calculate the quantile for
-* **weights**  : pandas.Series - the series to use as weights
-* **quantile**  : float - the quantile to calculate
-
-
-**Returns**
-
-float - the weighted quantile
-
-----
-
-
 ### elbow_method
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L99)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L76)
 ```python
 .elbow_method(
    growth_df, max_clusters, global_or_US, scenario
@@ -109,7 +84,7 @@ None, just plots the elbow method and saves it
 
 
 ### lme
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L146)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L123)
 ```python
 .lme(
    scenario
@@ -132,7 +107,7 @@ None
 
 
 ### grid
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L197)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/processing/postprocessing.py/#L174)
 ```python
 .grid(
    scenario, global_or_US, with_elbow_method = False

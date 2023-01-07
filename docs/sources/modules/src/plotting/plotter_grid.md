@@ -25,33 +25,8 @@ None, but saves the plot
 ----
 
 
-### prepare_geometry
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L66)
-```python
-.prepare_geometry(
-   growth_df
-)
-```
-
----
-Prepares the geometry for the growth_df. For some reason the spatial data has
-a longitude that is 0-360 instead of -180 to 180. This function converts it to
-the latter
-
-**Arguments**
-
-* **growth_df**  : a dataframe of the growth rate
-
-
-**Returns**
-
-None, but saves the plot
-
-----
-
-
 ### growth_rate_spatial_by_year
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L89)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L73)
 ```python
 .growth_rate_spatial_by_year(
    growth_df, global_or_US, scenario
@@ -75,7 +50,7 @@ None, but saves the plot
 
 
 ### cluster_timeseries_all_parameters_q_lines
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L153)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L138)
 ```python
 .cluster_timeseries_all_parameters_q_lines(
    parameters, global_or_US, scenario, areas
@@ -98,7 +73,7 @@ None, but saves the plot
 
 
 ### compare_nw_scenarios
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L278)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L262)
 ```python
 .compare_nw_scenarios(
    areas
@@ -110,7 +85,9 @@ Compares the results of the nuclear war scenarios as weigthed median
 
 **Arguments**
 
-None
+* **areas**  : A dataframe containing the area of each grid cell
+* **eez**  : A eez around coastlines to only use those areas
+
 
 **Returns**
 
@@ -120,7 +97,7 @@ None
 
 
 ### compare_nutrient_subfactors
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L383)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L369)
 ```python
 .compare_nutrient_subfactors(
    nitrate, ammonium, phosphate, scenario, areas

@@ -9,10 +9,10 @@ import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from shapely.geometry import Point
+from matplotlib.colors import LinearSegmentedColormap
 
 from src.processing import read_files as rf
-from src.processing import postprocessing as pp
+from src.utilities import prepare_geometry, weighted_quantile
 
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
@@ -28,6 +28,13 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     Returns:
         None, but saves the plot
     """
+    # Define the colors you want to use
+    # Define a list of three colors that starts with #3A913F and gets 30 % lighter with each step
+    colors = ["#95c091", "#dbf2ff", "#3A913F"]
+    # Create the colormap using the colors and the position values
+    custom_map = LinearSegmentedColormap.from_list("custom", colors, N=len(colors))
+
+    print("Plotting cluster spatial")
     growth_df = growth_df[["cluster", "geometry"]]
     global_map = gpd.read_file(
         "data/geospatial_information/Countries/ne_50m_admin_0_countries.shp"
@@ -35,7 +42,7 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     growth_df.set_crs(epsg=4326, inplace=True)
     growth_df.to_crs(global_map.crs, inplace=True)
     growth_df["cluster"] = growth_df["cluster"].astype(str)
-    ax = growth_df.plot(column="cluster", legend=True, cmap="summer_r")
+    ax = growth_df.plot(column="cluster", legend=True, cmap=custom_map)
     fig = plt.gcf()
     fig.set_size_inches(12, 12)
     global_map.plot(ax=ax, color="lightgrey", edgecolor="black", linewidth=0.2)
@@ -63,29 +70,6 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     )
 
 
-def prepare_geometry(growth_df):
-    """
-    Prepares the geometry for the growth_df. For some reason the spatial data has
-    a longitude that is 0-360 instead of -180 to 180. This function converts it to
-    the latter
-    Arguments:
-        growth_df: a dataframe of the growth rate
-    Returns:
-        None, but saves the plot
-    """
-    growth_df["latlon"] = growth_df.index
-    growth_df["latitude"] = growth_df["latlon"].str[0]
-    growth_df["longitude"] = growth_df["latlon"].str[1]
-    growth_df["longitude"] = growth_df["longitude"].apply(
-        lambda x: x - 360 if x > 180 else x
-    )
-    growth_df["geometry"] = (
-        growth_df[["longitude", "latitude"]].apply(tuple, axis=1).apply(Point)
-    )
-    growth_df = gpd.GeoDataFrame(growth_df)
-    return growth_df
-
-
 def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
     """
     Plots the growth rate by year. This includes the first
@@ -95,6 +79,7 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
     Returns:
         None, but saves the plot
     """
+    print("Plotting growth rate by year")
     global_map = gpd.read_file(
         "data/geospatial_information/Countries/ne_50m_admin_0_countries.shp"
     )
@@ -160,6 +145,7 @@ def cluster_timeseries_all_parameters_q_lines(
     Returns:
         None, but saves the plot
     """
+    print("Plotting cluster timeseries with q lines")
     # This is slightly larger than the actual area of the ocean due to the way the grid
     # is structured
     total_ocean_area = 361140210.2
@@ -207,10 +193,8 @@ def cluster_timeseries_all_parameters_q_lines(
             ax = axes[i, j]
             for q in np.arange(0.1, 0.6, 0.1):
                 # Calculate the quantiles for each months, weighted by area
-                q_up = cluster_df.apply(
-                    pp.weighted_quantile, args=(area_weights, 1 - q)
-                )
-                q_down = cluster_df.apply(pp.weighted_quantile, args=(area_weights, q))
+                q_up = cluster_df.apply(weighted_quantile, args=(area_weights, 1 - q))
+                q_down = cluster_df.apply(weighted_quantile, args=(area_weights, q))
                 # Transpose the dataframes so that the index is the month
                 q_up = q_up.transpose()
                 q_down = q_down.transpose()
@@ -279,10 +263,12 @@ def compare_nw_scenarios(areas):
     """
     Compares the results of the nuclear war scenarios as weigthed median
     Arguments:
-        None
+        areas: A dataframe containing the area of each grid cell
+        eez: A eez around coastlines to only use those areas
     Returns:
         None
     """
+    print("Starting the NW comparison plots")
     # A dictionary of seven colors, starting with #3A913F for the scenarios
     # All following colors are 12% lighter than the previous one
     colors = {
@@ -294,10 +280,10 @@ def compare_nw_scenarios(areas):
         "5 Tg": "#56C877",
         "Control": "#5BD282",
     }
-
     # have a list that is used to save the scenario results
     median_weighted_list = []
     for scenario in [str(i) + "tg" for i in [150, 47, 37, 27, 16, 5]] + ["control"]:
+        print("Starting scenario: " + scenario)
         # Read the data
         growth_df_scenario = pd.read_pickle(
             "data"
@@ -308,11 +294,15 @@ def compare_nw_scenarios(areas):
             + os.sep
             + "seaweed_growth_rate_global.pkl"
         )
-        # Combine area and cluster into one dataframe, merge by index
         # Reset the index, so we can join on column instead of
         areas_reset = areas.reset_index()
         growth_df_scenario = growth_df_scenario.reset_index()
-        # ROund the level and lat lon values to 4 decimals to make sure they match
+        # Only use those grid cells that are between -45 and 45 degrees latitude
+        # This is because the areas above and below have 0 growth either way
+        growth_df_scenario = growth_df_scenario[growth_df_scenario["level_0"] > -45]
+        growth_df_scenario = growth_df_scenario[growth_df_scenario["level_0"] < 45]
+        # Combine area and cluster into one dataframe, merge by index
+        # Round the level and lat lon values to 4 decimals to make sure they match
         # level just refers to the level of the multi index, but contains the same
         # information as the lat lon
         growth_df_scenario["level_0"] = growth_df_scenario["level_0"].round(4)
@@ -327,19 +317,15 @@ def compare_nw_scenarios(areas):
             left_on=["level_0", "level_1"],
             right_on=["TLAT", "TLONG"],
         )
-        # Only use those grid cells that are between -45 and 45 degrees latitude
-        # This is because the areas above and below have 0 growth either way
-        growth_df_scenario = growth_df_scenario[growth_df_scenario["TLAT"] > -45]
-        growth_df_scenario = growth_df_scenario[growth_df_scenario["TLAT"] < 45]
-
         # Remove the columsn we don't need anymore
         areas_reset = growth_df_scenario["TAREA"]
+        # Drop additional geospacial columns if we used a eez
         growth_df_scenario = growth_df_scenario.drop(
             columns=["TLAT", "TLONG", "level_0", "level_1", "TAREA"]
         )
         # Calculate the weighted median
         median_weighted = growth_df_scenario.apply(
-            pp.weighted_quantile, args=(areas_reset, 0.5)
+            weighted_quantile, args=(areas_reset, 0.5)
         ).transpose()
         # Save it in a list
         median_weighted_list.append(median_weighted.values)
@@ -396,7 +382,7 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     # a list of 3 very distinct colors
-    colors = ["#e6194b", "#3cb44b", "#ffe119"]
+    colors = ["#3a913f", "#dc582a", "#75787b"]
     labels = ["Nitrate Subfactor", "Ammonium Subfactor", "Phosphate Subfactor"]
     i = 0
     for nutrient in [nitrate, ammonium, phosphate]:
@@ -423,11 +409,16 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
         )
         # Calculate the weighted median
         median_weighted = nutrient_merged.apply(
-            pp.weighted_quantile, args=(areas_reset, 0.5)
+            weighted_quantile, args=(areas_reset, 0.5)
         ).transpose()
         # Plot the median
-        ax.plot(median_weighted, label=labels[i], color=colors[i], alpha=1)
+        ax.plot(median_weighted, color="black", linewidth=2)
+        ax.plot(median_weighted, label=labels[i], color=colors[i], linewidth=1.5)
+        ax.set_ylim(0, 1)
         i += 1
+    # Make it nicer
+    ax.set_xlabel("Months since Nuclear War")
+    ax.set_ylabel("Nutrient Subfactor")
     # save
     plt.legend()
     plt.savefig(
@@ -452,9 +443,11 @@ def main(scenario, global_or_US):
         None
     """
     # Read the data
+    # File with the areas of the grid cells
     areas = rf.read_area_file(
         "data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv"
     )
+    # File with the seaweed growth rate
     growth_df = gpd.GeoDataFrame(
         pd.read_pickle(
             "data"
@@ -476,10 +469,9 @@ def main(scenario, global_or_US):
     # Fix the geometry
     growth_df = prepare_geometry(growth_df)
     # Make the spatial plots
-    growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
     cluster_spatial(growth_df, global_or_US, scenario)
-
-    # Read in the other parameters for the line plot
+    growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
+    # Read in the other parameters for the line plots
     parameters = {}
     parameter_names = [
         "salinity_factor",
@@ -491,6 +483,7 @@ def main(scenario, global_or_US):
         "phosphate_subfactor",
         "ammonium_subfactor",
     ]
+    # Read in the data to plot
     for parameter in parameter_names:
         parameters[parameter] = pd.DataFrame(
             pd.read_pickle(
@@ -508,6 +501,7 @@ def main(scenario, global_or_US):
         )
         # Add one to the cluster
         parameters[parameter]["cluster"] = parameters[parameter]["cluster"] + 1
+    # Plot the nutrient subfactors comparison
     compare_nutrient_subfactors(
         parameters["nitrate_subfactor"],
         parameters["ammonium_subfactor"],
@@ -515,23 +509,27 @@ def main(scenario, global_or_US):
         scenario,
         areas,
     )
-    # Remove the subfactors from the parameters, as they aren't the main parameters
+    # Remove the subfactors from the parameters, as they aren't the main parameters and not needed
+    # for the line plot
     del parameters["nitrate_subfactor"]
     del parameters["ammonium_subfactor"]
     del parameters["phosphate_subfactor"]
+    # Plot the timeseries that compares how the parameters change over time
     cluster_timeseries_all_parameters_q_lines(parameters, global_or_US, scenario, areas)
 
 
 if __name__ == "__main__":
-    # Create the US plots
-    main("150tg", "US")
+
     # Call this seperately, as it needs to access all scenarios
+    # Compare the nuclear war scenarios
     areas = rf.read_area_file(
         "data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv"
     )
-    # Compare the nuclear war scenarios
+    # This is done seperately, as it needs to access all scenarios
     compare_nw_scenarios(areas)
+    # Create the US plots
+    main("150tg", "US")
     # Iterate over all scenarios
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
-        print("Preparing scenario: " + scenario)
+    for scenario in [str(i) + "tg" for i in [150, 5, 16, 27, 37, 47]] + ["control"]:
+        print("\nPreparing scenario: " + scenario)
         main(scenario, "global")

@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from src.processing.postprocessing import weighted_quantile
+from src.utilities import weighted_quantile
 
 
 def test_weighted_quantile():

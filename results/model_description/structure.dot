@@ -1,9 +1,9 @@
 digraph ModelOverview{
     // Inputs for the model
-    salinity [label="Salinity", style="filled", color="#88CC88"];
-    temperature [label="Water\nTemperature", style="filled", color="#88CC88"];
-    illumination [label="Illumination", style="filled", color="#88CC88"];
-    nutrients [label="Nutrients", style="filled", color="#88CC88"];
+    salinity [label="Salinity", style="filled", color="#D2D1BE"];
+    temperature [label="Water\nTemperature", style="filled", color="#D2D1BE"];
+    illumination [label="Illumination", style="filled", color="#D2D1BE"];
+    nutrients [label="Nutrients", style="filled", color="#D2D1BE"];
     // link nutrients
     nitrate [label="Nitrate",style="filled", color="white"];
     ammonium [label="Ammonium",style="filled", color="white"];
@@ -13,7 +13,7 @@ digraph ModelOverview{
     ammonium -> nutrients
     phosphate -> nutrients
 
-    env_data [label="Environmental Data\nin Nuclear Winter", style="filled",color="#55AA55"];
+    env_data [label="Environmental Data\nin Nuclear Winter", style="filled",color="#3A913F"];
     // link env_data to nutrients
     nutrients -> env_data;
     illumination -> env_data;
@@ -21,28 +21,28 @@ digraph ModelOverview{
     salinity -> env_data;
 
     // link env_data to the model
-    model_growth [label="Seaweed\nGrowth Model", shape=box, style="filled", fillcolor="#669999"];
+    model_growth [label="Seaweed\nGrowth Model", shape=box, style="filled", fillcolor="#779974"];
     env_data -> model_growth;
 
     // Outputs of the model
-    growth [label="Seaweed\nGrowth Rates", shape=hexagon, color="#D49A6A", style="filled"];
+    growth [label="Seaweed\nGrowth Rates", shape=hexagon, color="#9B9D67", style="filled"];
     // link growth to model
     model_growth -> growth;
 
     // link growth to upscaling model
-    upscaling_model [label="Scale-Up\nModel", shape=box, style="filled", fillcolor="#669999"];
+    upscaling_model [label="Scale-Up\nModel", shape=box, style="filled", fillcolor="#779974"];
     growth -> upscaling_model;
 
     // add additional data for the upscaling model
-    food_demands [label="Food\nDemands", style="filled", color="#55AA55"];
-    assumptions [label="Scale-Up\nAssumptions", style="filled",color="#55AA55"];
+    food_demands [label="Food\nDemands", style="filled", color="#3A913F"];
+    assumptions [label="Scale-Up\nAssumptions", style="filled",color="#3A913F"];
     food_demands -> upscaling_model;
     assumptions -> upscaling_model;
 
     // link upscaling model to the output
-    area_needed [label="Global Area\nNeeded", shape=hexagon, color="#D49A6A", style="filled"];
+    area_needed [label="Global Area\nNeeded", shape=hexagon, color="#9B9D67", style="filled"];
     upscaling_model -> area_needed;
-    upscaling_speed [label="Scale-Up\nSpeed", shape=hexagon, color="#D49A6A", style="filled"];
+    upscaling_speed [label="Scale-Up\nSpeed", shape=hexagon, color="#9B9D67", style="filled"];
     upscaling_model -> upscaling_speed;
 
 

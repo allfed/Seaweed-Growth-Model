@@ -9,12 +9,17 @@ copyright: ALLFED
 
 #This specifies the autogeneration portion
 pages:
+  - page: "modules/src/utilities.md"
+    source: "src/utilities.py"
+    functions:
+      - prepare_geometry
+      - weighted_quantile
+
   - page: "modules/src/processing/postprocessing.md"
     source: "src/processing/postprocessing.py"
     functions:
       - get_parameter_dataframe
       - time_series_analysis
-      - weighted_quantile
       - elbow_method
       - lme
       - grid
@@ -43,7 +48,6 @@ pages:
     source: "src/plotting/plotter_grid.py"
     functions:
       - cluster_spatial
-      - prepare_geometry
       - growth_rate_spatial_by_year
       - cluster_timeseries_all_parameters_q_lines
       - compare_nw_scenarios
