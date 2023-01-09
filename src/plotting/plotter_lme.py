@@ -25,7 +25,9 @@ def cluster_timeseries_all_parameters_q_lines(parameters, lme, lme_dict):
     i = 0
     for parameter, parameter_df in parameters.items():
         ax = axes[i]
-        lme_df = parameter_df.loc[lme, :]
+        lme_df = pd.DataFrame(parameter_df.loc[lme, :])
+        # Only do 120 months, 124 because it starts at -3
+        lme_df = lme_df.iloc[3:124, :]
         lme_df.plot(kind="line", ax=ax, legend=False, color="black", linewidth=2)
         lme_df.plot(kind="line", ax=ax, legend=False, linewidth=1.5)
         ax.set_ylabel(parameter)
@@ -61,7 +63,7 @@ def create_name_dict():
         + os.sep
         + "geospatial_information"
         + os.sep
-        + "lme_shp"
+        + "LME"
         + os.sep
         + "lme_metadata.csv"
     )
