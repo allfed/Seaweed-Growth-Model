@@ -29,7 +29,7 @@ None, but saves the plot
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L73)
 ```python
 .growth_rate_spatial_by_year(
-   growth_df, global_or_US, scenario
+   growth_df, global_or_US, scenario, optimal_growth_rate
 )
 ```
 
@@ -76,7 +76,7 @@ None, but saves the plot
 [source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L262)
 ```python
 .compare_nw_scenarios(
-   areas
+   areas, optimal_growth_rate
 )
 ```
 
