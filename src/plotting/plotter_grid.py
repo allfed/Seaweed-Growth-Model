@@ -243,6 +243,10 @@ def cluster_timeseries_all_parameters_q_lines(
                 ax.legend(handles=patches_list)
             j += 1
         i += 1
+    # Add the subplot labels
+    for i, ax in enumerate(axes.flat):
+        ax.text(0, 1, f'{chr(97+i)})', transform=ax.transAxes, fontsize=10,
+                verticalalignment='top', horizontalalignment='left', color="black", alpha=0.9, backgroundcolor="white")
     plt.savefig(
         "results"
         + os.sep
