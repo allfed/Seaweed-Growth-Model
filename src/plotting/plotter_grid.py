@@ -35,7 +35,7 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     custom_map = LinearSegmentedColormap.from_list("custom", colors, N=len(colors))
 
     print("Plotting cluster spatial")
-    growth_df = growth_df[["cluster", "geometry"]]
+    growth_df = growth_df.loc[:,["cluster", "geometry"]]
     global_map = gpd.read_file(
         "data/geospatial_information/Countries/ne_50m_admin_0_countries.shp"
     )
