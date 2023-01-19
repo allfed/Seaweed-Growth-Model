@@ -90,7 +90,9 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario, optimal_growt
         growth_df_year = growth_df_year.to_frame()
         growth_df_year.columns = ["growth_rate"]
         # Multiply it by optimal_growth_rate to get the actual growth rate
-        growth_df_year["growth_rate"] = growth_df_year["growth_rate"] * optimal_growth_rate
+        growth_df_year["growth_rate"] = (
+            growth_df_year["growth_rate"] * optimal_growth_rate
+        )
         # Make it a geodataframe
         growth_df_year["geometry"] = growth_df["geometry"]
         growth_df_year = gpd.GeoDataFrame(growth_df_year)
@@ -248,14 +250,14 @@ def cluster_timeseries_all_parameters_q_lines(
         ax.text(
             0,
             1,
-            f'{chr(97+i)})',
+            f"{chr(97+i)})",
             transform=ax.transAxes,
             fontsize=10,
-            verticalalignment='top',
-            horizontalalignment='left',
+            verticalalignment="top",
+            horizontalalignment="left",
             color="black",
             alpha=0.9,
-            backgroundcolor="white"
+            backgroundcolor="white",
         )
     plt.savefig(
         "results"

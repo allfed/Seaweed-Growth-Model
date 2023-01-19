@@ -7,20 +7,24 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ---
-Model to calculate where seaweed can grow in a nuclear war. 
+The Seaweed Growth Model is a tool that simulates the potential growth of seaweed in the aftermath of a nuclear war. The output of the model can be used to identify areas where seaweed growth is be possible. This model can be useful for researchers, environmentalists, and disaster response teams who are interested in understanding the potential impact of nuclear war on marine life. The model is implemented in Python and can be easily integrated into other analysis and visualization tools.
 
 ## Installation
-We recommend setting up a virtual environment to install this model and all its dependencies. A more in depth explanation of virtual environments can be found [here](https://goodresearch.dev/). The short version is: just create a virtual environment from the `environment.yml` file here by using either conda or mamba:
+To install the Seaweed Growth Model package, we recommend setting up a virtual environment. This will ensure that the package and its dependencies are isolated from other projects on your machine, which can prevent conflicts and make it easier to manage your dependencies. Here are the steps to follow:
 
-`conda env create -f environment.yml`
+* Create a virtual environment using either conda by running the command `conda env create -f environment.yml`. This will create an environment called "seaweed-growth-model". A virtual environment is like a separate Python environment, which you can think of as a separate "room" for your project to live in, it's own space which is isolated from the rest of the system, and it will have it's own set of packages and dependencies, that way you can work on different projects with different versions of packages without interfering with each other.
 
-This will create a virtual environment called "seaweed-growth-model". Once you activated it, you can install this model as a package into it by running the following line in the main folder of the repository:
+* Activate the environment by running `conda activate seaweed-growth-model`. This command will make the virtual environment you just created the active one, so that when you run any python command or install any package, it will do it within the environment.
 
-`pip install -e .`
+* Install the package by running `pip install -e .` in the main folder of the repository. This command will install the package you are currently in as a editable package, so that when you make changes to the package, you don't have to reinstall it again.
 
-When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. If you also want to run the example jupyter notebook, you have to [create a kernel from the environment](https://medium.com/@nrk25693/how-to-add-your-conda-environment-to-your-jupyter-notebook-in-just-4-steps-abeab8b8d084).
+* If you want to run the example Jupyter notebook, you'll need to create a kernel for the environment. First, install the necessary tools by running `conda install -c anaconda ipykernel`. This command will install the necessary tools to create a kernel for the Jupyter notebook. A kernel is a component of Jupyter notebook that allows you to run your code. It communicates with the notebook web application and the notebook document format to execute code and display the results.
 
-If you run into any problems feel free to open an issue in this repository.
+* Then, create the kernel by running `python -m ipykernel install --user --name=seaweed-growth-model`. This command will create a kernel with the name you specified "seaweed-growth-model" , which you can use to run the example notebook or play around with the model yourself.
+
+You can now use the kernel "seaweed-growth-model" to run the example notebook or play around with the model yourself. If you are using the kernel and it fails due an import error for the model package, you might have to rerun: `pip install -e .`.
+
+If you encounter any issues, feel free to open an issue in the repository.
 
 ## How this model works in general
 
