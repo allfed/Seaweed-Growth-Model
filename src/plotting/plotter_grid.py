@@ -35,7 +35,7 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     custom_map = LinearSegmentedColormap.from_list("custom", colors, N=len(colors))
 
     print("Plotting cluster spatial")
-    growth_df = growth_df.loc[:,["cluster", "geometry"]]
+    growth_df = growth_df.loc[:, ["cluster", "geometry"]]
     global_map = gpd.read_file(
         "data/geospatial_information/Countries/ne_50m_admin_0_countries.shp"
     )
@@ -245,8 +245,18 @@ def cluster_timeseries_all_parameters_q_lines(
         i += 1
     # Add the subplot labels
     for i, ax in enumerate(axes.flat):
-        ax.text(0, 1, f'{chr(97+i)})', transform=ax.transAxes, fontsize=10,
-                verticalalignment='top', horizontalalignment='left', color="black", alpha=0.9, backgroundcolor="white")
+        ax.text(
+            0,
+            1,
+            f'{chr(97+i)})',
+            transform=ax.transAxes,
+            fontsize=10,
+            verticalalignment='top',
+            horizontalalignment='left',
+            color="black",
+            alpha=0.9,
+            backgroundcolor="white"
+        )
     plt.savefig(
         "results"
         + os.sep
