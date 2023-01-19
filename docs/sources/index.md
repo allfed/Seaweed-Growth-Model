@@ -20,6 +20,12 @@ This will create a virtual environment called "seaweed-growth-model". Once you a
 
 When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. If you also want to run the example jupyter notebook, you have to [create a kernel from the environment](https://medium.com/@nrk25693/how-to-add-your-conda-environment-to-your-jupyter-notebook-in-just-4-steps-abeab8b8d084).
 
+This likely involves the commands:
+`conda env create -f environment.yml`
+`conda activate seaweed-growth-model`
+`conda install -c anaconda ipykernel`
+`python -m ipykernel install --user --name=seaweed-growth-model`
+
 If you run into any problems feel free to open an issue in this repository.
 
 ## How this model works in general
