@@ -35,7 +35,7 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     custom_map = LinearSegmentedColormap.from_list("custom", colors, N=len(colors))
 
     print("Plotting cluster spatial")
-    growth_df = growth_df[["cluster", "geometry"]]
+    growth_df = growth_df.loc[:, ["cluster", "geometry"]]
     global_map = gpd.read_file(
         "data/geospatial_information/Countries/ne_50m_admin_0_countries.shp"
     )
@@ -70,7 +70,7 @@ def cluster_spatial(growth_df, global_or_US, scenario):
     )
 
 
-def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
+def growth_rate_spatial_by_year(growth_df, global_or_US, scenario, optimal_growth_rate):
     """
     Plots the growth rate by year. This includes the first
     three months without nuclear war, in the case of the first year
@@ -89,8 +89,10 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
         growth_df_year = growth_df_year.mean(axis=1)
         growth_df_year = growth_df_year.to_frame()
         growth_df_year.columns = ["growth_rate"]
-        # Multiply it by 60 to get the actual growth rate
-        growth_df_year["growth_rate"] = growth_df_year["growth_rate"] * 60
+        # Multiply it by optimal_growth_rate to get the actual growth rate
+        growth_df_year["growth_rate"] = (
+            growth_df_year["growth_rate"] * optimal_growth_rate
+        )
         # Make it a geodataframe
         growth_df_year["geometry"] = growth_df["geometry"]
         growth_df_year = gpd.GeoDataFrame(growth_df_year)
@@ -102,7 +104,7 @@ def growth_rate_spatial_by_year(growth_df, global_or_US, scenario):
             legend=True,
             cmap="viridis",
             vmin=0,
-            vmax=50,
+            vmax=optimal_growth_rate,
             legend_kwds={
                 "label": "Mean Daily Growth Rate [%]",
                 "orientation": "vertical",
@@ -243,6 +245,20 @@ def cluster_timeseries_all_parameters_q_lines(
                 ax.legend(handles=patches_list)
             j += 1
         i += 1
+    # Add the subplot labels
+    for i, ax in enumerate(axes.flat):
+        ax.text(
+            0,
+            1,
+            f"{chr(97+i)})",
+            transform=ax.transAxes,
+            fontsize=10,
+            verticalalignment="top",
+            horizontalalignment="left",
+            color="black",
+            alpha=0.9,
+            backgroundcolor="white",
+        )
     plt.savefig(
         "results"
         + os.sep
@@ -259,7 +275,7 @@ def cluster_timeseries_all_parameters_q_lines(
     plt.close()
 
 
-def compare_nw_scenarios(areas):
+def compare_nw_scenarios(areas, optimal_growth_rate):
     """
     Compares the results of the nuclear war scenarios as weigthed median
     Arguments:
@@ -343,8 +359,8 @@ def compare_nw_scenarios(areas):
     )
     # Remove the first three months, because they are before the nuclear war
     all_medians = all_medians.iloc[3:]
-    # Multiply the values in the columns by 60, which is the maximum growth rate
-    all_medians = all_medians * 60
+    # Multiply the values in the columns by optimal_growth_rate, which is the maximum growth rate
+    all_medians = all_medians * optimal_growth_rate
     # Calculate the median for each year
     all_medians = all_medians.groupby(all_medians.index // 12).median()
     # Add one to the years, so that the first year is 1
@@ -434,11 +450,13 @@ def compare_nutrient_subfactors(nitrate, ammonium, phosphate, scenario, areas):
     )
 
 
-def main(scenario, global_or_US):
+def main(scenario, global_or_US, optimal_growth_rate):
     """
     Runs the other functions to read the data and make the plots
     Arguments:
-        None
+        scenario: The scenario to plot
+        global_or_US: Whether to plot the global or US scenario
+        optimal_growth_rate: The maximum growth rate
     Returns:
         None
     """
@@ -470,7 +488,7 @@ def main(scenario, global_or_US):
     growth_df = prepare_geometry(growth_df)
     # Make the spatial plots
     cluster_spatial(growth_df, global_or_US, scenario)
-    growth_rate_spatial_by_year(growth_df, global_or_US, scenario)
+    growth_rate_spatial_by_year(growth_df, global_or_US, scenario, optimal_growth_rate)
     # Read in the other parameters for the line plots
     parameters = {}
     parameter_names = [
@@ -519,17 +537,17 @@ def main(scenario, global_or_US):
 
 
 if __name__ == "__main__":
-
+    optimal_growth_rate = 30  # %/day
     # Call this seperately, as it needs to access all scenarios
     # Compare the nuclear war scenarios
     areas = rf.read_area_file(
         "data" + os.sep + "geospatial_information" + os.sep + "grid", "area_grid.csv"
     )
     # This is done seperately, as it needs to access all scenarios
-    compare_nw_scenarios(areas)
+    compare_nw_scenarios(areas, optimal_growth_rate)
     # Create the US plots
-    main("150tg", "US")
+    main("150tg", "US", optimal_growth_rate)
     # Iterate over all scenarios
     for scenario in [str(i) + "tg" for i in [150, 5, 16, 27, 37, 47]] + ["control"]:
         print("\nPreparing scenario: " + scenario)
-        main(scenario, "global")
+        main(scenario, "global", optimal_growth_rate)
