@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ---
-Model to calculate where seaweed can grow in a nuclear war. 
+The Seaweed Growth Model is a tool that simulates the potential growth of seaweed in the aftermath of a nuclear war. The output of the model can be used to identify areas where seaweed growth is be possible. This model can be useful for researchers, environmentalists, and disaster response teams who are interested in understanding the potential impact of nuclear war on marine life. The model is implemented in Python and can be easily integrated into other analysis and visualization tools.
 
 ## Installation
 To install the Seaweed Growth Model package, we recommend setting up a virtual environment. This will ensure that the package and its dependencies are isolated from other projects on your machine, which can prevent conflicts and make it easier to manage your dependencies. Here are the steps to follow:
