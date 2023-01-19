@@ -22,7 +22,7 @@ To install the Seaweed Growth Model package, we recommend setting up a virtual e
 
 * Then, create the kernel by running `python -m ipykernel install --user --name=seaweed-growth-model`. This command will create a kernel with the name you specified "seaweed-growth-model" , which you can use to run the example notebook or play around with the model yourself.
 
-You can now use the kernel "seaweed-growth-model" to run the example notebook or play around with the model yourself.
+You can now use the kernel "seaweed-growth-model" to run the example notebook or play around with the model yourself. If you are using the kernel and it fails due an import error for the model package, you might have to rerun: `pip install -e .`.
 
 If you encounter any issues, feel free to open an issue in the repository.
 
