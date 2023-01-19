@@ -14,17 +14,20 @@ We recommend setting up a virtual environment to install this model and all its 
 
 `conda env create -f environment.yml`
 
-This will create a virtual environment called "seaweed-growth-model". Once you activated it, you can install this model as a package into it by running the following line in the main folder of the repository:
+This will create a virtual environment called "seaweed-growth-model". 
 
-`pip install -e .`
-
-When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. If you also want to run the example jupyter notebook, you have to [create a kernel from the environment](https://medium.com/@nrk25693/how-to-add-your-conda-environment-to-your-jupyter-notebook-in-just-4-steps-abeab8b8d084).
+If you also want to run the example jupyter notebook, you have to [create a kernel from the environment](https://medium.com/@nrk25693/how-to-add-your-conda-environment-to-your-jupyter-notebook-in-just-4-steps-abeab8b8d084).
 
 This likely involves the commands:
-`conda env create -f environment.yml`
 `conda activate seaweed-growth-model`
 `conda install -c anaconda ipykernel`
 `python -m ipykernel install --user --name=seaweed-growth-model`
+
+When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. 
+
+Once you activated it, you can install this model as a package into it by running the following line in the main folder of the repository:
+`pip install -e .`
+
 
 If you run into any problems feel free to open an issue in this repository.
 
@@ -36,6 +39,9 @@ This model here uses nuclear winter environmental data and an empirical model ba
 
 ## Example of usage
 An example notebook on how this model can be used can be found in the [script folder](https://github.com/allfed/Seaweed-Growth-Model/blob/main/scripts/Example.ipynb). This example runs out of the box with the test data delivered with this repository. If you want to reproduce the results, you have to download the complete dataset. 
+
+To run this notebook, you can use the command
+`jupyter notebook Example.ipynb`
 
 ## Getting the global data
 
