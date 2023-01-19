@@ -20,7 +20,6 @@ To install the Seaweed Growth Model package, we recommend setting up a virtual e
 
 * If you want to run the example Jupyter notebook, you'll need to create a kernel for the environment. First, install the necessary tools by running `conda install -c anaconda ipykernel`. This command will install the necessary tools to create a kernel for the Jupyter notebook. A kernel is a component of Jupyter notebook that allows you to run your code. It communicates with the notebook web application and the notebook document format to execute code and display the results.
 
-
 * Then, create the kernel by running `python -m ipykernel install --user --name=seaweed-growth-model`. This command will create a kernel with the name you specified "seaweed-growth-model" , which you can use to run the example notebook or play around with the model yourself.
 
 You can now use the kernel "seaweed-growth-model" to run the example notebook or play around with the model yourself. If you are using the kernel and it fails due an import error for the model package, you might have to rerun: `pip install -e .`.
