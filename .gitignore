@@ -335,3 +335,4 @@ data/gridded_data_global/47tg/nw_PO4_120_months_47tg.pkl
 data/gridded_data_global/47tg/nw_SALT_120_months_47tg.pkl
 data/gridded_data_global/47tg/nw_TEMP_120_months_47tg.pkl
 data/geospatial_information/grid/harbor_50km_coast_2.5km_buffer.gpkg
+*.zip
