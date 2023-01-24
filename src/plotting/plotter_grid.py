@@ -157,7 +157,7 @@ def cluster_timeseries_all_parameters_q_lines(
         "nutrient_factor": "Nutrient Factor",
         "illumination_factor": "Illumination Factor",
         "temp_factor": "Temperature Factor",
-        "seaweed_growth_rate": "Seaweed Growth Rate",
+        "seaweed_growth_rate": "Total Growth Factor",
     }
     clusters = 4 if global_or_US == "US" else 3
     fig, axes = plt.subplots(
