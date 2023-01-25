@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.lines import Line2D
 
 from src.processing import read_files as rf
 from src.utilities import prepare_geometry, weighted_quantile
@@ -366,7 +367,51 @@ def compare_nw_scenarios(areas, optimal_growth_rate):
     # Add one to the years, so that the first year is 1
     all_medians.index = all_medians.index + 1
     # plot them all in the same subplot as bar plots
-    ax = all_medians.plot.bar(color=colors, edgecolor="black", linewidth=0.1)
+    ax = all_medians.plot.bar(color=colors, edgecolor="black", linewidth=0.1, legend=False)
+    # Create a custom legend for the plot with 7 columns
+    custom_lines = [
+        Line2D([0], [0], color=colors["150 Tg"], lw=4),
+        Line2D([0], [0], color=colors["47 Tg"], lw=4),
+        Line2D([0], [0], color=colors["37 Tg"], lw=4),
+        Line2D([0], [0], color=colors["27 Tg"], lw=4),
+        Line2D([0], [0], color=colors["16 Tg"], lw=4),
+        Line2D([0], [0], color=colors["5 Tg"], lw=4),
+        Line2D([0], [0], color=colors["Control"], lw=4),
+    ]
+    ax.legend(
+        custom_lines,
+        ["150 Tg", "47 Tg", "37 Tg", "27 Tg", "16 Tg", "5 Tg", "Control"],
+        ncol=7,
+        fontsize=8,
+    )
+    # Add an seperate error bar that has the range of min to max of the control run
+    # This is done by taking the min and max of the control run and plotting it as a vertical line
+    # The error bar is then the difference between the min and max
+    ymin = all_medians["Control"].min()
+    ymax = all_medians["Control"].max()
+    ax.errorbar(
+        x=8,
+        y=2.5,
+        yerr=(ymax - ymin) / 2,
+        color="dimgrey",
+        solid_capstyle='projecting',
+        capsize=3,
+        elinewidth=1.5,
+        markeredgewidth=1.5
+    )
+    # Annote the error bar with an explanation
+    ax.annotate(
+        "Range between\n Min and Max \nControl Run",
+        xy=(8.6, 2.5),
+        xytext=(8.6, 2.5),
+        xycoords="data",
+        textcoords="data",
+        ha="center",
+        va="center",
+        fontsize=7,
+        color="dimgrey",
+    )
+
     # Make it nicer
     ax.set_xlabel("Year after Nuclear War")
     ax.set_ylabel("Median Daily Growth Rate [%]")
@@ -374,7 +419,6 @@ def compare_nw_scenarios(areas, optimal_growth_rate):
     plt.xticks(rotation=0)
     # Remove the x grid
     ax.xaxis.grid(False)
-    plt.legend()
     plt.savefig(
         "results" + os.sep + "grid" + os.sep + "comparing_nw_scenarios.png",
         dpi=350,
