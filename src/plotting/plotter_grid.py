@@ -287,15 +287,14 @@ def compare_nw_scenarios(areas, optimal_growth_rate):
     """
     print("Starting the NW comparison plots")
     # A dictionary of seven colors, starting with #3A913F for the scenarios
-    # All following colors are 12% lighter than the previous one
     colors = {
         "150 Tg": "#3A913F",
-        "47 Tg": "#3F9C4A",
-        "37 Tg": "#45A755",
-        "27 Tg": "#4BB260",
-        "16 Tg": "#50BD6B",
-        "5 Tg": "#56C877",
-        "Control": "#5BD282",
+        "47 Tg": "#5DAF5D",
+        "37 Tg": "#7FC17F",
+        "27 Tg": "#A1DCA1",
+        "16 Tg": "#C3F5C3",
+        "5 Tg": "#E6FFE6",
+        "Control": "#95c091",
     }
     # have a list that is used to save the scenario results
     median_weighted_list = []
