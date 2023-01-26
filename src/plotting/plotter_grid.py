@@ -383,34 +383,6 @@ def compare_nw_scenarios(areas, optimal_growth_rate):
         ncol=7,
         fontsize=8,
     )
-    # Add an seperate error bar that has the range of min to max of the control run
-    # This is done by taking the min and max of the control run and plotting it as a vertical line
-    # The error bar is then the difference between the min and max
-    ymin = all_medians["Control"].min()
-    ymax = all_medians["Control"].max()
-    ax.errorbar(
-        x=8,
-        y=2.5,
-        yerr=(ymax - ymin) / 2,
-        color="dimgrey",
-        solid_capstyle='projecting',
-        capsize=3,
-        elinewidth=1.5,
-        markeredgewidth=1.5
-    )
-    # Annote the error bar with an explanation
-    ax.annotate(
-        "Range between\n Min and Max \nControl Run",
-        xy=(8.6, 2.5),
-        xytext=(8.6, 2.5),
-        xycoords="data",
-        textcoords="data",
-        ha="center",
-        va="center",
-        fontsize=7,
-        color="dimgrey",
-    )
-
     # Make it nicer
     ax.set_xlabel("Year after Nuclear War")
     ax.set_ylabel("Median Daily Growth Rate [%]")
