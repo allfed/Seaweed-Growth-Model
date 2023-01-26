@@ -97,7 +97,7 @@ None
 
 
 ### compare_nutrient_subfactors
-[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L429)
+[source](https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L428)
 ```python
 .compare_nutrient_subfactors(
    nitrate, ammonium, phosphate, scenario, areas
