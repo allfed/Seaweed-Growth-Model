@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.lines import Line2D
 
 from src.processing import read_files as rf
 from src.utilities import prepare_geometry, weighted_quantile
@@ -157,7 +158,7 @@ def cluster_timeseries_all_parameters_q_lines(
         "nutrient_factor": "Nutrient Factor",
         "illumination_factor": "Illumination Factor",
         "temp_factor": "Temperature Factor",
-        "seaweed_growth_rate": "Seaweed Growth Rate",
+        "seaweed_growth_rate": "Total Growth Factor",
     }
     clusters = 4 if global_or_US == "US" else 3
     fig, axes = plt.subplots(
@@ -286,15 +287,14 @@ def compare_nw_scenarios(areas, optimal_growth_rate):
     """
     print("Starting the NW comparison plots")
     # A dictionary of seven colors, starting with #3A913F for the scenarios
-    # All following colors are 12% lighter than the previous one
     colors = {
         "150 Tg": "#3A913F",
-        "47 Tg": "#3F9C4A",
-        "37 Tg": "#45A755",
-        "27 Tg": "#4BB260",
-        "16 Tg": "#50BD6B",
-        "5 Tg": "#56C877",
-        "Control": "#5BD282",
+        "47 Tg": "#5DAF5D",
+        "37 Tg": "#7FC17F",
+        "27 Tg": "#A1DCA1",
+        "16 Tg": "#C3F5C3",
+        "5 Tg": "#E6FFE6",
+        "Control": "#95c091",
     }
     # have a list that is used to save the scenario results
     median_weighted_list = []
@@ -366,7 +366,23 @@ def compare_nw_scenarios(areas, optimal_growth_rate):
     # Add one to the years, so that the first year is 1
     all_medians.index = all_medians.index + 1
     # plot them all in the same subplot as bar plots
-    ax = all_medians.plot.bar(color=colors, edgecolor="black", linewidth=0.1)
+    ax = all_medians.plot.bar(color=colors, edgecolor="black", linewidth=0.1, legend=False)
+    # Create a custom legend for the plot with 7 columns
+    custom_lines = [
+        Line2D([0], [0], color=colors["150 Tg"], lw=4),
+        Line2D([0], [0], color=colors["47 Tg"], lw=4),
+        Line2D([0], [0], color=colors["37 Tg"], lw=4),
+        Line2D([0], [0], color=colors["27 Tg"], lw=4),
+        Line2D([0], [0], color=colors["16 Tg"], lw=4),
+        Line2D([0], [0], color=colors["5 Tg"], lw=4),
+        Line2D([0], [0], color=colors["Control"], lw=4),
+    ]
+    ax.legend(
+        custom_lines,
+        ["150 Tg", "47 Tg", "37 Tg", "27 Tg", "16 Tg", "5 Tg", "Control"],
+        ncol=7,
+        fontsize=8,
+    )
     # Make it nicer
     ax.set_xlabel("Year after Nuclear War")
     ax.set_ylabel("Median Daily Growth Rate [%]")
@@ -374,7 +390,6 @@ def compare_nw_scenarios(areas, optimal_growth_rate):
     plt.xticks(rotation=0)
     # Remove the x grid
     ax.xaxis.grid(False)
-    plt.legend()
     plt.savefig(
         "results" + os.sep + "grid" + os.sep + "comparing_nw_scenarios.png",
         dpi=350,
