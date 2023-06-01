@@ -471,7 +471,7 @@ def main(scenario, global_or_US, optimal_growth_rate):
     Arguments:
         scenario: The scenario to plot
         global_or_US: Whether to plot the global or US scenario
-        optimal_growth_rate: The maximum growth rate
+        optimal_growth_rate: The maximum growth rate [% per day]
     Returns:
         None
     """
