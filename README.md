@@ -37,7 +37,7 @@ An example notebook on how this model can be used can be found in the [script fo
 
 ## Getting the global data
 
-The data is available in a [Zenodo Repository](https://zenodo.org/record/7553874). Once you download it simply copy it to `data/gridded_data_global` folder. Once there, you can run the model with the global data. However, if you just want to play around with the model, there is a dataset available for testing directly in this repository. 
+The data is available in a [Zenodo Repository](https://zenodo.org/record/7553874). Once you download it simply copy it to `data/gridded_data_global` folder. Once there, you can run the model with the global data. However, if you just want to play around with the model, there is a dataset available for testing directly in this repository. The full dataset can be found on [Zenodo](https://zenodo.org/record/7553874).
 
 ### Pickle Format
 
