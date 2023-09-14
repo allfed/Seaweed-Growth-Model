@@ -15,11 +15,13 @@ pages:
       - prepare_geometry
       - weighted_quantile
 
-  - page: "modules/src/processing/preprocessing.md"
-    source: "src/processing/preprocessing.py"
+  - page: "modules/src/processing/read_files.md"
+    source: "src/processing/read_files.py"
+    classes:
+      - DataLME
+      - DataGrid
     functions:
-      - get_area
-      - prepare_gridded_data
+      - read_area_file
 
   - page: "modules/src/processing/postprocessing.md"
     source: "src/processing/postprocessing.py"
@@ -30,13 +32,31 @@ pages:
       - lme
       - grid
 
-  - page: "modules/src/processing/read_files.md"
-    source: "src/processing/read_files.py"
-    classes:
-      - DataLME
-      - DataGrid
+  - page: "modules/src/processing/preprocessing.md"
+    source: "src/processing/preprocessing.py"
     functions:
-      - read_area_file
+      - get_area
+      - prepare_gridded_data
+
+  - page: "modules/src/plotting/plotter_lme.md"
+    source: "src/plotting/plotter_lme.py"
+    functions:
+      - cluster_timeseries_all_parameters_q_lines
+      - create_name_dict
+
+  - page: "modules/src/plotting/plotter_grid.md"
+    source: "src/plotting/plotter_grid.py"
+    functions:
+      - cluster_spatial
+      - growth_rate_spatial_by_year
+      - cluster_timeseries_all_parameters_q_lines
+      - compare_nw_scenarios
+      - compare_nutrient_subfactors
+
+  - page: "modules/src/plotting/plotter_methods.md"
+    source: "src/plotting/plotter_methods.py"
+    functions:
+      - plot_factors
 
   - page: "modules/src/model/seaweed_model.md"
     source: "src/model/seaweed_model.py"
@@ -63,24 +83,4 @@ pages:
       - calculate_nutrient_factor
       - salinity_single_value
       - calculate_salinity_factor
-
-  - page: "modules/src/plotting/plotter_methods.md"
-    source: "src/plotting/plotter_methods.py"
-    functions:
-      - plot_factors
-
-  - page: "modules/src/plotting/plotter_grid.md"
-    source: "src/plotting/plotter_grid.py"
-    functions:
-      - cluster_spatial
-      - growth_rate_spatial_by_year
-      - cluster_timeseries_all_parameters_q_lines
-      - compare_nw_scenarios
-      - compare_nutrient_subfactors
-
-  - page: "modules/src/plotting/plotter_lme.md"
-    source: "src/plotting/plotter_lme.py"
-    functions:
-      - cluster_timeseries_all_parameters_q_lines
-      - create_name_dict
 
