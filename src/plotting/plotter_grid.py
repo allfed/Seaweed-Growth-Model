@@ -366,7 +366,9 @@ def compare_nw_scenarios(areas, optimal_growth_rate):
     # Add one to the years, so that the first year is 1
     all_medians.index = all_medians.index + 1
     # plot them all in the same subplot as bar plots
-    ax = all_medians.plot.bar(color=colors, edgecolor="black", linewidth=0.1, legend=False)
+    ax = all_medians.plot.bar(
+        color=colors, edgecolor="black", linewidth=0.1, legend=False
+    )
     # Create a custom legend for the plot with 7 columns
     custom_lines = [
         Line2D([0], [0], color=colors["150 Tg"], lw=4),

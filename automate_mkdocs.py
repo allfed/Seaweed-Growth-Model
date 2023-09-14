@@ -50,7 +50,6 @@ def automate_mkdocs_from_docstring(
     structure = fix(defaultdict)()
     full_repo_dir = str(repo_dir) + "/"
     for script in scripts:
-
         with open(script, "r") as source:
             tree = ast.parse(source.read())
         funcs = {"classes": [], "functions": []}
@@ -60,7 +59,6 @@ def automate_mkdocs_from_docstring(
                     child, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)
                 ):
                     if child.name not in ["main"]:
-
                         relative_path = (
                             str(script)
                             .replace(full_repo_dir, "")
@@ -113,10 +111,8 @@ def automate_mkdocs_from_docstring(
         if match_string in contents[-1]:
             contents.append(insert_string)
         else:
-
             for index, line in enumerate(contents):
                 if match_string in line and insert_string not in contents[index + 1]:
-
                     contents = contents[: index + 1]
                     contents.append(insert_string)
                     break
@@ -160,10 +156,8 @@ def automate_nav_structure(
         if match_string in contents[-1]:
             contents.append(insert_string)
         else:
-
             for index, line in enumerate(contents):
                 if match_string in line and insert_string not in contents[index + 1]:
-
                     contents = contents[: index + 1]
                     contents.append(insert_string)
                     break
