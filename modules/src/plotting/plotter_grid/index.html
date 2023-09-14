@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../../img/favicon.ico">
+  <title>plotter_grid - Seaweed Growth Model</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "plotter_grid";
+    var mkdocs_page_input_path = "modules/src/plotting/plotter_grid.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Seaweed Growth Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">src</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="#">model</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../model/ocean_section/">ocean_section</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../model/seaweed_growth/">seaweed_growth</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../model/seaweed_model/">seaweed_model</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">plotting</a>
+    <ul class="current">
+                <li class="toctree-l3 current"><a class="reference internal current" href="./">plotter_grid</a>
+    <ul class="current">
+    <li class="toctree-l4"><a class="reference internal" href="#cluster_spatial">cluster_spatial</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#growth_rate_spatial_by_year">growth_rate_spatial_by_year</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#cluster_timeseries_all_parameters_q_lines">cluster_timeseries_all_parameters_q_lines</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#compare_nw_scenarios">compare_nw_scenarios</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#compare_nutrient_subfactors">compare_nutrient_subfactors</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../plotter_lme/">plotter_lme</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../plotter_methods/">plotter_methods</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">processing</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../processing/postprocessing/">postprocessing</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../processing/preprocessing/">preprocessing</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../processing/read_files/">read_files</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../utilities/">utilities</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../..">Seaweed Growth Model</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>modules &raquo;</li>
+        
+      
+        
+          <li>src &raquo;</li>
+        
+      
+        
+          <li>plotting &raquo;</li>
+        
+      
+    
+    <li>plotter_grid</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1"></h1>
+<h3 id="cluster_spatial">cluster_spatial</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L23">source</a></p>
+<pre><code class="language-python">.cluster_spatial(
+   growth_df, global_or_US, scenario
+)
+</code></pre>
+<hr />
+<p>Creates a spatial plot of the clusters</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>growth_df</strong>  : a dataframe of the growth rate</li>
+<li><strong>global_or_US</strong>  : a string of either "global" or "US" that indicates the scale</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>None, but saves the plot</p>
+<hr />
+<h3 id="growth_rate_spatial_by_year">growth_rate_spatial_by_year</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L74">source</a></p>
+<pre><code class="language-python">.growth_rate_spatial_by_year(
+   growth_df, global_or_US, scenario, optimal_growth_rate
+)
+</code></pre>
+<hr />
+<p>Plots the growth rate by year. This includes the first
+three months without nuclear war, in the case of the first year</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>growth_df</strong>  : a dataframe of the growth rate</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>None, but saves the plot</p>
+<hr />
+<h3 id="cluster_timeseries_all_parameters_q_lines">cluster_timeseries_all_parameters_q_lines</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L141">source</a></p>
+<pre><code class="language-python">.cluster_timeseries_all_parameters_q_lines(
+   parameters, global_or_US, scenario, areas
+)
+</code></pre>
+<hr />
+<p>Plots line plots for all clusters and all parameters</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>parameters</strong>  : a dictionary of dataframes of all parameters</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>None, but saves the plot</p>
+<hr />
+<h3 id="compare_nw_scenarios">compare_nw_scenarios</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L279">source</a></p>
+<pre><code class="language-python">.compare_nw_scenarios(
+   areas, optimal_growth_rate
+)
+</code></pre>
+<hr />
+<p>Compares the results of the nuclear war scenarios as weigthed median</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>areas</strong>  : A dataframe containing the area of each grid cell</li>
+<li><strong>eez</strong>  : A eez around coastlines to only use those areas</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>None</p>
+<hr />
+<h3 id="compare_nutrient_subfactors">compare_nutrient_subfactors</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/plotting/plotter_grid.py/#L402">source</a></p>
+<pre><code class="language-python">.compare_nutrient_subfactors(
+   nitrate, ammonium, phosphate, scenario, areas
+)
+</code></pre>
+<hr />
+<p>Takes the weighted average of the nutrient subfactors globally and plots them
+in the same plot to be able to compare them.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nitrate</strong>  : The nitrate subfactor</li>
+<li><strong>ammonium</strong>  : The ammonium subfactor</li>
+<li><strong>phosphate</strong>  : The phosphate subfactor</li>
+<li><strong>scenario</strong>  : The scenario to plot</li>
+<li><strong>areas</strong>  : The areas of the grid cells</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>None</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../plotter_lme/" class="btn btn-neutral float-right" title="plotter_lme">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../model/seaweed_model/" class="btn btn-neutral" title="seaweed_model"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>ALLFED</p>
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../model/seaweed_model/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../plotter_lme/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../../../..';</script>
+    <script src="../../../../js/theme_extra.js" defer></script>
+    <script src="../../../../js/theme.js" defer></script>
+      <script src="../../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

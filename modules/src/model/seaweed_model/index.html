@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../../img/favicon.ico">
+  <title>seaweed_model - Seaweed Growth Model</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "seaweed_model";
+    var mkdocs_page_input_path = "modules/src/model/seaweed_model.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Seaweed Growth Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">src</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">model</a>
+    <ul class="current">
+                <li class="toctree-l3"><a class="reference internal" href="../ocean_section/">ocean_section</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../seaweed_growth/">seaweed_growth</a>
+                </li>
+                <li class="toctree-l3 current"><a class="reference internal current" href="./">seaweed_model</a>
+    <ul class="current">
+    <li class="toctree-l4"><a class="reference internal" href="#seaweedmodel">SeaweedModel</a>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">plotting</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../plotting/plotter_grid/">plotter_grid</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../plotting/plotter_lme/">plotter_lme</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../plotting/plotter_methods/">plotter_methods</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">processing</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../processing/postprocessing/">postprocessing</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../processing/preprocessing/">preprocessing</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../processing/read_files/">read_files</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../utilities/">utilities</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../..">Seaweed Growth Model</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>modules &raquo;</li>
+        
+      
+        
+          <li>src &raquo;</li>
+        
+      
+        
+          <li>model &raquo;</li>
+        
+      
+    
+    <li>seaweed_model</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1"></h1>
+<h2 id="seaweedmodel">SeaweedModel</h2>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L10">source</a></p>
+<pre><code class="language-python">
+</code></pre>
+<hr />
+<p>Wrapper class that encapsulates the model
+and is meant to provide a simple interface.</p>
+<p><strong>Methods:</strong></p>
+<h3 id="add_data_by_lme">.add_data_by_lme</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L21">source</a></p>
+<pre><code class="language-python">.add_data_by_lme(
+   lme_names, file
+)
+</code></pre>
+<hr />
+<p>Adds data from the database to the model.
+Based on a LME.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>lme_names</strong>  : a list of LME names</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>None</p>
+<h3 id="add_data_by_grid">.add_data_by_grid</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L41">source</a></p>
+<pre><code class="language-python">.add_data_by_grid(
+   file
+)
+</code></pre>
+<hr />
+<p>Adds data from the database to the model.
+Based on a grid.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>lat_lons</strong>  : a list of lat_lon tuples</li>
+<li><strong>file</strong>  : the file to read the data from</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>None</p>
+<h3 id="calculate_factors">.calculate_factors</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L62">source</a></p>
+<pre><code class="language-python">.calculate_factors()
+</code></pre>
+<hr />
+<p>Calculates the growth factors for the model
+for all ocean sections (either grid or LME).</p>
+<p><strong>Arguments</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>None</p>
+<h3 id="calculate_growth_rate">.calculate_growth_rate</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L74">source</a></p>
+<pre><code class="language-python">.calculate_growth_rate()
+</code></pre>
+<hr />
+<p>Calculates the growth rate for the model
+for all ocean sections (either grid or LME).</p>
+<p><strong>Arguments</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>None</p>
+<h3 id="create_section_dfs">.create_section_dfs</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L86">source</a></p>
+<pre><code class="language-python">.create_section_dfs()
+</code></pre>
+<hr />
+<p>Creates a dataframe for each section in the model.</p>
+<p><strong>Arguments</strong></p>
+<p>None</p>
+<p><strong>Returns</strong></p>
+<p>None</p>
+<h3 id="construct_df_from_sections_for_date">.construct_df_from_sections_for_date</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L97">source</a></p>
+<pre><code class="language-python">.construct_df_from_sections_for_date(
+   months
+)
+</code></pre>
+<hr />
+<p>Constructs a dataframe from the data in the model for a given date.
+This uses the months since the beginning of the nuclear war.
+Mininum is -3, as the data starts before the war.
+Maximum is 357, as the data ends after the war.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>months</strong>  : the months since the beginning of the nuclear war</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>a dataframe for the values at the given month</p>
+<h3 id="construct_df_for_parameter">.construct_df_for_parameter</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_model.py/#L113">source</a></p>
+<pre><code class="language-python">.construct_df_for_parameter(
+   parameter
+)
+</code></pre>
+<hr />
+<p>Constructs a dataframe that contains complete time series of a given
+parameter for all sections in the model.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>parameter</strong>  : the parameter to construct the dataframe for</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>a dataframe with the date as index and the sections as columns</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../plotting/plotter_grid/" class="btn btn-neutral float-right" title="plotter_grid">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../seaweed_growth/" class="btn btn-neutral" title="seaweed_growth"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>ALLFED</p>
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../seaweed_growth/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../plotting/plotter_grid/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../../../..';</script>
+    <script src="../../../../js/theme_extra.js" defer></script>
+    <script src="../../../../js/theme.js" defer></script>
+      <script src="../../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

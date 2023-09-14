@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../../img/favicon.ico">
+  <title>seaweed_growth - Seaweed Growth Model</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "seaweed_growth";
+    var mkdocs_page_input_path = "modules/src/model/seaweed_growth.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Seaweed Growth Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">src</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">model</a>
+    <ul class="current">
+                <li class="toctree-l3"><a class="reference internal" href="../ocean_section/">ocean_section</a>
+                </li>
+                <li class="toctree-l3 current"><a class="reference internal current" href="./">seaweed_growth</a>
+    <ul class="current">
+    <li class="toctree-l4"><a class="reference internal" href="#growth_factor_combination_single_value">growth_factor_combination_single_value</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#growth_factor_combination">growth_factor_combination</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#illumination_single_value">illumination_single_value</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#calculate_illumination_factor">calculate_illumination_factor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#temperature_single_value">temperature_single_value</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#calculate_temperature_factor">calculate_temperature_factor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#nitrate_subfactor">nitrate_subfactor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#phosphate_subfactor">phosphate_subfactor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#ammonium_subfactor">ammonium_subfactor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#calculate_nutrient_factor">calculate_nutrient_factor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#salinity_single_value">salinity_single_value</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#calculate_salinity_factor">calculate_salinity_factor</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../seaweed_model/">seaweed_model</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">plotting</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../plotting/plotter_grid/">plotter_grid</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../plotting/plotter_lme/">plotter_lme</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../plotting/plotter_methods/">plotter_methods</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">processing</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../processing/postprocessing/">postprocessing</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../processing/preprocessing/">preprocessing</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../processing/read_files/">read_files</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../utilities/">utilities</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../..">Seaweed Growth Model</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>modules &raquo;</li>
+        
+      
+        
+          <li>src &raquo;</li>
+        
+      
+        
+          <li>model &raquo;</li>
+        
+      
+    
+    <li>seaweed_growth</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1"></h1>
+<h3 id="growth_factor_combination_single_value">growth_factor_combination_single_value</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L25">source</a></p>
+<pre><code class="language-python">.growth_factor_combination_single_value(
+   illumination_factor: float, temperature_factor: float, nutrient_factor: float,
+   salinity_factor: float
+)
+</code></pre>
+<hr />
+<p>Calculates the actual production rate of the seaweed</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>illumination_factor</strong>  : the illumination factor</li>
+<li><strong>temperature_factor</strong>  : the temperature factor</li>
+<li><strong>nutrient_factor</strong>  : the nutrient factor</li>
+<li><strong>salinity_factor</strong>  : the salinity factor</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>fraction of the actual production rate the seaweed could
+reach in optimal circumstances</p>
+<hr />
+<h3 id="growth_factor_combination">growth_factor_combination</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L63">source</a></p>
+<pre><code class="language-python">.growth_factor_combination(
+   illumination_factor: pd.Series, temperature_factor: pd.Series,
+   nutrient_factor: pd.Series, salinity_factor: pd.Series
+)
+</code></pre>
+<hr />
+<p>Calculates the actual production rate of the seaweed for a whole dataframe
+And returns it as a pandas series</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>illumination_factor</strong>  : the illumination factor</li>
+<li><strong>temperature_factor</strong>  : the temperature factor</li>
+<li><strong>nutrient_factor</strong>  : the nutrient factor</li>
+<li><strong>salinity_factor</strong>  : the salinity factor</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>fraction of the actual production rate the seaweed could</p>
+<hr />
+<h3 id="illumination_single_value">illumination_single_value</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L103">source</a></p>
+<pre><code class="language-python">.illumination_single_value(
+   illumination: float
+)
+</code></pre>
+<hr />
+<p>Calculates the illumination factor for a single value based on an empirical model</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>illumination</strong>  : the illumination of the algae in W/m²</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>The illumination factor</p>
+<hr />
+<h3 id="calculate_illumination_factor">calculate_illumination_factor</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L127">source</a></p>
+<pre><code class="language-python">.calculate_illumination_factor(
+   illumination: pd.Series
+)
+</code></pre>
+<hr />
+<p>Calculates the illumination factor for a whole series</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>illumination</strong>  : the illumination of the algae in W/m²</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>The illumination factor as a pandas series</p>
+<hr />
+<h3 id="temperature_single_value">temperature_single_value</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L138">source</a></p>
+<pre><code class="language-python">.temperature_single_value(
+   temperature: float
+)
+</code></pre>
+<hr />
+<p>Calculates the temperature factor for a single value based on an empirical model</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>temperature</strong>  : the temperature of the water in °C</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>The temperature factor as a float</p>
+<hr />
+<h3 id="calculate_temperature_factor">calculate_temperature_factor</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L164">source</a></p>
+<pre><code class="language-python">.calculate_temperature_factor(
+   temperature: pd.Series
+)
+</code></pre>
+<hr />
+<p>Calculates the temperature factor for a whole dataframe column</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>temperature</strong>  : the temperature of the water in celcius</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>The temperature factor as a pandas series</p>
+<hr />
+<h3 id="nitrate_subfactor">nitrate_subfactor</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L176">source</a></p>
+<pre><code class="language-python">.nitrate_subfactor(
+   nitrate
+)
+</code></pre>
+<hr />
+<p>Calculates the nitrate subfactor for a single value</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nitrate</strong>  : the nitrate concentration in mmol/m³</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>The nitrate subfactor as a float</p>
+<hr />
+<h3 id="phosphate_subfactor">phosphate_subfactor</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L188">source</a></p>
+<pre><code class="language-python">.phosphate_subfactor(
+   phosphate
+)
+</code></pre>
+<hr />
+<p>Calculates the phosphate subfactor for a single value</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>phosphate</strong>  : the phosphate concentration in mmol/m³</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>The phosphate subfactor as a float</p>
+<hr />
+<h3 id="ammonium_subfactor">ammonium_subfactor</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L200">source</a></p>
+<pre><code class="language-python">.ammonium_subfactor(
+   ammonium
+)
+</code></pre>
+<hr />
+<p>Calculates the ammonium subfactor for a single value</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>ammonium</strong>  : the ammonium concentration in mmol/m³</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>The ammonium subfactor as a float</p>
+<hr />
+<h3 id="calculate_nutrient_factor">calculate_nutrient_factor</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L212">source</a></p>
+<pre><code class="language-python">.calculate_nutrient_factor(
+   nitrate: pd.Series, ammonium: pd.Series, phosphate: pd.Series
+)
+</code></pre>
+<hr />
+<p>Calculates the nutrient factor for a whole series
+And returns the nutrient factor as a pandas series</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nitrate</strong>  : the nitrate concentration in mmol/m³</li>
+<li><strong>ammonium</strong>  : the ammonium concentration in mmol/m³</li>
+<li><strong>phosphate</strong>  : the phosphate concentration in mmol/m³</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><strong>nutrient_factor</strong>  : The nutrient factor as a pd.Series
+    nitrate_subfactor: The nitrate subfactor as a pd.Series
+    ammonium_subfactor: The ammonium subfactor as a pd.Series
+    phosphate_subfactor: The phosphate subfactor as a pd.Series
+List of:</li>
+</ul>
+<hr />
+<h3 id="salinity_single_value">salinity_single_value</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L253">source</a></p>
+<pre><code class="language-python">.salinity_single_value(
+   salinity: float
+)
+</code></pre>
+<hr />
+<p>Calculates the salinity factor for a single salinity value based on an empirical model</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>salinity</strong>  : the salinity of the water</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>The salinity factor as a float</p>
+<hr />
+<h3 id="calculate_salinity_factor">calculate_salinity_factor</h3>
+<p><a href="https://github.com/allfed/Seaweed-Growth-Model/blob/master/src/model/seaweed_growth.py/#L277">source</a></p>
+<pre><code class="language-python">.calculate_salinity_factor(
+   salinity: pd.Series
+)
+</code></pre>
+<hr />
+<p>Calculates the salinity factor for a whole dataframe</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>salinity</strong>  : the salinity of the water in ppt</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>The salinity factor as a pandas series</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../seaweed_model/" class="btn btn-neutral float-right" title="seaweed_model">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../ocean_section/" class="btn btn-neutral" title="ocean_section"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>ALLFED</p>
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../ocean_section/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../seaweed_model/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../../../..';</script>
+    <script src="../../../../js/theme_extra.js" defer></script>
+    <script src="../../../../js/theme.js" defer></script>
+      <script src="../../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
